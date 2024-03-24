@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
 	java
 	id("org.springframework.boot") version "3.2.3"
@@ -24,4 +26,8 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+	imageName.set("luiscajl/demo:0.0.1-SNAPSHOT")
 }
