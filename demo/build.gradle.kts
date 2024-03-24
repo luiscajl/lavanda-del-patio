@@ -29,5 +29,5 @@ tasks.withType<Test> {
 }
 
 tasks.named<BootBuildImage>("bootBuildImage") {
-	imageName.set("luiscajl/demo:0.0.1-SNAPSHOT")
+	imageName.set("luiscajl/demo:0.0.1")
 }

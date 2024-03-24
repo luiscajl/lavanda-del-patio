@@ -21,6 +21,6 @@ jobs:
       - name: Publish to Registry
         uses: luiscajl/publish-image-dockerhub-action@main
         with:
-          name: luiscajl/demo:0.0.1-SNAPSHOT
+          name: luiscajl/demo:0.0.1
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
