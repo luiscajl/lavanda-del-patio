@@ -27,7 +27,7 @@
 #: "$VERSION"
 
 export APP=$1
-# Guarda la salida y los errores del comando en una variable, pero también imprime todo en tiempo real.
+# Guarda la salida y los errores del comando en una variable, pero también imprime en tiempo real.
 OUTPUT=$(gradle "$APP":bootBuildImage 2>&1 | tee /dev/stderr)
 
 # Ejecuta el comando bootBuildImage y filtra la salida para obtener el nombre de la imagen
