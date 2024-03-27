@@ -30,7 +30,7 @@ export APP=$1
 #gradle "$APP":bootBuildImage
 
 # Ejecuta el comando bootBuildImage y filtra la salida para obtener el nombre de la imagen
-IMAGE_NAME=$(gradle "$APP":bootBuildImage | tee /dev/tty | grep "Successfully built image" | sed -n -e 's/^.*Successfully built image '\''\(.*\)'\''.*$/\1/p')
+IMAGE_NAME=$(gradle "$APP":bootBuildImage 2>&1 | grep "Successfully built image" | sed -n -e 's/^.*Successfully built image '\''\(.*\)'\''.*$/\1/p')
 
 # Verifica si IMAGE_NAME no está vacío
 if [ -n "$IMAGE_NAME" ]; then
@@ -40,3 +40,5 @@ if [ -n "$IMAGE_NAME" ]; then
 else
     echo "No se pudo encontrar el nombre de la imagen."
 fi
+
+
