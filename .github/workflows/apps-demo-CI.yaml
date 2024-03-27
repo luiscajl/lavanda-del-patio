@@ -1,0 +1,38 @@
+name: Apps:Demo:Build:Push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/demo/**'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: 'maven'
+      - name: Test dependencies
+        run: |
+          echo "GRAALVM_HOME: $GRAALVM_HOME"
+          echo "JAVA_HOME: $JAVA_HOME"
+          java --version
+          native-image --version
+
+      - name: Build
+        run: ./scripts/build-image.sh apps:demo
+
+#      - name: Gradle build native image for AMD64
+#        run: gradle demo:bootBuildImage
+#
+#      - name: Publish to Dockerhub Registry
+#        uses: luiscajl/publish-image-dockerhub-action@main
+#        with:
+#          name: luiscajl/demo:0.0.1
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
