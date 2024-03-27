@@ -27,10 +27,11 @@
 #: "$VERSION"
 
 export APP=$1
-#gradle "$APP":bootBuildImage
+# Guarda la salida y los errores del comando en una variable, pero también imprime todo en tiempo real.
+OUTPUT=$(gradle "$APP":bootBuildImage 2>&1 | tee /dev/stderr)
 
 # Ejecuta el comando bootBuildImage y filtra la salida para obtener el nombre de la imagen
-IMAGE_NAME=$(gradle "$APP":bootBuildImage 2>&1 | grep "Successfully built image" | sed -n -e 's/^.*Successfully built image '\''\(.*\)'\''.*$/\1/p')
+IMAGE_NAME=$(echo "$OUTPUT" | grep "Successfully built image" | sed -n -e 's/^.*Successfully built image '\''\(.*\)'\''.*$/\1/p')
 
 # Verifica si IMAGE_NAME no está vacío
 if [ -n "$IMAGE_NAME" ]; then
