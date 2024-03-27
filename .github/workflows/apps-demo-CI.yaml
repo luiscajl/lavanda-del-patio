@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - 'feature/**'
     paths:
       - 'apps/demo/**'
   workflow_dispatch:
