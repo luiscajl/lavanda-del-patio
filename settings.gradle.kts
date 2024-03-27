@@ -9,4 +9,4 @@
 
 rootProject.name = "lavanda-del-patio"
 
-include("demo")
+include("apps:demo","apps:demo2")
