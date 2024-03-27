@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-echo $DOCKER_IMAGE_NAME
+echo $1
+docker push "$1"
