@@ -38,7 +38,7 @@ if [ -n "$IMAGE_NAME" ]; then
     # Exporta el nombre de la imagen a una variable de entorno
     export DOCKER_IMAGE_NAME=$IMAGE_NAME
     echo "Exported DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME"
-    echo "::set-output name=DOCKER_IMAGE_NAME::$DOCKER_IMAGE_NAME"
+    echo "DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME" >> $GITHUB_OUTPUT
 else
     echo "No se pudo encontrar el nombre de la imagen."
 fi
