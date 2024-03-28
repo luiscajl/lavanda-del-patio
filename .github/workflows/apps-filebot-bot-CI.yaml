@@ -1,4 +1,4 @@
-name: Apps:Demo:Build:Push
+name: Apps:FilebotBot:Build:Push
 on:
   push:
     branches:
@@ -28,6 +28,8 @@ jobs:
       - name: Build native image
         id: build_image
         run: ./scripts/build-image.sh apps:filebot-bot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
