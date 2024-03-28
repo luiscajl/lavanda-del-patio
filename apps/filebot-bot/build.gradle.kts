@@ -33,7 +33,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.telegram:telegrambots:6.9.7.1")
     compileOnly("org.projectlombok:lombok:1.18.32")
-    annotationProcessor("org.projectlombok:lombok:1.18.32")
     testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("org.modelmapper:modelmapper:3.2.0") {
