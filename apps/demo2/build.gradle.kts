@@ -8,7 +8,8 @@ plugins {
 }
 
 group = "com.example"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
+val dockerLibrary = "luiscajl"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_21
@@ -29,5 +30,5 @@ tasks.withType<Test> {
 }
 
 tasks.named<BootBuildImage>("bootBuildImage") {
-	imageName.set("luiscajl/demo:0.0.1")
+	imageName.set("${dockerLibrary}/${project.name}:${version}")
 }

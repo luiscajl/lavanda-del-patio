@@ -1,7 +1,7 @@
 .gradle
 **/build/
 !src/**/build/
-
+.idea
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -24,3 +24,4 @@ gradle-app.setting
 build
 
 .DS_Store
+application-dev.yml

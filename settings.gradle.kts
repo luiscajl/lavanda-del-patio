@@ -8,5 +8,17 @@
  */
 
 rootProject.name = "lavanda-del-patio"
+include("apps:demo", "apps:demo2", "apps:filebot-bot")
 
-include("apps:demo","apps:demo2")
+pluginManagement {
+    repositories {
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/Lavanda-del-Patio/*") //FIXME: CHANGE TO LUISCAJL
+            credentials {
+                username = "luiscajl"
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
