@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableMongoAuditing
 @Slf4j
 @EnableScheduling
-@RegisterReflectionForBinding
+@RegisterReflectionForBinding(org.telegram.telegrambots.meta.api.objects.ApiResponse.class)
 public class AppBeans {
 
     // @Autowired
