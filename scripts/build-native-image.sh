@@ -14,11 +14,11 @@
 #
 # Usage:
 #
-#       ./scripts/build-image.sh <image-name>
+#       ./scripts/build-native-image.sh <image-name>
 #
 # Example command line usage:
 #
-#       ./scripts/build-image.sh apps:demo
+#       ./scripts/build-native-image.sh apps:demo
 #
 
 #set -u # or set -o nounset
