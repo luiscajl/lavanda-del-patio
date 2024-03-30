@@ -27,7 +27,7 @@ jobs:
 
       - name: Build native image
         id: build_image
-        run: ./scripts/build-image.sh apps:filebot-bot
+        run: ./scripts/build-native-image.sh apps:filebot-bot
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
