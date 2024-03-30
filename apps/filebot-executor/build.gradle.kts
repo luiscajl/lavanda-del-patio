@@ -39,7 +39,9 @@ tasks.withType<Test> {
 
 tasks.named<BootBuildImage>("bootBuildImage") {
     imageName.set("${dockerLibrary}/${project.name}:${version}")
-    environment = mapOf("BP_NATIVE_IMAGE" to "true")
+    builder.set("paketobuildpacks/builder-jammy-full:latest")
+    runImage.set("paketobuildpacks/run-jammy-full:latest")
+    createdDate = "now"
     environment = mapOf(
             "BP_NATIVE_IMAGE" to "true",
             "TZ" to "Europe/Madrid",
@@ -48,6 +50,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
             "PGUSER" to "apps",
             "PGROUP" to "apps",
             "HOME" to "/home/apps"
-    )}
+    )
+}
 
 
