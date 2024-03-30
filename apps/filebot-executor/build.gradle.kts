@@ -9,26 +9,28 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.0.78"
+version = "0.0.125"
 val dockerLibrary = "lavandadelpatio"
+
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
-
 dependencies {
-    implementation("es.lavanda:lib-common:0.0.71")
-    implementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("es.lavanda:lib-common:0.0.72")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.telegram:telegrambots:6.9.7.1")
+    runtimeOnly("org.glassfish.jaxb:jaxb-runtime")
+    runtimeOnly("com.thoughtworks.xstream:xstream:1.4.20")
     testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("org.modelmapper:modelmapper:3.2.0") {
-        exclude(group = "com.h2database", module = "h2")
-        exclude(group = "org.testng", module = "testng")
-    }
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }
 
 tasks.withType<Test> {
@@ -38,5 +40,14 @@ tasks.withType<Test> {
 tasks.named<BootBuildImage>("bootBuildImage") {
     imageName.set("${dockerLibrary}/${project.name}:${version}")
     environment = mapOf("BP_NATIVE_IMAGE" to "true")
-    environment = mapOf("TZ" to "Europe/Madrid")
-}
+    environment = mapOf(
+            "BP_NATIVE_IMAGE" to "true",
+            "TZ" to "Europe/Madrid",
+            "PUID" to "568",
+            "PGID" to "568",
+            "PGUSER" to "apps",
+            "PGROUP" to "apps",
+            "HOME" to "/home/apps"
+    )}
+
+

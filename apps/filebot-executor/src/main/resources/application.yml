@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: lavanda-filebot-executor
+  profiles:
+    active: dev
