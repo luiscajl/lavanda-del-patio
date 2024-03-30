@@ -1,0 +1,15 @@
+spring:
+    rabbitmq:
+        host: rabbitmq
+        listener:
+            simple:
+                retry:
+                    enabled: true
+                    initial-interval: 3s
+                    max-attempts: 1
+                    max-interval: 10s
+                    multiplier: 2
+
+tmdb:
+    apikey: XXXXXXXXX
+    language: es-ES
