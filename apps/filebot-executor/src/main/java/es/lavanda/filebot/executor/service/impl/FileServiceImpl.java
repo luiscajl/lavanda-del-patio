@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 
-    @Autowired
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
-    @Autowired
-    private FilebotUtils filebotUtils;
+    private final FilebotUtils filebotUtils;
 
     @Override
     public List<String> ls(String path) {
@@ -35,7 +35,7 @@ public class FileServiceImpl implements FileService {
             Process process = new ProcessBuilder("bash", "-c", "ls \"" + path + "\"").redirectErrorStream(true)
                     .start();
             StreamGobbler streamGobbler = new StreamGobbler(process.getInputStream(), line -> {
-                // log.info("BASH commandline: {}", line);
+                log.debug("BASH commandline: {}", line);
                 lsResult.add(line);
             });
             executorService.submit(streamGobbler);
@@ -65,7 +65,7 @@ public class FileServiceImpl implements FileService {
             Process process = new ProcessBuilder("bash", "-c", "rmdir -r\"" + path + "\"").redirectErrorStream(true)
                     .start();
             StreamGobbler streamGobbler = new StreamGobbler(process.getInputStream(), line -> {
-                // log.info("BASH commandline: {}", line);
+                log.debug("BASH commandline: {}", line);
                 lsResult.add(line);
             });
             executorService.submit(streamGobbler);
@@ -118,7 +118,6 @@ public class FileServiceImpl implements FileService {
         }
     }
 
-    // Método para obtener la extensión de un archivo
     public static String getFileExtension(File file) {
         String fileName = file.getName();
         if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
