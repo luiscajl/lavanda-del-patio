@@ -39,8 +39,8 @@ tasks.withType<Test> {
 
 tasks.named<BootBuildImage>("bootBuildImage") {
     imageName.set("${dockerLibrary}/${project.name}:${version}")
-    builder.set("paketobuildpacks/builder-jammy-full:latest")
-    runImage.set("paketobuildpacks/run-jammy-full:latest")
+    builder.set("paketobuildpacks/builder-jammy-base:latest")
+    runImage.set("paketobuildpacks/run-jammy-base:latest")
     createdDate = "now"
     environment = mapOf(
             "BP_NATIVE_IMAGE" to "true",
