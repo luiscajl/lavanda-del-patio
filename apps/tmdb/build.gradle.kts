@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.0.40"
+version = "0.0.41"
 val dockerLibrary = "lavandadelpatio"
 
 
