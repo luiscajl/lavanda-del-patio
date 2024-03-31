@@ -1,0 +1,183 @@
+apiVersion: v1
+entries:
+  arr:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.104759733Z"
+    digest: 1e7eff8fe0f9e9222715319882f6520c45a868e0c0a1a678793e6bd499b4e877
+    name: arr
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/arr-1.0.9/arr-1.0.9.tgz
+    version: 1.0.9
+  automated-download-films:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.242069648Z"
+    digest: 06f0051fd0274b0572a87b8a967daa2cfb47004e1d11ada1dd5404aa8a6d48a1
+    name: automated-download-films
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/automated-download-films-0.2.7/automated-download-films-0.2.7.tgz
+    version: 0.2.7
+  automated-download-shows:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.34217508Z"
+    digest: f52f75632224a1340cee31495fa7f05339802556c7cc03d3a6c4bf0699e28362
+    name: automated-download-shows
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/automated-download-shows-0.2.4/automated-download-shows-0.2.4.tgz
+    version: 0.2.4
+  elastictranscoder:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.433544768Z"
+    description: A Helm chart for Kubernetes
+    digest: 8fe7d3bb90a8ddf8c24dfb0683680cc4e23905c8a5a92554cb96c65b27fdf96c
+    name: elastictranscoder
+    type: application
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/elastictranscoder-0.46.0/elastictranscoder-0.46.0.tgz
+    version: 0.46.0
+  filebot-bot:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.518181795Z"
+    digest: f0d8f6976971bc5431a4757a06567090374db3f0caf27abe528f0741dbe3dc87
+    name: filebot-bot
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/filebot-bot-0.0.11/filebot-bot-0.0.11.tgz
+    version: 0.0.11
+  filebot-executor:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.612266495Z"
+    digest: fb145037d3ea7e1bae511388c4bf01b014a8e55e89a1262ea153a9d1fe1cfcac
+    name: filebot-executor
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/filebot-executor-1.0.13/filebot-executor-1.0.13.tgz
+    version: 1.0.13
+  filebot-reports:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.702421886Z"
+    digest: 66f0ef9dc13034437a856235f62eb4f5d3e9e81dbead8aad69901789855a67f2
+    name: filebot-reports
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/filebot-reports-0.2.5/filebot-reports-0.2.5.tgz
+    version: 0.2.5
+  filebrowser:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.783985945Z"
+    digest: 23d491e02faf5fe624a114e6fb8c8df62483e7819fc5b54e6e4265542cd2cbad
+    name: filebrowser
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/filebrowser-0.0.1/filebrowser-0.0.1.tgz
+    version: 0.0.1
+  flaresolverr:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.866247868Z"
+    description: A Helm chart for Kubernetes
+    digest: 367b11f363e5015325afa65f71af732ed9a17d10b9feb3c7e20200ae06aa895c
+    name: flaresolverr
+    type: application
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/flaresolverr-0.0.3/flaresolverr-0.0.3.tgz
+    version: 0.0.3
+  frontend:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:29.95369473Z"
+    digest: 759823856fb0dd976b2c033371809cadd9e88f36051f3dc011d404cf0db0e049
+    name: frontend
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/frontend-0.1.7/frontend-0.1.7.tgz
+    version: 0.1.7
+  jackett:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.054707427Z"
+    digest: c4037b7de4b5edc3d31de3ee30b481ce20d484d94acd84544e0d49c2c47ebd60
+    name: jackett
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/jackett-0.1.4/jackett-0.1.4.tgz
+    version: 0.1.4
+  plex:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.151521557Z"
+    digest: d7087e4850894d8d462e1091bdca07b037111e813549b7d35b9187e8b32149c9
+    name: plex
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/plex-1.0.1/plex-1.0.1.tgz
+    version: 1.0.1
+  plex-rclone-wireguard:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.290734115Z"
+    digest: 1fc80259a7f1c1108f00696fd10ec8c64d4c6990146ab9d81f3756ac023a603f
+    name: plex-rclone-wireguard
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/plex-rclone-wireguard-1.0.19/plex-rclone-wireguard-1.0.19.tgz
+    version: 1.0.19
+  qbittorrentvpn:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.377560895Z"
+    digest: b12d05b2108a0aaf298aaa9112e29025a3665772dff501a7788d42daaf1f9458
+    name: qbittorrentvpn
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/qbittorrentvpn-2.0.25/qbittorrentvpn-2.0.25.tgz
+    version: 2.0.25
+  rclone:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.465231121Z"
+    digest: 85ba2e1f44e9a5ae9a111b62f4522a2ae6e64f00d64806ea8095817ba4966002
+    name: rclone
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/rclone-2.0.2/rclone-2.0.2.tgz
+    version: 2.0.2
+  rclone-cache:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.563158488Z"
+    digest: 3dbd25f227a7a648f883da830d979d4ff979598b50847595ab551f72fb48fdf4
+    name: rclone-cache
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/rclone-cache-1.0.5/rclone-cache-1.0.5.tgz
+    version: 1.0.5
+  tautulli:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.662828169Z"
+    digest: 32e69c221fd7a8c4b150d3cfd7b7236f0572b6cc230cc8d7fb7372b8e45c5678
+    name: tautulli
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/tautulli-0.0.15/tautulli-0.0.15.tgz
+    version: 0.0.15
+  tdarr:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.747040861Z"
+    digest: fd2ef7c9bb0f7d9bcb8b69e5560fa3e83dee54694751842a2e077b2212c0098a
+    name: tdarr
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/tdarr-0.0.7/tdarr-0.0.7.tgz
+    version: 0.0.7
+  tmdb:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.83695116Z"
+    digest: fd15fb47dc8897bcf719a4697d97e9242ff66671e77909d51b869ae5fa5963df
+    name: tmdb
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/tmdb-0.2.4/tmdb-0.2.4.tgz
+    version: 0.2.4
+  torznab-atomohd:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:30.922577201Z"
+    digest: 51dae308a003a29c87a8e3b4ee848bab70cf888aa584aad1284efcc839acc4e7
+    name: torznab-atomohd
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/torznab-atomohd-0.0.3/torznab-atomohd-0.0.3.tgz
+    version: 0.0.3
+  transmission:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:31.011360738Z"
+    digest: 924d46d60c194f35bafa0282f73967eb2d739a7f1f8dbc0ded256ab819a9a9b2
+    name: transmission
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/transmission-0.1.17/transmission-0.1.17.tgz
+    version: 0.1.17
+  xteve:
+  - apiVersion: v2
+    created: "2024-03-31T07:16:31.113263368Z"
+    digest: f93dfb42c5f2afa6ec493b125698daffcd60dd9f28b3df87b4e84f96872b91ea
+    name: xteve
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
+    version: 0.1.6
+generated: "2024-03-31T07:16:31.113288776Z"
