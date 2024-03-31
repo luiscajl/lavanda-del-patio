@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "plex-rclone-wireguard.fullname" . }}-test-connection"
+  labels:
+    {{- include "plex-rclone-wireguard.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "plex-rclone-wireguard.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

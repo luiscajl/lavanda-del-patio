@@ -1,0 +1,52 @@
+replicaCount: 1
+
+config:
+  dataPath: /mnt/rclone-writer
+  typeOfRclone: gdrive-writer
+  command: |-
+      [
+       "mount",
+       "gdrive-writer:","/data",
+       "--config=/config/rclone/rclone.conf",
+       "--log-level=INFO",
+       "--allow-other",
+       "--allow-non-empty",
+       "--umask","002",
+       "--dir-cache-time","100h", 
+       "--poll-interval","15s", 
+       "--cache-dir=/cache", 
+       "--vfs-cache-mode","writes", 
+       "--drive-stop-on-upload-limit"
+       ]
+nodeSelector: {}
+image:
+  repository: rclone/rclone
+  pullPolicy: Always
+  tag: "latest"
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+podAnnotations: {}
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+securityContext:
+  privileged: true
+  capabilities:
+    add:
+      - SYS_ADMIN
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2048Mi
+  requests:
+    cpu: 400m
+    memory: 512Mi
+
+tolerations: []
+affinity: {}

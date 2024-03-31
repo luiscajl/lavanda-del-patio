@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "transmission.fullname" . }}
+  labels:
+    {{- include "transmission.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "transmission.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "transmission.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "transmission.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 9091
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /downloads
+              name: transmission-downloads-volume
+            - mountPath: /config
+              name: transmission-config-volume
+          # livenessProbe:
+          #   httpGet:
+          #     path: /transmission/web/
+          #     port: 9091
+          #     httpHeaders:
+          #       - name: Authorization
+          #         value: Basic {{ (printf "%s:%s" .Values.transmission.user .Values.transmission.password | b64enc) }}
+          #     scheme: HTTP
+          #   initialDelaySeconds: 12
+          #   periodSeconds: 60
+          #   successThreshold: 1
+          #   failureThreshold: 5
+          #   timeoutSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /transmission/web/
+          #     port: 9091
+          #     httpHeaders:
+          #       - name: Authorization
+          #         value: Basic {{ (printf "%s:%s" .Values.transmission.user .Values.transmission.password | b64enc) }}
+          #     scheme: HTTP
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 10
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   failureThreshold: 5
+          env:
+            - name: PUID
+              value: "0"
+            - name: PGID
+              value: "0"
+            - name: TZ
+              value: "Europe/Madrid"
+            - name: USER
+              value: {{  required "A valid .Values.transmission.user entry required!"  .Values.transmission.user }}
+            - name: PASS
+              value: {{  required "A valid .Values.transmission.password entry required!"  .Values.transmission.password }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        # - name: transmission-downloads-volume
+        #   persistentVolumeClaim:
+        #     claimName: transmission-downloads
+        - name: transmission-downloads-volume
+          nfs: 
+            server: {{ .Values.nfs.server}} 
+            path: {{ .Values.nfs.paths.media }} 
+        - name: transmission-config-volume    
+          persistentVolumeClaim:
+            claimName: transmission-config
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

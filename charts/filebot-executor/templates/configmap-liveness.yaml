@@ -1,0 +1,18 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: filebot-executor-health 
+data:
+  liveness.sh: |
+    #!/bin/bash
+    DIR1=/media
+    numFiles1=`ls $DIR1 | wc -l`
+    numFiles2=`ls $DIR1 | wc -l`
+    # echo $numFiles
+    if [[ "$(curl -sL -w '%{http_code}' http://localhost:8080/actuator/health/liveness -o /dev/null)" = "200"  ]];
+    then
+      echo 0
+    else
+      echo "Liveness failed!" 1>&2
+      exit 1
+    fi    

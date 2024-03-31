@@ -1,0 +1,9 @@
+name: Libs:LibCommon:Release
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+    paths:
+      - "libs/lib-common/**"
+  workflow_dispatch:

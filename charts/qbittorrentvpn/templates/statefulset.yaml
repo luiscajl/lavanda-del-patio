@@ -1,0 +1,180 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "qbittorrentvpn.fullname" . }}
+  labels:
+    {{- include "qbittorrentvpn.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  serviceName: {{ include "qbittorrentvpn.fullname" . }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "qbittorrentvpn.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "qbittorrentvpn.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "qbittorrentvpn.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: data
+          hostPath:
+            path: {{ .Values.paths.data }}
+            type: Directory
+        - name: downloads
+          hostPath:
+            path: {{ .Values.paths.downloads }}
+            type: Directory            
+        - name: etc-localtime
+          hostPath:
+            path: /etc/localtime
+        - name: scripts
+          configMap:
+            name: qbittorrent-scripts     
+        - name: health-data
+          configMap:
+            name: qbittorrent-health  
+            items:
+              - key: liveness.sh
+                path: liveness.sh
+        - name: wireguard-data-airvpn
+          configMap:
+            name: wireguard-config-airvpn  
+            items:
+              - key: wg0.conf
+                path: wg0.conf                
+        - name: health
+          emptyDir: {}                                                         
+      initContainers:           
+        - name: qbittorrent-scripts-config
+          image: "busybox"
+          command:
+            - cp
+          args:
+            - -v
+            - /in/liveness.sh
+            - /out/liveness.sh
+          volumeMounts:
+          - name: health-data
+            mountPath: /in
+          - name: health
+            mountPath: /out  
+        - name: create-wireguard-config
+          image: "busybox"
+          command:
+            - mkdir
+          args:
+            - -p
+            - /out/wireguard
+          volumeMounts:
+          - name: {{ include "qbittorrentvpn.fullname" . }}-config-volume
+            mountPath: /out                  
+        - name: import-wireguard-config-for-qbittorrent
+          image: "busybox"
+          command:
+            - cp
+          args:
+            - -v
+            - /in/wg0.conf
+            - /out/wireguard/wg0.conf
+          volumeMounts:
+          - name: wireguard-data-airvpn
+            mountPath: /in
+          - name: {{ include "qbittorrentvpn.fullname" . }}-config-volume
+            mountPath: /out                
+        - name: permission-fix-for-health
+          image: busybox
+          command: ['sh', '-c']
+          args: ['chmod -R 777 /out']
+          volumeMounts:
+          - name: health
+            mountPath: /out                                                                                                    
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+           {{- range .Values.environmentVariables }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+            {{- end }} 
+          volumeMounts:
+            - mountPath: /config
+              name: {{ include "qbittorrentvpn.fullname" . }}-config-volume  
+            - mountPath: /scripts
+              name: scripts                 
+            - mountPath: /data
+              name: data
+              mountPropagation: Bidirectional
+            - mountPath: /downloads
+              name: downloads         
+              mountPropagation: Bidirectional     
+            - mountPath: /etc/localtime
+              name: etc-localtime   
+            - mountPath: /health
+              name: health                  
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - bin/bash
+          #       - -c
+          #       - /health/liveness.sh
+          #   initialDelaySeconds: 30
+          #   timeoutSeconds: 20
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 3                 
+          # readinessProbe:
+          #   exec:
+          #     command:
+          #       - bin/bash
+          #       - -c
+          #       - /health/liveness.sh
+          #   initialDelaySeconds: 30
+          #   timeoutSeconds: 20
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 3                        
+          ports:
+            - name: privoxy
+              containerPort: 8181
+              protocol: TCP
+            - name: bittorrent-ui
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP     
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "qbittorrentvpn.fullname" . }}-config-volume  
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi

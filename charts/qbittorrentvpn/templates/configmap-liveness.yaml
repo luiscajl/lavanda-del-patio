@@ -1,0 +1,19 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: qbittorrent-health 
+data:
+  liveness.sh: |
+    #!/bin/bash
+    DIR=/data
+    numFiles=`ls $DIR | wc -l`
+    echo "Numero de ficheros encontrados en la carpeta" $numFiles
+    if [[ "$(curl -sL -w '%{http_code}' http://localhost:8081 -o /dev/null)" = "200"  ]];
+    #if [[ $numFiles -gt 1 ]];
+    then
+      echo "Liveness OK!"
+      echo 0
+    else
+      echo "Liveness failed!" 1>&2
+      exit 1
+    fi

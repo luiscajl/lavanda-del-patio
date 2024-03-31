@@ -1,0 +1,69 @@
+name: Apps:Frontend:Build:Push
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+    paths:
+      - 'apps/frontend/**'
+  workflow_dispatch:
+env:
+  IMAGE: lavandadelpatio/frontend
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Install angular cli
+        run: |
+          npm install -g @angular/cli
+      - name: Npm install
+        run: |
+          npm install
+      - name: Npm build production
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          ng build --configuration=production
+      - name: Npm build preproduction
+        if: ${{ github.ref == 'refs/heads/develop' }}
+        run: |
+          ng build --configuration=preproduction
+      - name: Generate build ID
+        id: prep
+        run: |
+          branch=${GITHUB_REF##*/}
+          sha=${GITHUB_SHA::8}
+          ts=$(date +%s)
+          echo "::set-output name=BUILD_ID::${branch}-${sha}-${ts}"
+      - name: Build and publish container image with tag
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          file: Dockerfile
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
+      - name: Send telegram message
+        if: always()
+        uses: xinthink/action-telegram@v1
+        with:
+          botToken: ${{ secrets.TELEGRAM_TOKEN }}
+          chatId: ${{ secrets.TELEGRAM_TO }}
+          jobStatus: ${{ job.status }}
+          skipSuccess: true

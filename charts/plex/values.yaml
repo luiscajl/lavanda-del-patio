@@ -1,0 +1,90 @@
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/linuxserver/plex
+  pullPolicy: Always
+  tag: "latest"
+
+environmentVariables:
+  - name: PUID
+    value: "1000"
+  - name: PGID
+    value: "1000"
+  - name: VERSION
+    value: "docker"
+volumes:
+  config: 
+    enabled: true 
+    storageClass: 
+    size: 70Gi
+  data:   
+    enabled: true 
+    path: /mnt/rclone-reader  
+    server: 10.0.0.2
+
+nodeSelector: {}
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 32400
+  annotations: {}
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+      - path: /
+        backend:
+          serviceName: chart-example.local
+          servicePort: 80
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: 
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 6000m
+  #   memory: 4096Mi
+  # requests:
+  #   cpu: 2000m
+  #   memory: 2048Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+tolerations: []
+
+affinity: {}

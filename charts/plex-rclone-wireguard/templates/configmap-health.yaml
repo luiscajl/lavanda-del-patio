@@ -1,0 +1,62 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: plex-rclone-wireguard-health 
+data:
+  health-script.sh: |
+    #!/bin/bash
+
+    # Punto de comprobación de preparación (readiness)
+    readiness() {
+      # Realizar una llamada GET al puerto 32400
+      response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:32400/identity)
+    
+      # Verificar si la respuesta es 200 (éxito)
+      if [[ $response == "200" ]]; then
+        echo "Plex: OK-IDENTITY"
+        # Verificar si el número de archivos en la carpeta es mayor que 1
+        # file_count=$(ls /media  | wc -l)
+        # if [[ $file_count -gt 1 ]]; then
+        #   echo "Plex: OK-RCLONE"
+        #   exit 0  # Éxito
+        # fi
+        exit 0  # Éxito
+      fi
+    
+      exit 1  # Fallo
+    }
+    
+    # Punto de comprobación de disponibilidad (liveness)
+    liveness() {
+      # Realizar una llamada GET al puerto 32400
+      response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:32400/identity)
+    
+      # Verificar si la respuesta es 200 (éxito)
+      if [[ $response == "200" ]]; then
+        echo "Plex: OK-IDENTITY"
+        # Verificar si el número de archivos en la carpeta es mayor que 1
+        # file_count=$(ls /media  | wc -l)
+        # if [[ $file_count -gt 1 ]]; then
+        #   echo "Plex: OK-RCLONE"
+        #   exit 0  # Éxito
+        # fi    
+        exit 0  # Éxito
+      fi
+  
+      exit 1  # Fallo
+    }
+        
+    # Ejecutar el script según el argumento proporcionado
+    case $1 in
+      readiness)
+        readiness
+        ;;
+      liveness)
+        liveness
+        ;;     
+      *)
+        echo "Comando no válido. Use 'readiness','liveness'."
+        exit 1
+        ;;
+    esac
+      

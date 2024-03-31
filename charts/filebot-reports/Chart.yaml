@@ -1,0 +1,3 @@
+apiVersion: v2
+name: filebot-reports
+version: 0.2.5

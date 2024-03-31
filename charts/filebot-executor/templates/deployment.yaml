@@ -1,0 +1,175 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "filebot-executor.fullname" . }}
+  labels:
+    {{- include "filebot-executor.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "filebot-executor.selectorLabels" . | nindent 6 }}
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1    
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "filebot-executor.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "filebot-executor.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+             
+      initContainers:           
+        - name: filebot-executor-scripts-config
+          image: "busybox"
+          command:
+            - cp
+          args:
+            - -v
+            - /in/liveness.sh
+            - /out/liveness.sh
+          volumeMounts:
+          - name: config-data
+            mountPath: /in
+          - name: config
+            mountPath: /out     
+        - name: permission-fix
+          image: busybox
+          command: ['sh', '-c']
+          args: ['chmod -R 777 /out']
+          volumeMounts:
+          - name: config
+            mountPath: /out                           
+      containers:     
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.spring.profile}}
+            - name: SPRING_DATA_MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-uri
+                  key: secret
+            - name: SPRING_RABBITMQ_USERNAME
+              value: user
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq
+                  key: rabbitmq-password    
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq    
+            - name: FILEBOT_PATH_INPUT
+              value: {{ .Values.filebot.pathInput | quote }}
+            - name: FILEBOT_PATH_OUTPUT
+              value: {{ .Values.filebot.pathOutput | quote}}
+            - name: FILEBOT_PATH_DATA
+              value: {{ .Values.filebot.pathData | quote }} 
+            - name: FILEBOT_TEST_ENABLED
+              value: {{ .Values.filebot.testEnabled | quote }}     
+            - name: QBITTORRENT_URL
+              value: {{ .Values.qbittorrent.url | quote }}       
+            - name: SPRING_AMQP_DESERIALIZATION_TRUST_ALL
+              value: "true"  
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 5              
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - bin/bash
+          #       - -c
+          #       - /health/liveness.sh
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   failureThreshold: 2                 
+          # readinessProbe:
+          #   exec:
+          #     command:
+          #       - bin/bash
+          #       - -c
+          #       - /health/liveness.sh
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   failureThreshold: 2  
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /home/apps
+              name: filebot-config  
+            - mountPath: /media
+              mountPropagation: Bidirectional
+              name: data  
+            - mountPath: /health
+              name: config   
+      volumes:
+        - name: data
+          hostPath:
+            path: {{ .Values.data.path }}
+            type: Directory          
+        - name: filebot-config
+          persistentVolumeClaim:
+            claimName: filebot-config-rwm    
+        - name: config-data
+          configMap:
+            name: filebot-executor-health   
+            items:
+              - key: liveness.sh
+                path: liveness.sh
+        - name: config
+          emptyDir: {}                                 
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "rclone.fullname" . }}
+  labels:
+    {{- include "rclone.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "rclone.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rclone.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "rclone.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: rclone-data
+          hostPath:
+            path: {{ .Values.config.dataPath }}       
+        - name: config-data
+          configMap:
+            name: rclone-config-data
+            items:
+              - key: rclone.conf
+                path: rclone.conf
+        - name: config
+          emptyDir: {}        
+      initContainers:
+        - name: umount-previous-mount
+          image: rclone/rclone
+          command: ["/bin/fusermount", "-u" ,"/data"]   
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          volumeMounts:
+            - mountPath: /data
+              mountPropagation: Bidirectional
+              name: rclone-data                  
+        - name: {{ .Chart.Name }}-config
+          image: "busybox"
+          command:
+            - cp
+          args:
+            - -v
+            - /in/rclone.conf
+            - /out/rclone.conf
+          volumeMounts:
+          - name: config-data
+            mountPath: /in
+          - name: config
+            mountPath: /out    
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: {{ .Values.config.command }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/fusermount", "-u" ,"/data" ]
+          livenessProbe:
+            exec:
+              command:
+                - "rclone" 
+                - "lsd" 
+                - "{{ .Values.config.typeOfRclone}}:"
+          readinessProbe:
+            exec:
+              command:
+                - "rclone" 
+                - "lsd" 
+                - "{{ .Values.config.typeOfRclone}}:"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /data
+              mountPropagation: Bidirectional
+              name: rclone-data
+            # - mountPath: /cache
+            #   mountPropagation: Bidirectional
+            #   name: rclone-cache 
+            - mountPath: /config/rclone
+              name: config              
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}             
