@@ -1,5 +1,6 @@
 package es.lavanda.tmdb.config;
 
+import es.lavanda.lib.common.model.TelegramFilebotExecutionODTO;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -39,6 +40,8 @@ public class RabbitMQConfig {
         Map<String, Class<?>> idClassMapping = new HashMap<>();
         idClassMapping.put("es.lavanda.lib.common.model.TelegramFilebotExecutionIDTO",
                 TelegramFilebotExecutionIDTO.class);
+        idClassMapping.put("es.lavanda.lib.common.model.TelegramFilebotExecutionODTO",
+                TelegramFilebotExecutionODTO.class);
         classMapper.setIdClassMapping(idClassMapping);
         return classMapper;
     }
