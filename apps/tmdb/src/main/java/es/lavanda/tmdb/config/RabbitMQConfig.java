@@ -34,32 +34,32 @@ public class RabbitMQConfig {
 
     public static final String EXCHANGE_MESSAGES = "lavandadelpatio-exchange";
 
-    @Bean
-    public DefaultClassMapper classMapper() {
-        DefaultClassMapper classMapper = new DefaultClassMapper();
-        Map<String, Class<?>> idClassMapping = new HashMap<>();
-        idClassMapping.put("es.lavanda.lib.common.model.TelegramFilebotExecutionIDTO",
-                TelegramFilebotExecutionIDTO.class);
-        idClassMapping.put("es.lavanda.lib.common.model.TelegramFilebotExecutionODTO",
-                TelegramFilebotExecutionODTO.class);
-        classMapper.setIdClassMapping(idClassMapping);
-        return classMapper;
-    }
+//    @Bean
+//    public DefaultClassMapper classMapper() {
+//        DefaultClassMapper classMapper = new DefaultClassMapper();
+//        Map<String, Class<?>> idClassMapping = new HashMap<>();
+//        idClassMapping.put("es.lavanda.lib.common.model.TelegramFilebotExecutionIDTO",
+//                TelegramFilebotExecutionIDTO.class);
+//        idClassMapping.put("es.lavanda.lib.common.model.TelegramFilebotExecutionODTO",
+//                TelegramFilebotExecutionODTO.class);
+//        classMapper.setIdClassMapping(idClassMapping);
+//        return classMapper;
+//    }
 
-    @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter() {
-        Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
-        jsonConverter.setClassMapper(classMapper());
-        return jsonConverter;
-    }
+//    @Bean
+//    public Jackson2JsonMessageConverter jsonMessageConverter() {
+//        Jackson2JsonMessageConverter jsonConverter = new Jackson2JsonMessageConverter();
+//        jsonConverter.setClassMapper(classMapper());
+//        return jsonConverter;
+//    }
 
-    @Bean("rabbitTemplateOverrided")
-    @Primary
-    public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
-        final var rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
-        return rabbitTemplate;
-    }
+//    @Bean("rabbitTemplateOverrided")
+//    @Primary
+//    public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
+//        final var rabbitTemplate = new RabbitTemplate(connectionFactory);
+//        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+//        return rabbitTemplate;
+//    }
 
     @Bean
     DirectExchange messagesExchange() {
