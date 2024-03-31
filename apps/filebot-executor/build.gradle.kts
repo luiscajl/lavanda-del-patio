@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.0.128"
+version = "0.0.130"
 val dockerLibrary = "lavandadelpatio"
 
 
@@ -40,7 +40,7 @@ tasks.withType<Test> {
 tasks.named<BootBuildImage>("bootBuildImage") {
     imageName.set("${dockerLibrary}/${project.name}:${version}")
     builder.set("paketobuildpacks/builder-jammy-base:latest")
-    runImage.set("paketobuildpacks/run-jammy-base:latest")
+    runImage.set("luiscajl/run-jammy-base-with-filebot:latest")
     createdDate = "now"
     environment = mapOf(
             "BP_NATIVE_IMAGE" to "true",
