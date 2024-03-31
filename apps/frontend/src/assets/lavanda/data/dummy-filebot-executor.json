@@ -1,0 +1,434 @@
+{
+  "content": [
+      {
+          "id": "64b0616df34039149bd74b94",
+          "files": [],
+          "path": "/media/Torrenting/Nancy Drew 2019 S04E07 1080p x265-ELiTE",
+          "newPath": null,
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Nancy Drew 2019 S04E07 1080p x265-ELiTE\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "FILES_NOT_FOUND",
+          "log": null,
+          "createdAt": "2023-07-13T20:41:17.587+00:00",
+          "lastModifiedAt": "2023-07-13T21:00:18.283+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64b0592af34039149bd74b93",
+          "files": [],
+          "path": "/media/Torrenting/Nancy Drew 2019 S04E07 720p x265-T0PAZ",
+          "newPath": null,
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Nancy Drew 2019 S04E07 720p x265-T0PAZ\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "FILES_NOT_FOUND",
+          "log": null,
+          "createdAt": "2023-07-13T20:06:02.651+00:00",
+          "lastModifiedAt": "2023-07-13T21:00:09.537+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64b0273ef34039149bd74b92",
+          "files": [],
+          "path": "/media/Torrenting/Outlander S07E04 MULTI 1080p WEB x264-HiggsBoson",
+          "newPath": null,
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Outlander S07E04 MULTI 1080p WEB x264-HiggsBoson\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "FILES_NOT_FOUND",
+          "log": null,
+          "createdAt": "2023-07-13T16:33:02.267+00:00",
+          "lastModifiedAt": "2023-07-13T16:51:18.177+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afe9fcf34039149bd74b91",
+          "files": [
+              {
+                  "file": "from.s02e06.2160p.web.h265-ggwp.mkv",
+                  "newFile": "From s02e06_[eng]_2160p_14 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E06.2160p.WEB.H265-GGWP[rarbg]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E06.2160p.WEB.H265-GGWP[rarbg]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:50:45 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E06.2160p.WEB.H265-GGWP[rarbg]\nInput: /media/Torrenting/From.S02E06.2160p.WEB.H265-GGWP[rarbg]/from.s02e06.2160p.web.h265-ggwp.mkv\nGroup: {Series=From} => [from.s02e06.2160p.web.h265-ggwp.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [from]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E06.2160p.WEB.H265-GGWP[rarbg]/from.s02e06.2160p.web.h265-ggwp.mkv] to [/media/Series-EN/From/Season 2/From s02e06_[eng]_2160p_14 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_51]_from_s02e06_2160p_web_h265-ggwp.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T12:11:40.198+00:00",
+          "lastModifiedAt": "2023-07-13T16:51:11.678+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afe515f34039149bd74b8f",
+          "files": [
+              {
+                  "file": "silo.s01e05.hdr.2160p.web.h265-cakes.mkv",
+                  "newFile": "Silo s01e05_[eng]_2160p_25 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/Silo.S01E05.HDR.2160p.WEB.H265-CAKES[rarbg]",
+          "newPath": "Season 1",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Silo.S01E05.HDR.2160p.WEB.H265-CAKES[rarbg]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PENDING",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:48:50 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/Silo.S01E05.HDR.2160p.WEB.H265-CAKES[rarbg]\nInput: /media/Torrenting/Silo.S01E05.HDR.2160p.WEB.H265-CAKES[rarbg]/silo.s01e05.hdr.2160p.web.h265-cakes.mkv\nGroup: {Series=Silo} => [silo.s01e05.hdr.2160p.web.h265-cakes.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [Silo] [silo]\nFetching episode data for [Silo]\n└─ 10 episodes\n[MOVE] from [/media/Torrenting/Silo.S01E05.HDR.2160p.WEB.H265-CAKES[rarbg]/silo.s01e05.hdr.2160p.web.h265-cakes.mkv] to [/media/Series-EN/Silo/Season 1/Silo s01e05_[eng]_2160p_25 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_50]_silo_s01e05_hdr_2160p_web_h265-cakes.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T11:50:45.031+00:00",
+          "lastModifiedAt": "2023-07-13T16:50:43.553+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afe4f2f34039149bd74b8e",
+          "files": [
+              {
+                  "file": "silo.s01e09.hdr.2160p.web.h265-nhtfs.mkv",
+                  "newFile": "Silo s01e09_[eng]_2160p_25 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/Silo.S01E09.HDR.2160p.WEB.H265-NHTFS[TGx]",
+          "newPath": "Season 1",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Silo.S01E09.HDR.2160p.WEB.H265-NHTFS[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "ON_FILEBOT_EXECUTION",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:46:39 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/Silo.S01E09.HDR.2160p.WEB.H265-NHTFS[TGx]\nIgnore extra: /media/Torrenting/Silo.S01E09.HDR.2160p.WEB.H265-NHTFS[TGx]/Sample\nInput: /media/Torrenting/Silo.S01E09.HDR.2160p.WEB.H265-NHTFS[TGx]/silo.s01e09.hdr.2160p.web.h265-nhtfs.mkv\nGroup: {Series=Silo} => [silo.s01e09.hdr.2160p.web.h265-nhtfs.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [Silo] [silo]\nFetching episode data for [Silo]\n└─ 10 episodes\n[MOVE] from [/media/Torrenting/Silo.S01E09.HDR.2160p.WEB.H265-NHTFS[TGx]/silo.s01e09.hdr.2160p.web.h265-nhtfs.mkv] to [/media/Series-EN/Silo/Season 1/Silo s01e09_[eng]_2160p_25 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_48]_silo_s01e09_hdr_2160p_web_h265-nhtfs.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T11:50:10.456+00:00",
+          "lastModifiedAt": "2023-07-13T16:48:47.071+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afe394f34039149bd74b8d",
+          "files": [
+              {
+                  "file": "silo.s01e08.hdr.2160p.web.h265-dirt.mkv",
+                  "newFile": "Silo s01e08_[eng]_2160p_25 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/Silo.S01E08.HDR.2160p.WEB.H265-DiRT[TGx]",
+          "newPath": "Season 1",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Silo.S01E08.HDR.2160p.WEB.H265-DiRT[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "ERROR",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:44:27 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/Silo.S01E08.HDR.2160p.WEB.H265-DiRT[TGx]\nInput: /media/Torrenting/Silo.S01E08.HDR.2160p.WEB.H265-DiRT[TGx]/silo.s01e08.hdr.2160p.web.h265-dirt.mkv\nGroup: {Series=Silo} => [silo.s01e08.hdr.2160p.web.h265-dirt.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [Silo] [silo]\nFetching episode data for [Silo]\n└─ 10 episodes\n[MOVE] from [/media/Torrenting/Silo.S01E08.HDR.2160p.WEB.H265-DiRT[TGx]/silo.s01e08.hdr.2160p.web.h265-dirt.mkv] to [/media/Series-EN/Silo/Season 1/Silo s01e08_[eng]_2160p_25 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_46]_silo_s01e08_hdr_2160p_web_h265-dirt.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T11:44:20.661+00:00",
+          "lastModifiedAt": "2023-07-13T16:46:36.566+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afe360f34039149bd74b8c",
+          "files": [
+              {
+                  "file": "silo.s01e04.hdr.2160p.web.h265-cakes.mkv",
+                  "newFile": "Silo s01e04_[eng]_2160p_25 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/Silo.S01E04.HDR.2160p.WEB.H265-CAKES[rarbg]",
+          "newPath": "Season 1",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Silo.S01E04.HDR.2160p.WEB.H265-CAKES[rarbg]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "ON_TELEGRAM",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:42:04 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/Silo.S01E04.HDR.2160p.WEB.H265-CAKES[rarbg]\nInput: /media/Torrenting/Silo.S01E04.HDR.2160p.WEB.H265-CAKES[rarbg]/silo.s01e04.hdr.2160p.web.h265-cakes.mkv\nGroup: {Series=Silo} => [silo.s01e04.hdr.2160p.web.h265-cakes.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [Silo] [silo]\nFetching episode data for [Silo]\n└─ 10 episodes\n[MOVE] from [/media/Torrenting/Silo.S01E04.HDR.2160p.WEB.H265-CAKES[rarbg]/silo.s01e04.hdr.2160p.web.h265-cakes.mkv] to [/media/Series-EN/Silo/Season 1/Silo s01e04_[eng]_2160p_25 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_44]_silo_s01e04_hdr_2160p_web_h265-cakes.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T11:43:28.276+00:00",
+          "lastModifiedAt": "2023-07-13T16:44:24.440+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afd9d7f34039149bd74b8a",
+          "files": [
+              {
+                  "file": "from.s02e05.2160p.web.h265-ggez.mkv",
+                  "newFile": "From s02e05_[eng]_2160p_14 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E05.2160p.WEB.H265-GGEZ[rarbg]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E05.2160p.WEB.H265-GGEZ[rarbg]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "UNPROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:41:39 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E05.2160p.WEB.H265-GGEZ[rarbg]\nInput: /media/Torrenting/From.S02E05.2160p.WEB.H265-GGEZ[rarbg]/from.s02e05.2160p.web.h265-ggez.mkv\nGroup: {Series=From} => [from.s02e05.2160p.web.h265-ggez.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [from]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E05.2160p.WEB.H265-GGEZ[rarbg]/from.s02e05.2160p.web.h265-ggez.mkv] to [/media/Series-EN/From/Season 2/From s02e05_[eng]_2160p_14 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_42]_from_s02e05_2160p_web_h265-ggez.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T11:02:47.588+00:00",
+          "lastModifiedAt": "2023-07-13T16:42:01.187+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afd773f34039149bd74b89",
+          "files": [
+              {
+                  "file": "from.s02e02.2160p.web.h265-ggwp.mkv",
+                  "newFile": "From s02e02_[eng]_2160p_14 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E02.2160p.WEB.H265-GGWP[rarbg]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E02.2160p.WEB.H265-GGWP[rarbg]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "FILES_EXISTED_IN_DESTINATION",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:41:12 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E02.2160p.WEB.H265-GGWP[rarbg]\nIgnore extra: /media/Torrenting/From.S02E02.2160p.WEB.H265-GGWP[rarbg]/Sample\nInput: /media/Torrenting/From.S02E02.2160p.WEB.H265-GGWP[rarbg]/from.s02e02.2160p.web.h265-ggwp.mkv\nGroup: {Series=From} => [from.s02e02.2160p.web.h265-ggwp.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [from]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E02.2160p.WEB.H265-GGWP[rarbg]/from.s02e02.2160p.web.h265-ggwp.mkv] to [/media/Series-EN/From/Season 2/From s02e02_[eng]_2160p_14 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_41]_from_s02e02_2160p_web_h265-ggwp.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T10:52:35.596+00:00",
+          "lastModifiedAt": "2023-07-13T16:41:36.318+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afd722f34039149bd74b88",
+          "files": [
+              {
+                  "file": "from.s02e03.2160p.web.h265-ggwp.mkv",
+                  "newFile": "From s02e03_[eng]_2160p_15 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E03.2160p.WEB.H265-GGWP[rarbg]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E03.2160p.WEB.H265-GGWP[rarbg]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:40:45 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E03.2160p.WEB.H265-GGWP[rarbg]\nInput: /media/Torrenting/From.S02E03.2160p.WEB.H265-GGWP[rarbg]/from.s02e03.2160p.web.h265-ggwp.mkv\nGroup: {Series=From} => [from.s02e03.2160p.web.h265-ggwp.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [from]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E03.2160p.WEB.H265-GGWP[rarbg]/from.s02e03.2160p.web.h265-ggwp.mkv] to [/media/Series-EN/From/Season 2/From s02e03_[eng]_2160p_15 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_41]_from_s02e03_2160p_web_h265-ggwp.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T10:51:14.748+00:00",
+          "lastModifiedAt": "2023-07-13T16:41:08.488+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afd6d7f34039149bd74b87",
+          "files": [
+              {
+                  "file": "From.S02E10.2160p.WEB.h265-EDITH.mkv",
+                  "newFile": "From s02e10_[eng]_2160p_14 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E10.2160p.WEB.h265-EDITH[TGx]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E10.2160p.WEB.h265-EDITH[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:40:17 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E10.2160p.WEB.h265-EDITH[TGx]\nIgnore extra: /media/Torrenting/From.S02E10.2160p.WEB.h265-EDITH[TGx]/Sample\nInput: /media/Torrenting/From.S02E10.2160p.WEB.h265-EDITH[TGx]/From.S02E10.2160p.WEB.h265-EDITH.mkv\nGroup: {Series=From} => [From.S02E10.2160p.WEB.h265-EDITH.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [From]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E10.2160p.WEB.h265-EDITH[TGx]/From.S02E10.2160p.WEB.h265-EDITH.mkv] to [/media/Series-EN/From/Season 2/From s02e10_[eng]_2160p_14 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_40]_From_S02E10_2160p_WEB_h265-EDITH.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T10:49:59.707+00:00",
+          "lastModifiedAt": "2023-07-13T16:40:39.056+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afd55ff34039149bd74b86",
+          "files": [
+              {
+                  "file": "from.s02e01.2160p.web.h265-ggez.mkv",
+                  "newFile": "From s02e01_[eng]_2160p_14 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E01.2160p.WEB.H265-GGEZ[rarbg]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E01.2160p.WEB.H265-GGEZ[rarbg]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:39:44 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E01.2160p.WEB.H265-GGEZ[rarbg]\nIgnore extra: /media/Torrenting/From.S02E01.2160p.WEB.H265-GGEZ[rarbg]/Sample\nInput: /media/Torrenting/From.S02E01.2160p.WEB.H265-GGEZ[rarbg]/from.s02e01.2160p.web.h265-ggez.mkv\nGroup: {Series=From} => [from.s02e01.2160p.web.h265-ggez.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [from]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E01.2160p.WEB.H265-GGEZ[rarbg]/from.s02e01.2160p.web.h265-ggez.mkv] to [/media/Series-EN/From/Season 2/From s02e01_[eng]_2160p_14 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_40]_from_s02e01_2160p_web_h265-ggez.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T10:43:43.352+00:00",
+          "lastModifiedAt": "2023-07-13T16:40:13.271+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afafa4f34039149bd74b84",
+          "files": [
+              {
+                  "file": "Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL.mkv",
+                  "newFile": "Mayans M.C. s05e09_[eng]_2160p_15 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL[TGx]",
+          "newPath": "Season 5",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:39:12 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL[TGx]\nIgnore extra: /media/Torrenting/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL[TGx]/Sample\nInput: /media/Torrenting/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL[TGx]/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL.mkv\nGroup: {Series=Mayans M.C.} => [Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [Mayans M.C.] [Mayans M C]\nFetching episode data for [Mayans M.C.]\n└─ 50 episodes\nStripping invalid characters from the output file path: /media/Series-EN/Mayans M.C./Season 5/Mayans M.C. s05e09_[eng]_2160p_15 Mbps.mkv\n[MOVE] from [/media/Torrenting/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL[TGx]/Mayans.M.C.S05E09.2160p.WEB.h265-ETHEL.mkv] to [/media/Series-EN/Mayans M.C/Season 5/Mayans M.C. s05e09_[eng]_2160p_15 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_39]_Mayans_M_C_S05E09_2160p_WEB_h265-ETHEL.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T08:02:44.034+00:00",
+          "lastModifiedAt": "2023-07-13T16:39:38.086+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64af9b34f34039149bd74b83",
+          "files": [
+              {
+                  "file": "Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR.mkv",
+                  "newFile": "Mayans M.C. s05e09_[eng]_1080p_10 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR[TGx]",
+          "newPath": "Season 5",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 18:36:31 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR[TGx]\nInput: /media/Torrenting/Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR[TGx]/Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR.mkv\nGroup: {Series=Mayans M.C.} => [Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [Mayans M.C.] [Mayans M C]\nFetching episode data for [Mayans M.C.]\n└─ 50 episodes\nStripping invalid characters from the output file path: /media/Series-EN/Mayans M.C./Season 5/Mayans M.C. s05e09_[eng]_1080p_10 Mbps.mkv\n[MOVE] from [/media/Torrenting/Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR[TGx]/Mayans.M.C.S05E09.1080p.WEB.h264-ELEANOR.mkv] to [/media/Series-EN/Mayans M.C/Season 5/Mayans M.C. s05e09_[eng]_1080p_10 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_18_36]_Mayans_M_C_S05E09_1080p_WEB_h264-ELEANOR.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T06:35:32.225+00:00",
+          "lastModifiedAt": "2023-07-13T16:39:03.894+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afe537f34039149bd74b90",
+          "files": [
+              {
+                  "file": "/media/Torrenting/From.S02E08.2160p.WEB.h265-EDITH[TGx]/From.S02E08.2160p.WEB.h265-EDITH.mkv",
+                  "newFile": "/media/Series-EN/From/Season 2/From s02e08_[eng]_2160p_14 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E08.2160p.WEB.h265-EDITH[TGx]",
+          "newPath": null,
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E08.2160p.WEB.h265-EDITH[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "FILES_EXISTED_IN_DESTINATION",
+          "log": null,
+          "createdAt": "2023-07-13T11:51:19.156+00:00",
+          "lastModifiedAt": "2023-07-13T12:01:16.341+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afdf64f34039149bd74b8b",
+          "files": [
+              {
+                  "file": "From.S02E09.2160p.WEB.H265-CRUCiFiED.mkv",
+                  "newFile": "From s02e09_[eng]_2160p_14 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E09.2160p.WEB.H265-CRUCiFiED[TGx]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E09.2160p.WEB.H265-CRUCiFiED[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 14:00:13 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E09.2160p.WEB.H265-CRUCiFiED[TGx]\nIgnore extra: /media/Torrenting/From.S02E09.2160p.WEB.H265-CRUCiFiED[TGx]/Sample\nInput: /media/Torrenting/From.S02E09.2160p.WEB.H265-CRUCiFiED[TGx]/From.S02E09.2160p.WEB.H265-CRUCiFiED.mkv\nGroup: {Series=From} => [From.S02E09.2160p.WEB.H265-CRUCiFiED.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [From]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E09.2160p.WEB.H265-CRUCiFiED[TGx]/From.S02E09.2160p.WEB.H265-CRUCiFiED.mkv] to [/media/Series-EN/From/Season 2/From s02e09_[eng]_2160p_14 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_14_00]_From_S02E09_2160p_WEB_H265-CRUCiFiED.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T11:26:28.184+00:00",
+          "lastModifiedAt": "2023-07-13T12:00:38.753+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64afd1a0f34039149bd74b85",
+          "files": [
+              {
+                  "file": "From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb.mkv",
+                  "newFile": "From s02e07_[eng]_1080p_7.8 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb[TGx]",
+          "newPath": "Season 2",
+          "category": "tv-sonarr-en",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb[TGx]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}' ",
+          "english": true,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Thu Jul 13 13:00:06 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nArgument[0]: /media/Torrenting/From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb[TGx]\nInput: /media/Torrenting/From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb[TGx]/From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb.mkv\nGroup: {Series=From} => [From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb.mkv]\nRename episodes using [TheMovieDB] with [Airdate Order]\nLookup via [From] [From]\nFetching episode data for [From]\n└─ 20 episodes\n[MOVE] from [/media/Torrenting/From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb[TGx]/From.S02E07.Belly.of.the.Beast.1080p.AMZN.WEB-DL.DDP5.1.H.264-NTb.mkv] to [/media/Series-EN/From/Season 2/From s02e07_[eng]_1080p_7.8 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-13_13_00]_From_S02E07_Belly_of_the_Beast_1080p_AMZN_WEB-DL_D.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-13T10:27:44.888+00:00",
+          "lastModifiedAt": "2023-07-13T11:00:38.931+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64aeaaf1f34039149bd74b82",
+          "files": [
+              {
+                  "file": "Deep Impact 4Kremux2160.www.atomohd.care.mkv",
+                  "newFile": "Deep Impact (1998)_[eng, spa]_2160p_64 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/Deep Impact [4K UHDremux 2160p][HDR10][DTS-HD 5.1 AC3 5.1 Castellano-Ingles AC3 5.1+Subs][ES-EN]",
+          "newPath": "Deep Impact (1998)",
+          "category": "radarr",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/Deep Impact [4K UHDremux 2160p][HDR10][DTS-HD 5.1 AC3 5.1 Castellano-Ingles AC3 5.1+Subs][ES-EN]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}'  --q \"8656\"  --def \"ut_label=movie\" ",
+          "english": false,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Wed Jul 12 17:00:20 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nParameter: ut_label = movie\nArgument[0]: /media/Torrenting/Deep Impact [4K UHDremux 2160p][HDR10][DTS-HD 5.1 AC3 5.1 Castellano-Ingles AC3 5.1+Subs][ES-EN]\nInput: /media/Torrenting/Deep Impact [4K UHDremux 2160p][HDR10][DTS-HD 5.1 AC3 5.1 Castellano-Ingles AC3 5.1+Subs][ES-EN]/Deep Impact 4Kremux2160.www.atomohd.care.mkv\nProcess as Movie [movie]\nGroup: {Movie=true} => [Deep Impact 4Kremux2160.www.atomohd.care.mkv]\nRename movies using [TheMovieDB]\nLooking up movie by query [8656]\n[MOVE] from [/media/Torrenting/Deep Impact [4K UHDremux 2160p][HDR10][DTS-HD 5.1 AC3 5.1 Castellano-Ingles AC3 5.1+Subs][ES-EN]/Deep Impact 4Kremux2160.www.atomohd.care.mkv] to [/media/Peliculas/Deep Impact (1998)/Deep Impact (1998)_[eng, spa]_2160p_64 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-12_17_00]_Deep_Impact_4Kremux2160_www_atomohd_care.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-12T13:30:25.599+00:00",
+          "lastModifiedAt": "2023-07-12T15:00:37.869+00:00",
+          "expireAfterFourteenDays": null
+      },
+      {
+          "id": "64aeaa97f34039149bd74b81",
+          "files": [
+              {
+                  "file": "El rey escorpion 4Kremux2160.www.atomohd.care.mkv",
+                  "newFile": "The Scorpion King (2002)_[eng, spa]_2160p_78 Mbps.mkv"
+              }
+          ],
+          "path": "/media/Torrenting/El rey escorpion [4K UHDremux 2160p][HDR10][Castellano DTS 5.1-Ingles DTS 5.1+Subs][ES-EN]",
+          "newPath": "The Scorpion King (2002)",
+          "category": "radarr",
+          "command": "filebot -script 'fn:amc'  --output \"/media\"  --action move  --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3  --lang en  --order Airdate  -no-xattr \"/media/Torrenting/El rey escorpion [4K UHDremux 2160p][HDR10][Castellano DTS 5.1-Ingles DTS 5.1+Subs][ES-EN]\" --def  'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}'  'seriesFormat=/media/Series/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}'  --def 'storeReport=/home/filebot/.reports'  'unsortedFormat=/media/Unsorted/{fn}.{ext}'  --q \"9334\"  --def \"ut_label=movie\" ",
+          "english": false,
+          "action": "MOVE",
+          "manual": false,
+          "status": "PROCESSED",
+          "log": "Run script [fn:amc] at [Wed Jul 12 17:00:02 CEST 2023]\n\n[PSA] Important Discussion of Proposed Changes:\nhttps://www.filebot.net/forums/viewtopic.php?t=13406\n\nParameter: movieDB = TheMovieDB\nParameter: seriesDB = TheMovieDB::TV\nParameter: animeDB = AniDB\nParameter: musicDB = ID3\nParameter: movieFormat = /media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}\nParameter: seriesFormat = /media/Series/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}\nParameter: storeReport = /home/filebot/.reports\nParameter: unsortedFormat = /media/Unsorted/{fn}.{ext}\nParameter: ut_label = movie\nArgument[0]: /media/Torrenting/El rey escorpion [4K UHDremux 2160p][HDR10][Castellano DTS 5.1-Ingles DTS 5.1+Subs][ES-EN]\nInput: /media/Torrenting/El rey escorpion [4K UHDremux 2160p][HDR10][Castellano DTS 5.1-Ingles DTS 5.1+Subs][ES-EN]/El rey escorpion 4Kremux2160.www.atomohd.care.mkv\nProcess as Movie [movie]\nGroup: {Movie=true} => [El rey escorpion 4Kremux2160.www.atomohd.care.mkv]\nRename movies using [TheMovieDB]\nLooking up movie by query [9334]\n[MOVE] from [/media/Torrenting/El rey escorpion [4K UHDremux 2160p][HDR10][Castellano DTS 5.1-Ingles DTS 5.1+Subs][ES-EN]/El rey escorpion 4Kremux2160.www.atomohd.care.mkv] to [/media/Peliculas/The Scorpion King (2002)/The Scorpion King (2002)_[eng, spa]_2160p_78 Mbps.mkv]\nProcessed 1 file\nSaving HTML report to [/home/filebot/.reports/[2023-07-12_17_00]_El_rey_escorpion_4Kremux2160_www_atomohd_care.html]\nDone ヾ(＠⌒ー⌒＠)ノ\n",
+          "createdAt": "2023-07-12T13:28:55.618+00:00",
+          "lastModifiedAt": "2023-07-12T15:00:18.508+00:00",
+          "expireAfterFourteenDays": null
+      }
+  ],
+  "pageable": {
+      "sort": {
+          "empty": true,
+          "sorted": false,
+          "unsorted": true
+      },
+      "offset": 0,
+      "pageNumber": 0,
+      "pageSize": 20,
+      "paged": true,
+      "unpaged": false
+  },
+  "totalPages": 130,
+  "totalElements": 2590,
+  "last": false,
+  "size": 20,
+  "number": 0,
+  "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+  },
+  "numberOfElements": 20,
+  "first": true,
+  "empty": false
+}

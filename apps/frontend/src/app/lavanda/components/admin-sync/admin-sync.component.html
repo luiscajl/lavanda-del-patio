@@ -1,0 +1,206 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="center">
+          <div class="my-2">
+            <button pButton pRipple label="Force Analysis"  class="p-button-primary mr-2"
+              (click)="forceAnalysis()"></button>
+            <!-- <button pButton pRipple label="Reload" icon="pi pi-refresh" class="p-button-success mr-2"
+              (click)="reload()"></button>
+            <button pButton pRipple label="Manual Execution" icon="pi pi-play" class="p-button-danger mr-2"
+              (click)="executeManually()"></button> -->
+            <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedExecutors()" [disabled]="!selectedExecutors || !selectedExecutors.length"></button> -->
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+            class="mr-2 inline-block"></p-fileUpload>
+          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+            (click)="dt.exportCSV()"></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-table #dt [value]="mediaPaths" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+        [globalFilterFields]="['name','country.name','representative.name','status']" [expandedRowKeys]="expandedRows"
+        [paginator]="false" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedMedia"
+        selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage Media</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                class="w-full sm:w-auto" />
+            </span>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Status..."
+                class="w-full sm:w-auto" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="code">Name<p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="name">Provider<p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="price">Category<p-sortIcon field="price"></p-sortIcon></th>
+            <th>Files</th>
+            <!-- <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th> -->
+            <!-- <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th> -->
+            <!-- <th pSortableColumn="inventoryStatus">Tags <p-sortIcon field="inventoryStatus"></p-sortIcon></th> -->
+            <!-- <th></th> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-executor let-expanded="expanded">
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="executor"></p-tableCheckbox>
+            </td>
+            <td style="width:30%; min-width:20rem;">
+              <span class="p-column-title">Name</span>
+              {{executor.name || executor.id}}
+            </td>
+            <td class="flex-wrap gap-2">
+              <p-tag *ngIf="checkDropbox(executor)" severity="info" value="DROPBOX" [rounded]="true"></p-tag>
+              <p-tag *ngIf="checkMega(executor)" severity="danger" value="MEGA" [rounded]="true"></p-tag>
+              <p-tag *ngIf="checkNas(executor)" severity="warning" value="NAS" [rounded]="true"></p-tag>
+            </td>
+            <td style="width:14%; min-width:10rem;">
+              <span class="p-column-title">Category</span>
+              {{executor.category}}
+            </td>
+            <td>
+              <button type="button" pButton pRipple [pRowToggler]="executor"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <!-- <td style="width:14%; min-width:10rem;"><span class="p-column-title">Image</span>
+                          <img [src]="'assets/lavanda/images/executor/' + executor.image" [alt]="executor.name" width="100" class="shadow-4" />
+                      </td> -->
+            <!-- <td style="width:14%; min-width:8rem;">
+                          <span class="p-column-title">Price</span>
+                          {{executor.category | currency:'USD'}}
+                      </td> -->
+
+            <!-- <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+              <span
+                [class]="'executor-badge status-' + (executor.status ? executor.status.toLowerCase() : '')">{{executor.status}}</span>
+            </td> -->
+            <!-- <td>
+              <div class="flex">
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                  (click)="editExecutor(executor)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                  (click)="deleteExecutor(executor)"></button>
+              </div>
+            </td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-executor>
+          <tr>
+            <td colspan="9">
+              <div class="p-3">
+                <p-table [value]="executor.mediaFiles" dataKey="file" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Extension</th>
+            <th>Provider</th>
+            <th>Size</th>
+            <th>Filename</th>
+            <th>Duration</th>
+            <th></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-executorFile>
+          <tr>
+            <td>{{executorFile.name}}</td>
+            <td>{{executorFile.extension}}</td>
+            <td style="width:5%; min-width:1rem;">
+              <!-- <span class="p-column-title">Providers</span> -->
+              <div *ngIf="checkDropboxMediaFile(executorFile)">
+                <p-tag severity="info" value="DROPBOX" [rounded]="true"></p-tag>
+              </div>
+              <div *ngIf="checkMegaMediaFile(executorFile)">
+                <p-tag severity="danger" value="MEGA" [rounded]="true"></p-tag>
+              </div>
+
+              <div *ngIf="checkNasMediaFile(executorFile)">
+                <p-tag severity="warning" value="NAS" [rounded]="true"></p-tag>
+              </div>
+              <!-- {{getProviders(executor)}} -->
+            </td>
+            <td>{{executorFile.size}}</td>
+            <td>{{executorFile.format.filename}}</td>
+            <td>{{secondsToHms(executorFile.format.duration)}}</td>
+            <td>
+              <div class="flex">
+                <!-- <button pButton pRipple icon="pi pi-sync" class="p-button-rounded p-button-info mr-2"
+                  (click)="sendToSync(executorFile)"></button> -->
+
+                <button pButton pRipple icon="pi pi-sync" pTooltip="Send to sync"
+                  class="p-button-rounded p-button-info mr-2" (click)="openSyncDialog(executorFile,executor)"></button>
+
+                <button *ngIf="executorFile.selectedForTranscoding" pButton pRipple pTooltip="Deactivate transcode"
+                  type="button" icon="pi pi-video" class="p-button-rounded p-button-success"
+                  (click)=" activateDeactivateTranscode(executorFile)"></button>
+                <button *ngIf="!executorFile.selectedForTranscoding" pButton pRipple pTooltip="Activate transcode"
+                  type="button" icon="pi pi-video" class="p-button-rounded p-button-danger"
+                  (click)=" activateDeactivateTranscode(executorFile)"></button>
+
+                <!-- <button [disabled]="!executorFile.selectedForTranscoding" pButton pRipple icon="pi pi-sort-alt-slash"
+                  class="p-button-rounded p-button-danger" (click)="activateDeactivateTranscode(executorFile)"></button> -->
+              </div>
+            </td>
+            <!-- <td>{{executorFile.format.duration}}</td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">There are no order for this executor yet.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="page" [rows]="pageSize" [totalRecords]="totalElements"
+      [rowsPerPageOptions]="rowsPerPageOptions"></p-paginator>
+
+    <p-dialog [(visible)]="syncDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Sync to?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple class="p-button-raised p-button-danger" label="MEGA" (click)="sendToMega()"></button>
+        <button pButton pRipple class="p-button-raised p-button-warning" label="NAS" (click)="sendToNas()"></button>
+      </ng-template>
+    </p-dialog>
+
+    <!-- <p-dialog [(visible)]="deleteExecutorsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to delete selected executors?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+          (click)="deleteExecutorsDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+          (click)="confirmDeleteSelected()"></button>
+      </ng-template>
+    </p-dialog> -->
+
+  </div>
+</div>
