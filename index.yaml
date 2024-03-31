@@ -150,6 +150,13 @@ entries:
     version: 0.0.7
   tmdb:
   - apiVersion: v2
+    created: "2024-03-31T07:44:04.707574603Z"
+    digest: 570669f1e762accc777e33424ab4e434fdc972e32ce5af5c086a3c22f52b9ace
+    name: tmdb
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/tmdb-0.2.5/tmdb-0.2.5.tgz
+    version: 0.2.5
+  - apiVersion: v2
     created: "2024-03-31T07:16:30.83695116Z"
     digest: fd15fb47dc8897bcf719a4697d97e9242ff66671e77909d51b869ae5fa5963df
     name: tmdb
@@ -180,4 +187,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-03-31T07:16:31.113288776Z"
+generated: "2024-03-31T07:44:04.707589861Z"
