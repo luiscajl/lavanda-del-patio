@@ -29,8 +29,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/luiscajl/lavanda-del-patio/")
             credentials {
-                username = "luiscajl"
-                password = (System.getenv("GITHUB_TOKEN") ?: findProperty("GITHUB_TOKEN")).toString()
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
