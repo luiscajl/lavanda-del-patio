@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
     id("maven-publish")
+    id("java-library")
     id("io.freefair.lombok") version "8.6"
 }
 
@@ -12,16 +13,21 @@ version = "0.1.0"
 java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
-repositories {
-    mavenCentral()
-    maven { url = uri("https://maven.pkg.github.com/Lavanda-del-Patio/lib-common") }
+
+tasks.named("bootJar") {
+    enabled = false
 }
 
 publishing {
+    publications {
+        create<MavenPublication>("library") {
+            from(components["java"])
+        }
+    }
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Lavanda-del-Patio/lib-common")
+            url = uri("https://maven.pkg.github.com/luiscajl/lavanda-del-patio/")
             credentials {
                 username = "luiscajl"
                 password = (System.getenv("GITHUB_TOKEN") ?: findProperty("GITHUB_TOKEN")).toString()
@@ -43,9 +49,3 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-springBoot {
-    buildInfo()
-}
-
-// Si usas el plugin de release de Gradle o necesitas configurar la integración SCM, aquí es donde agregarías esa configuración.
-// Por ejemplo, la configuración SCM se manejaría fuera de este archivo en Gradle, a menudo mediante propiedades del sistema o variables de entorno.
