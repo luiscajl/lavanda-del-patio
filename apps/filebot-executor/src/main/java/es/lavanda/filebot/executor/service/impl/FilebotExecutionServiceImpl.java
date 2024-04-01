@@ -194,24 +194,24 @@ public class FilebotExecutionServiceImpl implements FilebotExecutionService {
     @Override
     public FilebotExecution editExecution(String id, FilebotExecution filebotExecution) {
         checkSameId(filebotExecution, id);
-        FilebotExecution filebotExecutionToEdit = filebotExecutionRepository.findById(id).map(fe -> {
-            if (Boolean.FALSE.equals(fe.isManual())) {
-                fe.setPath(filebotUtils.getFilebotPathInput() + "/" + filebotExecution.getPath());
+        FilebotExecution filebotExecutionEdited = filebotExecutionRepository.findById(id).map(filebotExecutionToEdit -> {
+            if (Boolean.FALSE.equals(filebotExecutionToEdit.isManual())) {
+                filebotExecutionToEdit.setPath(filebotUtils.getFilebotPathInput() + "/" + filebotExecution.getPath());
             }
-            fe.setCategory(filebotExecution.getCategory());
+            filebotExecutionToEdit.setCategory(filebotExecution.getCategory());
             if (filebotExecution.getCategory().equals(FilebotCategory.TV_EN)) {
-                fe.setEnglish(true);
+                filebotExecutionToEdit.setEnglish(true);
             }
-            fe.setAction(filebotExecution.getAction());
-            fe.setOnTestPhase(true);
-            fe.setCommand(Objects.nonNull(filebotExecution.getCommand()) ? filebotExecution.getCommand()
-                    : filebotUtils.getFilebotCommand(Path.of(fe.getPath()), fe.getQuery(),
-                    fe.getCategory(), fe.isForceStrict(), fe.isEnglish(), filebotExecution.getAction(), fe.isOnTestPhase()));
-            fe.setStatus(FilebotStatus.UNPROCESSED);
-            return fe;
+            filebotExecutionToEdit.setAction(filebotExecution.getAction());
+            filebotExecutionToEdit.setOnTestPhase(true);
+            filebotExecutionToEdit.setCommand(Objects.nonNull(filebotExecution.getCommand()) ? filebotExecution.getCommand()
+                    : filebotUtils.getFilebotCommand(Path.of(filebotExecutionToEdit.getPath()), filebotExecutionToEdit.getQuery(),
+                    filebotExecutionToEdit.getCategory(), filebotExecutionToEdit.isForceStrict(), filebotExecutionToEdit.isEnglish(), filebotExecution.getAction(), filebotExecutionToEdit.isOnTestPhase()));
+            filebotExecutionToEdit.setStatus(FilebotStatus.UNPROCESSED);
+            return filebotExecutionToEdit;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "FilebotExecution not found with the id " + id));
-        return filebotExecutionRepository.save(filebotExecutionToEdit);
+        return filebotExecutionRepository.save(filebotExecutionEdited);
     }
 
     private void checkSameId(FilebotExecution filebotExecution, String id) {
