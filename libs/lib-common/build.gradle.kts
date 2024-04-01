@@ -2,12 +2,12 @@ plugins {
     java
     id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
-    id("com.gradle.plugin-publish") version "0.15.0"
+    id("maven-publish")
     id("io.freefair.lombok") version "8.6"
 }
 
 group = "es.lavanda"
-version = "0.0.73"
+version = "0.1.0"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -17,13 +17,26 @@ repositories {
     maven { url = uri("https://maven.pkg.github.com/Lavanda-del-Patio/lib-common") }
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Lavanda-del-Patio/lib-common")
+            credentials {
+                username = "luiscajl"
+                password = (System.getenv("GITHUB_TOKEN") ?: findProperty("GITHUB_TOKEN")).toString()
+            }
+        }
+    }
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework:spring-context")
-    implementation("commons-io:commons-io:2.14.0")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.3")
+    implementation("commons-io:commons-io:2.16.0")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
 }
 
 tasks.withType<JavaCompile> {
