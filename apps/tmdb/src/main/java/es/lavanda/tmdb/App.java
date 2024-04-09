@@ -15,7 +15,7 @@ public class App {
 
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
-		log.info(" --------- App SpringBoot Started ------- ");
+		log.info(" --------- TMDB App SpringBoot Started ------- ");
 	}
 
 
