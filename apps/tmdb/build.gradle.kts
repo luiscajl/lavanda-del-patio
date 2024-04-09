@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.0.41"
+version = "0.0.42"
 val dockerLibrary = "lavandadelpatio"
 
 
@@ -19,7 +19,7 @@ java {
 }
 
 dependencies {
-    implementation("es.lavanda:lib-common:0.0.72")
+    implementation("es.lavanda:lib-common:0.1.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
@@ -44,6 +44,7 @@ tasks.named<BootBuildImage>("bootBuildImage") {
     environment = mapOf(
             "BP_NATIVE_IMAGE" to "true",
             "TZ" to "Europe/Madrid",
+            "LANG" to "en_US.UTF-8"
     )
 }
 
