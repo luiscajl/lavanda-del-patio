@@ -63,7 +63,7 @@ public class FileServiceImpl implements FileService {
             String lowercase = command.toLowerCase();
             String sanitized = lowercase.replaceAll("[^a-z0-9]+", "-");
             String jobName = sanitized.replaceAll("^-|-$", "").substring(0, 5) + "-" + RandomStringUtils.randomAlphanumeric(10).toLowerCase();
-            String containerName = jobName.substring(0, 44) + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
+            String containerName = jobName.substring(0, 5) + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
             api.createNamespacedJob(KUBERNETES_NAMESPACE, createJob(jobName, containerName, command)).execute();
             boolean isJobActive = true;
             while (isJobActive) {
