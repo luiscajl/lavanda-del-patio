@@ -126,7 +126,7 @@ public class FilebotServiceImpl implements FilebotService {
             }
             return filebotExecution;
         } catch (ApiException | IOException | InterruptedException e) {
-            log.error("");
+            log.error("Exception: ", e);
             throw new RuntimeException(e);
         }
     }

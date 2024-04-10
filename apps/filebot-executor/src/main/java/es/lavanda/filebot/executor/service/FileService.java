@@ -9,7 +9,7 @@ public interface FileService {
 
     List<String> ls(String path);
 
-    void rmdir(String path);
+//    void rmdir(String path);
 
     boolean isValidForFilebot(String fileOrDirectory);
 
