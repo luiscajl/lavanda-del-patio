@@ -44,6 +44,13 @@ entries:
     version: 0.0.11
   filebot-executor:
   - apiVersion: v2
+    created: "2024-04-10T19:07:24.776004119Z"
+    digest: d57a37ce3a47ad8ace4873064c4101a4c896d30f6fd8894647b305c216e29a47
+    name: filebot-executor
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/filebot-executor-1.0.15/filebot-executor-1.0.15.tgz
+    version: 1.0.15
+  - apiVersion: v2
     created: "2024-03-31T07:49:30.19024209Z"
     digest: 4da13731917fe950df9d83b53bba4dcb5ff911ce68d0a341675b1590314a5a15
     name: filebot-executor
@@ -194,4 +201,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-03-31T07:49:30.190262929Z"
+generated: "2024-04-10T19:07:24.776022894Z"
