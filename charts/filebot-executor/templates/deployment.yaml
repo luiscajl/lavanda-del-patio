@@ -95,13 +95,13 @@ spec:
             - name: SPRING_AMQP_DESERIALIZATION_TRUST_ALL
               value: "true"
             - name: LAVANDA_NAMESPACE
-              value: {{ .Release.Namespace }}
+              value: {{ .Release.Namespace | quote }}
             - name: LAVANDA_VOLUMES_CONFIG_CLAIMNAME
-              value: {{ .Values.volumes.config.claimname }}
+              value: {{ .Values.volumes.config.claimname | quote }}
             - name: LAVANDA_VOLUMES_DATA_PATH
-              value: {{ .Values.volumes.data.path }}
+              value: {{ .Values.volumes.data.path | quote }}
             - name: LAVANDA_USER
-              value: {{ .Values.user }}
+              value: {{ .Values.user  | quote }}
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
