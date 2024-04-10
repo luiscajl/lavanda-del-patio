@@ -16,7 +16,7 @@ spec:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 0
-      maxSurge: 1    
+      maxSurge: 1
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -33,8 +33,8 @@ spec:
       serviceAccountName: {{ include "filebot-executor.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-             
-      initContainers:           
+
+      initContainers:
         - name: filebot-executor-scripts-config
           image: "busybox"
           command:
@@ -47,15 +47,15 @@ spec:
           - name: config-data
             mountPath: /in
           - name: config
-            mountPath: /out     
+            mountPath: /out
         - name: permission-fix
           image: busybox
           command: ['sh', '-c']
           args: ['chmod -R 777 /out']
           volumeMounts:
           - name: config
-            mountPath: /out                           
-      containers:     
+            mountPath: /out
+      containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -79,19 +79,19 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: rabbitmq
-                  key: rabbitmq-password    
+                  key: rabbitmq-password
             - name: SPRING_RABBITMQ_HOST
-              value: rabbitmq    
+              value: rabbitmq
             - name: FILEBOT_PATH_INPUT
               value: {{ .Values.filebot.pathInput | quote }}
             - name: FILEBOT_PATH_OUTPUT
               value: {{ .Values.filebot.pathOutput | quote}}
             - name: FILEBOT_PATH_DATA
-              value: {{ .Values.filebot.pathData | quote }} 
+              value: {{ .Values.filebot.pathData | quote }}
             - name: FILEBOT_TEST_ENABLED
-              value: {{ .Values.filebot.testEnabled | quote }}     
+              value: {{ .Values.filebot.testEnabled | quote }}
             - name: QBITTORRENT_URL
-              value: {{ .Values.qbittorrent.url | quote }}       
+              value: {{ .Values.qbittorrent.url | quote }}
             - name: SPRING_AMQP_DESERIALIZATION_TRUST_ALL
               value: "true"
             - name: LAVANDA_NAMESPACE
@@ -101,7 +101,9 @@ spec:
             - name: LAVANDA_VOLUMES_DATA_PATH
               value: {{ .Values.volumes.data.path | quote }}
             - name: LAVANDA_USER
-              value: {{ .Values.user  | quote }}
+              value: {{ .Values.user | quote }}
+            - name: FILEBOT_IMAGE_TAG
+              value: {{ .Values.filebot.image.tag | quote }}
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
@@ -125,28 +127,28 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /home/apps
-              name: filebot-config  
+              name: filebot-config
             - mountPath: /media
               mountPropagation: Bidirectional
-              name: data  
+              name: data
             - mountPath: /health
-              name: config   
+              name: config
       volumes:
         - name: data
           hostPath:
             path: {{ .Values.data.path }}
-            type: Directory          
+            type: Directory
         - name: filebot-config
           persistentVolumeClaim:
-            claimName: filebot-config-rwm    
+            claimName: filebot-config-rwm
         - name: config-data
           configMap:
-            name: filebot-executor-health   
+            name: filebot-executor-health
             items:
               - key: liveness.sh
                 path: liveness.sh
         - name: config
-          emptyDir: {}                                 
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
