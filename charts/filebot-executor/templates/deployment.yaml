@@ -93,7 +93,15 @@ spec:
             - name: QBITTORRENT_URL
               value: {{ .Values.qbittorrent.url | quote }}       
             - name: SPRING_AMQP_DESERIALIZATION_TRUST_ALL
-              value: "true"  
+              value: "true"
+            - name: LAVANDA_NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: LAVANDA_VOLUMES_CONFIG_CLAIMNAME
+              value: {{ .Values.volumes.config.claimname }}
+            - name: LAVANDA_VOLUMES_DATA_PATH
+              value: {{ .Values.volumes.data.path }}
+            - name: LAVANDA_USER
+              value: {{ .Values.user }}
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

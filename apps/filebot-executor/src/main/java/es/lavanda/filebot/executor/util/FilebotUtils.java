@@ -27,14 +27,21 @@ public class FilebotUtils {
     @Value("${filebot.test.enabled}")
     private boolean FILEBOT_TEST_ENABLED;
 
+    @Value("${filebot.image.tag}")
+    private String IMAGE_TAG;
+
+
+
+
+
     public String getRegisterCommand() {
         return FILEBOT + FilebotConstants.LICENSE.toString() +
                 getFilebotPathData().trim() + "/license.psm";
     }
 
     public String getFilebotCommand(Path folderPath, String query, FilebotCategory category, boolean forceStrict,
-            boolean english,
-            FilebotAction action, boolean testPhase) {
+                                    boolean english,
+                                    FilebotAction action, boolean testPhase) {
         log.info("FOLDER PATH {}", folderPath);
         String queryFilled = "";
         String nonStrict = "";
@@ -77,6 +84,10 @@ public class FilebotUtils {
                 getUnsortedFormat() +
                 // getExcludeList() +
                 queryFilled + nonStrict + utLabel;
+    }
+
+    public String getImageTag() {
+        return IMAGE_TAG;
     }
 
     private String getAction(FilebotAction action, boolean testPhase) {

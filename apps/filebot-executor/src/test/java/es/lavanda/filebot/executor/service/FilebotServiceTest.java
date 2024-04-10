@@ -18,8 +18,8 @@ import es.lavanda.filebot.executor.service.impl.FilebotServiceImpl;
 public class FilebotServiceTest {
 
     @InjectMocks
-    private FilebotService filebotService = new FilebotServiceImpl();
-    
+    private FilebotService filebotService;
+
     @Mock
     private ExecutorService executorServiceBean = Executors.newSingleThreadExecutor();
 

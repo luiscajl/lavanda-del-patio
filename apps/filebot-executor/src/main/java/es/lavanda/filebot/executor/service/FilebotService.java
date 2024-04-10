@@ -4,6 +4,6 @@ import es.lavanda.filebot.executor.model.FilebotExecution;
 
 public interface FilebotService {
 
-    void execute(FilebotExecution filebotExecution);
+    FilebotExecution executeByKubernetes(FilebotExecution filebotExecution);
 
 }

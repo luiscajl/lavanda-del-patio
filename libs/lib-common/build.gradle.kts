@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.2.3"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     id("maven-publish")
     id("java-library")
@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.1.2"
+version = "0.1.3"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21

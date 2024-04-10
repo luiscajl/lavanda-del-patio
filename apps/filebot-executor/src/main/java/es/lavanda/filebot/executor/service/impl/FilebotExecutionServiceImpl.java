@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,9 @@ public class FilebotExecutionServiceImpl implements FilebotExecutionService {
 
     @Autowired
     private FilebotService filebotService;
+
+    @Value("${lavanda.namespace}")
+    private String KUBERNETES_NAMESPACE;
 
     @Override
     public Page<FilebotExecution> getAllPageable(Pageable pageable, String status, String path) {
@@ -107,7 +111,8 @@ public class FilebotExecutionServiceImpl implements FilebotExecutionService {
                             filebotExecution.isEnglish(), filebotExecution.getAction(), filebotExecution.isOnTestPhase()));
             save(filebotExecution);
             log.info("FilebotExecution {} approved and updated: {}", filebotExecutionTestODTO.isApproved(), filebotExecution);
-            filebotService.execute(filebotExecution);
+            filebotService.executeByKubernetes(filebotExecution); //FIXME: ADD     @Value("${lavanda.namespace}")
+            // private String KUBERNETES_NAMESPACE;
         } else {
             log.error("FilebotExecution not found: {}", filebotExecutionTestODTO.getId());
         }
@@ -240,9 +245,8 @@ public class FilebotExecutionServiceImpl implements FilebotExecutionService {
                     filebotExecution.getQuery(), filebotExecution.getCategory(), filebotExecution.isForceStrict(),
                     filebotExecution.isEnglish(),
                     filebotExecution.getAction(), filebotExecution.isOnTestPhase()));
-            filebotService.execute(optFilebotExecution.get());
             save(filebotExecution);
-            filebotService.execute(filebotExecution);
+            filebotService.executeByKubernetes(filebotExecution);
         } else {
             log.error("FilebotExecution not found: {}", id);
         }
@@ -258,7 +262,7 @@ public class FilebotExecutionServiceImpl implements FilebotExecutionService {
                     filebotExecution.isEnglish(),
                     filebotExecution.getAction(), filebotExecution.isOnTestPhase()));
             save(filebotExecution);
-            filebotService.execute(filebotExecution);
+            filebotService.executeByKubernetes(filebotExecution);
         }
     }
 

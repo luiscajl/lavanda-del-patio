@@ -9,4 +9,4 @@ spring:
           initial-interval: 20s
           max-attempts: 10
           max-interval: 300000
-          multiplier: 3    
+          multiplier: 3

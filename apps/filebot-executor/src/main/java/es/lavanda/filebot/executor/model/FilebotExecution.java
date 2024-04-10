@@ -64,6 +64,9 @@ public class FilebotExecution implements Serializable {
     @Field("status")
     private FilebotStatus status = FilebotStatus.UNPROCESSED;
 
+    @Field("job_status")
+    private FilebotJobStatus jobStatus = FilebotJobStatus.NOT_STARTED;
+
     @Field("log")
     private String log;
 
@@ -79,10 +82,11 @@ public class FilebotExecution implements Serializable {
     private String expireAfterFourteenDays;
 
     public enum FilebotStatus {
-        UNPROCESSED, ON_TELEGRAM, PENDING, ON_FILEBOT_EXECUTION, ON_TELEGRAM_TEST, PROCESSED,
-        FILES_EXISTED_IN_DESTINATION,
-        ERROR,
-        FILES_NOT_FOUND;
+        UNPROCESSED, ON_TELEGRAM, PENDING, ON_FILEBOT_EXECUTION, ON_TELEGRAM_TEST, PROCESSED, FILES_EXISTED_IN_DESTINATION, FILES_NOT_FOUND, ERROR
+    }
+
+    public enum FilebotJobStatus {
+        NOT_STARTED, STARTED, ERROR_NO_LICENSE, ERROR_NEED_STRICT_OR_QUERY, ERROR_FILES_EXISTED_IN_DESTINATION, ERROR_FILES_NOT_FOUND, ERROR_GENERIC, TEST_PHASE,PROCESSED
     }
 
     @Data
