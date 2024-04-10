@@ -17,7 +17,7 @@ java {
 }
 
 dependencies {
-    implementation("es.lavanda:lib-common:0.0.71")
+    implementation("es.lavanda:lib-common:0.1.3")
     implementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
