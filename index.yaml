@@ -106,6 +106,13 @@ entries:
     version: 0.0.3
   frontend:
   - apiVersion: v2
+    created: "2024-04-11T07:20:42.041883596Z"
+    digest: de2afbe7437e5dee13eda2ad4a3fe10d0a16cb207c037f4cb30c1e920dee2483
+    name: frontend
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/frontend-0.1.8/frontend-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
     created: "2024-03-31T07:16:29.95369473Z"
     digest: 759823856fb0dd976b2c033371809cadd9e88f36051f3dc011d404cf0db0e049
     name: frontend
@@ -215,4 +222,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-04-10T19:36:41.500040372Z"
+generated: "2024-04-11T07:20:42.041908071Z"
