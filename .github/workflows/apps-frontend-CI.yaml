@@ -55,7 +55,6 @@ jobs:
           echo "::set-output name=BUILD_ID::${branch}-${sha}-${ts}"
       - name: Build and publish container image with tag
         uses: docker/build-push-action@v2
-        working-directory: 'apps/frontend'
         with:
           push: true
           context: apps/frontend
