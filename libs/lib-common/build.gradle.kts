@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.1.3"
+version = "0.1.4"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -39,7 +39,6 @@ publishing {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
-    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework:spring-context")
     implementation("commons-io:commons-io:2.16.0")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.17.0")
