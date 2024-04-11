@@ -36,16 +36,19 @@ jobs:
         run: |
           npm install -g @angular/cli
       - name: Npm install
+        working-directory: 'apps/frontend'
         run: |
           npm install
       - name: Npm build production
-        if: ${{ github.ref == 'refs/heads/main' }}
+        working-directory: 'apps/frontend'
+
+        # if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           ng build --configuration=production
-      - name: Npm build preproduction
-        if: ${{ github.ref == 'refs/heads/develop' }}
-        run: |
-          ng build --configuration=preproduction
+      # - name: Npm build preproduction
+      #   if: ${{ github.ref == 'refs/heads/develop' }}
+      #   run: |
+      #     ng build --configuration=preproduction
       - name: Generate build ID
         id: prep
         run: |
@@ -55,10 +58,11 @@ jobs:
           echo "::set-output name=BUILD_ID::${branch}-${sha}-${ts}"
       - name: Build and publish container image with tag
         uses: docker/build-push-action@v2
+        working-directory: 'apps/frontend'
         with:
           push: true
           context: .
-          file: Dockerfile
+          file: apps/frontend/Dockerfile
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
