@@ -39,20 +39,14 @@ jobs:
         run: |
           npm install
       - name: Npm build production
-        # if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           ng build --configuration=production
-      # - name: Npm build preproduction
-      #   if: ${{ github.ref == 'refs/heads/develop' }}
-      #   run: |
-      #     ng build --configuration=preproduction
       - name: Generate build ID
         id: prep
         run: |
           branch=${GITHUB_REF##*/}
           sha=${GITHUB_SHA::8}
-          ts=$(date +%s)
-          echo "::set-output name=BUILD_ID::${branch}-${sha}-${ts}"
+          echo "::set-output name=BUILD_ID::${branch}-${sha}"
       - name: Build and publish container image with tag
         uses: docker/build-push-action@v5.3.0
         with:
@@ -62,11 +56,3 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
-      - name: Send telegram message
-        if: always()
-        uses: xinthink/action-telegram@v1
-        with:
-          botToken: ${{ secrets.TELEGRAM_TOKEN }}
-          chatId: ${{ secrets.TELEGRAM_TO }}
-          jobStatus: ${{ job.status }}
-          skipSuccess: true
