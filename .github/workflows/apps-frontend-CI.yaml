@@ -36,12 +36,9 @@ jobs:
         run: |
           npm install -g @angular/cli
       - name: Npm install
-        working-directory: 'apps/frontend'
         run: |
           npm install
       - name: Npm build production
-        working-directory: 'apps/frontend'
-
         # if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           ng build --configuration=production
@@ -61,8 +58,8 @@ jobs:
         working-directory: 'apps/frontend'
         with:
           push: true
-          context: .
-          file: apps/frontend/Dockerfile
+          context: apps/frontend
+          file: Dockerfile
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
