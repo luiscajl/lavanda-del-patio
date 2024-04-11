@@ -62,15 +62,14 @@ public class FileServiceImpl implements FileService {
             BatchV1Api api = new BatchV1Api();
             String lowercase = command.toLowerCase();
             String sanitized = lowercase.replaceAll("[^a-z0-9]+", "-");
-            String jobName = sanitized.replaceAll("^-|-$", "").substring(0, 5) + "-" + RandomStringUtils.randomAlphanumeric(10).toLowerCase();
-            String containerName = jobName.substring(0, 5) + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
-            api.createNamespacedJob(KUBERNETES_NAMESPACE, createJob(jobName, containerName, command)).execute();
+            String jobName = sanitized.replaceAll("^-|-$", "").substring(0, 2) + "-" + RandomStringUtils.randomAlphanumeric(10).toLowerCase();
+            api.createNamespacedJob(KUBERNETES_NAMESPACE, createJob(jobName, jobName, command)).execute();
             boolean isJobActive = true;
             while (isJobActive) {
                 V1JobStatus jobStatus = api.readNamespacedJobStatus(jobName, KUBERNETES_NAMESPACE).execute().getStatus();
                 if (Objects.nonNull(jobStatus) && ((Objects.nonNull(jobStatus.getSucceeded()) && jobStatus.getSucceeded() > 0) || (Objects.nonNull(jobStatus.getFailed()) && jobStatus.getFailed() > 0))) {
                     log.info("Job finished");
-                    return getLogOfContainer(coreApi, KUBERNETES_NAMESPACE, containerName);
+                    return getLogOfContainer(coreApi, KUBERNETES_NAMESPACE, jobName);
                 }
                 Thread.sleep(1000);
             }

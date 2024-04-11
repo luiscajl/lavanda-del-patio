@@ -30,10 +30,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/filebot-executor")
 @Slf4j
-@CrossOrigin(allowedHeaders = "*", origins = { "http://localhost:4200", "https://lavandadelpatio.es",
-        "https://pre.lavandadelpatio.es" }, allowCredentials = "true", exposedHeaders = "*", methods = {
-                RequestMethod.OPTIONS, RequestMethod.DELETE, RequestMethod.GET, RequestMethod.PATCH, RequestMethod.POST,
-                RequestMethod.PUT }, originPatterns = { "*" })
+@CrossOrigin(allowedHeaders = "*", origins = {"http://localhost:4200", "https://lavandadelpatio.es",
+        "https://pre.lavandadelpatio.es"}, allowCredentials = "true", exposedHeaders = "*", methods = {
+        RequestMethod.OPTIONS, RequestMethod.DELETE, RequestMethod.GET, RequestMethod.PATCH, RequestMethod.POST,
+        RequestMethod.PUT}, originPatterns = {"*"})
 public class FilebotExecutionRestController {
 
     @Autowired
@@ -41,7 +41,7 @@ public class FilebotExecutionRestController {
 
     @GetMapping
     public ResponseEntity<Page<FilebotExecution>> getAll(Pageable pageable,
-            @RequestParam(required = false) String status, @RequestParam(required = false) String path) {
+                                                         @RequestParam(required = false) String status, @RequestParam(required = false) String path) {
         return ResponseEntity.ok(filebotExecutorService.getAllPageable(pageable, status, path));
     }
 
@@ -78,7 +78,7 @@ public class FilebotExecutionRestController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<FilebotExecution> editExecution(@PathVariable String id,
-            @RequestBody FilebotExecution filebotExecution) {
+                                                          @RequestBody FilebotExecution filebotExecution) {
         log.info("Received edit for ID: {}", id);
         return ResponseEntity.ok(filebotExecutorService.editExecution(id, filebotExecution));
     }
