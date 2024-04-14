@@ -198,6 +198,7 @@ public class FileServiceImpl implements FileService {
                 .metadata(new V1ObjectMeta().name(jobName))
                 .spec(new V1JobSpec()
                         .backoffLimit(0)
+                        .ttlSecondsAfterFinished(100)
                         .template(new V1PodTemplateSpec()
                                 .spec(new V1PodSpec()
                                         .containers(Collections.singletonList(new V1Container()
