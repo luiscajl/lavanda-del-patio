@@ -103,15 +103,14 @@ public class FilebotServiceImpl implements FilebotService {
             String lowercase = filebotExecution.getName().toLowerCase();
             String sanitized = lowercase.replaceAll("[^a-z0-9]+", "-").replaceAll("^-|-$", "");
             String baseName = sanitized.length() > 44 ? sanitized.substring(0, 44) : sanitized;
-            String jobName = baseName + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
-            String containerName = baseName + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
-            api.createNamespacedJob(KUBERNETES_NAMESPACE, createFilebotJob(jobName, containerName, filebotExecution.getCommand())).execute();
+            String nameForContainerAndJob = baseName + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
+            api.createNamespacedJob(KUBERNETES_NAMESPACE, createFilebotJob(nameForContainerAndJob, nameForContainerAndJob, filebotExecution.getCommand())).execute();
             boolean isJobActive = true;
             while (isJobActive) {
-                V1JobStatus jobStatus = api.readNamespacedJobStatus(jobName, KUBERNETES_NAMESPACE).execute().getStatus();
+                V1JobStatus jobStatus = api.readNamespacedJobStatus(nameForContainerAndJob, KUBERNETES_NAMESPACE).execute().getStatus();
                 if (Objects.nonNull(jobStatus) && ((Objects.nonNull(jobStatus.getSucceeded()) && jobStatus.getSucceeded() > 0) || (Objects.nonNull(jobStatus.getFailed()) && jobStatus.getFailed() > 0))) {
                     log.info("Job finished");
-                    filebotExecution.setLog(getLogOfContainer(coreApi, KUBERNETES_NAMESPACE, containerName));
+                    filebotExecution.setLog(getLogOfContainer(coreApi, KUBERNETES_NAMESPACE, nameForContainerAndJob));
                     filebotExecution.setJobStatus(getJobStatusFromLog(filebotExecution.getLog(), jobStatus.getFailed() == null ? 0 : 1));
                     filebotExecutionRepository.save(filebotExecution);
                     if (FilebotJobStatus.PROCESSED.equals(filebotExecution.getJobStatus()) || FilebotJobStatus.TEST_PHASE.equals(filebotExecution.getJobStatus())) {
