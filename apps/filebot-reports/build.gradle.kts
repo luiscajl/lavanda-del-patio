@@ -9,24 +9,28 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.0.43"
+version = "0.0.28"
 val dockerLibrary = "lavandadelpatio"
-
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
 
 dependencies {
-    implementation("es.lavanda:lib-common:0.1.4")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-amqp")
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.1")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.jsoup:jsoup:1.16.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("org.apache.commons:commons-csv:1.10.0")
+    runtimeOnly("org.glassfish.jaxb:jaxb-runtime")
+    runtimeOnly("com.thoughtworks.xstream:xstream:1.4.20")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
-    compileOnly("org.projectlombok:lombok:1.18.30")
+
+    testImplementation("org.mockito:mockito-junit-jupiter:2.28.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.7.0")
+    compileOnly("org.projectlombok:lombok:1.18.30")
+
 }
 
 tasks.withType<JavaCompile> {

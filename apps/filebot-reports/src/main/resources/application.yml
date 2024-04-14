@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: lavanda-filebot-reports
+  profiles:
+    active: dev
+cloud:
+  aws:
+    region:
+      static: eu-west-1
+    stack:
+      auto: false
