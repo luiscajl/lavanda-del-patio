@@ -101,9 +101,10 @@ public class FilebotServiceImpl implements FilebotService {
             CoreV1Api coreApi = new CoreV1Api(client);
             BatchV1Api api = new BatchV1Api();
             String lowercase = filebotExecution.getName().toLowerCase();
-            String sanitized = lowercase.replaceAll("[^a-z0-9]+", "-");
-            String jobName = sanitized.replaceAll("^-|-$", "").substring(0, 50) + "-" + RandomStringUtils.randomAlphanumeric(10).toLowerCase();
-            String containerName = jobName.substring(0, 44) + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
+            String sanitized = lowercase.replaceAll("[^a-z0-9]+", "-").replaceAll("^-|-$", "");
+            String baseName = sanitized.length() > 44 ? sanitized.substring(0, 44) : sanitized;
+            String jobName = baseName + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
+            String containerName = baseName + "-" + RandomStringUtils.randomAlphanumeric(6).toLowerCase();
             api.createNamespacedJob(KUBERNETES_NAMESPACE, createFilebotJob(jobName, containerName, filebotExecution.getCommand())).execute();
             boolean isJobActive = true;
             while (isJobActive) {
@@ -213,6 +214,7 @@ public class FilebotServiceImpl implements FilebotService {
                 .metadata(new V1ObjectMeta().name(jobName))
                 .spec(new V1JobSpec()
                         .backoffLimit(0)
+                        .ttlSecondsAfterFinished(100)
                         .template(new V1PodTemplateSpec()
                                 .spec(new V1PodSpec()
                                         .containers(Collections.singletonList(new V1Container()

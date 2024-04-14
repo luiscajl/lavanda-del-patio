@@ -1,31 +1,5 @@
 #!/usr/bin/env bash
 
-#
-# Builds a Docker native image using gradle and graalvm.
-#
-# Environment variables:
-#
-#   CONTAINER_REGISTRY - The hostname of your container registry.
-#   VERSION - The version number to tag the images with.
-#
-# Parameters:
-#
-#   1 - The path to the code for the image and the name of the image.
-#
-# Usage:
-#
-#       ./scripts/build-native-image.sh <image-name>
-#
-# Example command line usage:
-#
-#       ./scripts/build-native-image.sh apps:demo
-#
-
-#set -u # or set -o nounset
-#: "$1"
-#: "$CONTAINER_REGISTRY"
-#: "$VERSION"
-
 export APP=$1
 # Guarda la salida y los errores del comando en una variable, pero también imprime en tiempo real.
 OUTPUT=$(gradle "$APP":bootBuildImage 2>&1 | tee /dev/stderr)

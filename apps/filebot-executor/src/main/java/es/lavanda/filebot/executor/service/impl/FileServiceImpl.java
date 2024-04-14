@@ -50,19 +50,17 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public List<String> ls(String path) {
-        String returnedLog = executeJob("ls " + "\"" + path + "\"");
+        String returnedLog = executeJob("ls", "ls " + "\"" + path + "\"");
         return Arrays.asList(returnedLog.split("\\r?\\n"));
     }
 
-    private String executeJob(String command) {
+    private String executeJob(String jobStartedName, String command) {
         try {
             ApiClient client = Config.defaultClient();
             Configuration.setDefaultApiClient(client);
             CoreV1Api coreApi = new CoreV1Api(client);
             BatchV1Api api = new BatchV1Api();
-            String lowercase = command.toLowerCase();
-            String sanitized = lowercase.replaceAll("[^a-z0-9]+", "-");
-            String jobName = sanitized.replaceAll("^-|-$", "").substring(0, 2) + "-" + RandomStringUtils.randomAlphanumeric(10).toLowerCase();
+            String jobName = jobStartedName + "-" + RandomStringUtils.randomAlphanumeric(10).toLowerCase();
             V1Job job = createJob(jobName, jobName, command);
             log.info("Json before create JOB: {}", job.toJson());
             api.createNamespacedJob(KUBERNETES_NAMESPACE, job).execute();

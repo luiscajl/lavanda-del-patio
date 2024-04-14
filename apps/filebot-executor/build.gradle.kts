@@ -4,12 +4,12 @@ plugins {
     java
     id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
-    id("org.graalvm.buildtools.native") version "0.10.1"
+    id("com.google.cloud.tools.jib") version "3.4.2"
     id("io.freefair.lombok") version "8.6"
 }
 
 group = "es.lavanda"
-version = "0.0.135"
+version = "0.0.136"
 val dockerLibrary = "lavandadelpatio"
 
 
@@ -37,21 +37,14 @@ tasks.withType<JavaCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+jib {
+    to {
+        image = "lavandadelpatio/filebot-executor"
+        tags = setOf("$version")
+        auth {
+            username = System.getenv("DOCKERHUB_USERNAME")
+            password = System.getenv("DOCKERHUB_TOKEN")
+        }
+    }
 
-tasks.named<BootBuildImage>("bootBuildImage") {
-    imageName.set("${dockerLibrary}/${project.name}:${version}")
-//    builder.set("paketobuildpacks/builder-jammy-base:latest")
-//    runImage.set("luiscajl/run-jammy-base-with-filebot:latest")
-    createdDate = "now"
-    environment = mapOf(
-            "BP_NATIVE_IMAGE" to "true",
-            "TZ" to "Europe/Madrid",
-            "PUID" to "568",
-            "PGID" to "568",
-            "PGUSER" to "apps",
-            "PGROUP" to "apps",
-            "HOME" to "/home/apps"
-    )
 }
-
-

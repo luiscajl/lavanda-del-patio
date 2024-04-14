@@ -7,6 +7,7 @@ import es.lavanda.lib.common.model.FilebotExecutionIDTO;
 import es.lavanda.lib.common.model.FilebotExecutionTestIDTO;
 import es.lavanda.lib.common.model.TelegramFilebotExecutionIDTO;
 import es.lavanda.lib.common.model.TelegramFilebotExecutionODTO;
+import io.kubernetes.client.openapi.models.V1Job;
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
