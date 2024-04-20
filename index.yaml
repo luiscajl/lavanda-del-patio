@@ -183,6 +183,17 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/tdarr-0.0.7/tdarr-0.0.7.tgz
     version: 0.0.7
+  threadfin:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-04-20T10:45:11.004843778Z"
+    description: A Helm chart for Kubernetes
+    digest: 22ee1e01cf5beadfcd53467a028762de98f19bbc868117759a766486154e3ecc
+    name: threadfin
+    type: application
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/threadfin-0.1.0/threadfin-0.1.0.tgz
+    version: 0.1.0
   tmdb:
   - apiVersion: v2
     created: "2024-03-31T07:44:04.707574603Z"
@@ -222,4 +233,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-04-11T07:20:42.041908071Z"
+generated: "2024-04-20T10:45:11.004870739Z"
