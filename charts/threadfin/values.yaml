@@ -14,10 +14,8 @@ image:
 environmentVariables:
   - name: "TZ"
     value: "Europe/Madrid"
-  - name: "PUID"
-    value: "1001"
-  - name: "PGID"
-    value: "1001"
+  - name: "THREADFIN_PORT"
+    value: "34400"
 
 imagePullSecrets: [ ]
 nameOverride: ""
@@ -47,7 +45,7 @@ securityContext: { }
 
 service:
   type: ClusterIP
-  port: 34400
+  port: "34400"
 
 ingress:
   enabled: false
