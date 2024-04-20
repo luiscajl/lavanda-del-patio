@@ -185,6 +185,13 @@ entries:
     version: 0.0.7
   threadfin:
   - apiVersion: v2
+    created: "2024-04-20T18:55:54.369964303Z"
+    digest: 836122647c8e0e340adaf44f44fa4c6e42d5a7172a5a24a131faae2190929dcc
+    name: threadfin
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/threadfin-0.1.2/threadfin-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     created: "2024-04-20T10:55:32.087943735Z"
     digest: a7837129f6e96a24b756e9843b84c9198d13b536938dd52d86b63ee9047ecab2
     name: threadfin
@@ -240,4 +247,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-04-20T10:55:32.087977659Z"
+generated: "2024-04-20T18:55:54.369997415Z"
