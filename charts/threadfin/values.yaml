@@ -8,12 +8,16 @@ image:
   repository: fyb3roptik/threadfin
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 
 environmentVariables:
   - name: "TZ"
     value: "Europe/Madrid"
+  - name: "PUID"
+    value: "1001"
+  - name: "PGID"
+    value: "1001"
 
 imagePullSecrets: [ ]
 nameOverride: ""
