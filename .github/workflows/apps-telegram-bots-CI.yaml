@@ -5,7 +5,7 @@ on:
       - main
       - 'feature/**'
     paths:
-      - 'apps/filebot-bot/**'
+      - 'apps/telegram-bots/**'
   workflow_dispatch:
 jobs:
   build:
