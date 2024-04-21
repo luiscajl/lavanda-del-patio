@@ -1,11 +1,11 @@
-name: Apps:FilebotParser:Build:Push
+name: Apps:TelegramBots:Build:Push
 on:
   push:
     branches:
       - main
       - 'feature/**'
     paths:
-      - 'apps/filebot-parser/**'
+      - 'apps/filebot-bot/**'
   workflow_dispatch:
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
 
       - name: Build native image
         id: build_image
-        run: ./scripts/build-native-image.sh apps:filebot-parser
+        run: ./scripts/build-native-image.sh apps:telegram-bots
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
