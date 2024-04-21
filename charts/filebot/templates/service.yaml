@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "filebot-executor.fullname" . }}
+  name: {{ include "filebot.fullname" . }}
   labels:
-    {{- include "filebot-executor.labels" . | nindent 4 }}
+    {{- include "filebot.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,5 +12,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "filebot-executor.selectorLabels" . | nindent 4 }}
+    {{- include "filebot.selectorLabels" . | nindent 4 }}
 

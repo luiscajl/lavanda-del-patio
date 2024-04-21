@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "filebot-executor.fullname" . }}
+  name: {{ include "filebot.fullname" . }}
   labels:
-    {{- include "filebot-executor.labels" . | nindent 4 }}
+    {{- include "filebot.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
   selector:
     matchLabels:
-      {{- include "filebot-executor.selectorLabels" . | nindent 6 }}
+      {{- include "filebot.selectorLabels" . | nindent 6 }}
   revisionHistoryLimit: 1
   strategy:
     type: RollingUpdate
@@ -24,18 +24,18 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "filebot-executor.selectorLabels" . | nindent 8 }}
+        {{- include "filebot.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "filebot-executor.serviceAccountName" . }}
+      serviceAccountName: {{ include "filebot.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
 
       initContainers:
-        - name: filebot-executor-scripts-config
+        - name: filebot-scripts-config
           image: "busybox"
           command:
             - cp
@@ -82,6 +82,8 @@ spec:
                   key: rabbitmq-password
             - name: SPRING_RABBITMQ_HOST
               value: rabbitmq
+            - name: FILEBOT_PATH_REPORTS
+              value: {{ .Values.filebot.reports | quote }}
             - name: FILEBOT_PATH_INPUT
               value: {{ .Values.filebot.pathInput | quote }}
             - name: FILEBOT_PATH_OUTPUT
@@ -143,7 +145,7 @@ spec:
             claimName: filebot-config-rwm
         - name: config-data
           configMap:
-            name: filebot-executor-health
+            name: filebot-health
             items:
               - key: liveness.sh
                 path: liveness.sh

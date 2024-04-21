@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "filebot-executor.name" -}}
+{{- define "filebot.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "filebot-executor.fullname" -}}
+{{- define "filebot.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "filebot-executor.chart" -}}
+{{- define "filebot.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "filebot-executor.labels" -}}
-helm.sh/chart: {{ include "filebot-executor.chart" . }}
-{{ include "filebot-executor.selectorLabels" . }}
+{{- define "filebot.labels" -}}
+helm.sh/chart: {{ include "filebot.chart" . }}
+{{ include "filebot.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,17 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "filebot-executor.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "filebot-executor.name" . }}
+{{- define "filebot.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "filebot.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "filebot-executor.serviceAccountName" -}}
+{{- define "filebot.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "filebot-executor.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "filebot.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
