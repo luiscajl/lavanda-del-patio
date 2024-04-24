@@ -7,15 +7,26 @@ image:
   pullPolicy: Always
   tag: "0.0.1-SNAPSHOT"
 
+environmentVariables:
+  - name: FILEBOT_USER
+    value: "568"
+  - name: FILEBOT_NAMESPACE
+    value: "lavanda"
+  - name: FILEBOT_IMAGE_TAG
+    value: "luiscajl/filebot:latest"
+  - name: FILEBOT_PATH_INPUT
+    value: null
+  - name: FILEBOT_PATH_OUTPUT
+    value: null
+  - name: FILEBOT_PATH_DATA
+    value: null
+  - name: FILEBOT_TEST_ENABLED
+    value: null
+  - name: FILEBOT_VOLUMES_CONFIG_CLAIMNAME
+    value: null
+  - name: FILEBOT_VOLUMES_DATA_PATH
+    value: null
 
-data:
-  path: /mnt/gdrive 
-filebot:
-  pathInput: /media/Torrenting
-  pathOutput: /media
-  pathData: /home/apps
-  testEnabled: false
-  reports: /data/.reports
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

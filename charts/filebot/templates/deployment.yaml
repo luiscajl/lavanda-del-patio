@@ -82,30 +82,10 @@ spec:
                   key: rabbitmq-password
             - name: SPRING_RABBITMQ_HOST
               value: rabbitmq
-            - name: FILEBOT_PATH_REPORTS
-              value: {{ .Values.filebot.reports | quote }}
-            - name: FILEBOT_PATH_INPUT
-              value: {{ .Values.filebot.pathInput | quote }}
-            - name: FILEBOT_PATH_OUTPUT
-              value: {{ .Values.filebot.pathOutput | quote}}
-            - name: FILEBOT_PATH_DATA
-              value: {{ .Values.filebot.pathData | quote }}
-            - name: FILEBOT_TEST_ENABLED
-              value: {{ .Values.filebot.testEnabled | quote }}
-            - name: QBITTORRENT_URL
-              value: {{ .Values.qbittorrent.url | quote }}
-            - name: SPRING_AMQP_DESERIALIZATION_TRUST_ALL
-              value: "true"
-            - name: LAVANDA_NAMESPACE
-              value: {{ .Release.Namespace | quote }}
-            - name: LAVANDA_VOLUMES_CONFIG_CLAIMNAME
-              value: {{ .Values.volumes.config.claimname | quote }}
-            - name: LAVANDA_VOLUMES_DATA_PATH
-              value: {{ .Values.volumes.data.path | quote }}
-            - name: LAVANDA_USER
-              value: {{ .Values.user | quote }}
-            - name: FILEBOT_IMAGE_TAG
-              value: {{ .Values.filebot.image.tag | quote }}
+            {{- range .Values.environmentVariables }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

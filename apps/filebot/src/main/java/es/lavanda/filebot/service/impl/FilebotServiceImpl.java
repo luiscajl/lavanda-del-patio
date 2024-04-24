@@ -49,16 +49,16 @@ public class FilebotServiceImpl implements FilebotService {
 
     private final FilebotExecutionRepository filebotExecutionRepository;
 
-    @Value("${lavanda.namespace}")
+    @Value("${filebot.namespace}")
     private String KUBERNETES_NAMESPACE;
 
-    @Value("${lavanda.volumes.config.claimname}")
+    @Value("${filebot.volumes.config.claimname}")
     private String CONFIG_CLAIM_NAME;
 
-    @Value("${lavanda.volumes.data.path}")
+    @Value("${filebot.volumes.data.path}")
     private String HOST_PATH_DATA_VOLUME;
 
-    @Value("${lavanda.user}")
+    @Value("${filebot.user}")
     private String USER;
 
 
@@ -219,7 +219,7 @@ public class FilebotServiceImpl implements FilebotService {
                                                 .name(containerName)
                                                 .image(filebotUtils.getImageTag())
                                                 .command(Arrays.asList("/bin/sh", "-c"))
-                                                .args(Collections.singletonList(command))
+                                                .args(Collections.singletonList("sleep 1000000"))
                                                 .env(getEnvVars())
                                                 .volumeMounts(getVolumeMounts())
                                                 .securityContext(new V1SecurityContext().privileged(true).runAsUser(Long.valueOf(USER)))))
@@ -236,10 +236,10 @@ public class FilebotServiceImpl implements FilebotService {
     private List<V1VolumeMount> getVolumeMounts() {
         V1VolumeMount filebotConfigVolumeMount = new V1VolumeMount()
                 .name("filebot-config")
-                .mountPath("/data");
+                .mountPath(filebotUtils.getFilebotPathData());
         V1VolumeMount mediaVolumeMount = new V1VolumeMount()
                 .name("data")
-                .mountPath("/media")
+                .mountPath(filebotUtils.getFilebotPathInput())
                 .mountPropagation("Bidirectional");
         return Arrays.asList(mediaVolumeMount, filebotConfigVolumeMount);
     }

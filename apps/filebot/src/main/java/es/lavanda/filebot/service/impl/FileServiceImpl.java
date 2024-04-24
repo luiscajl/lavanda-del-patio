@@ -34,13 +34,13 @@ public class FileServiceImpl implements FileService {
 
     private final FilebotUtils filebotUtils;
 
-    @Value("${lavanda.namespace}")
+    @Value("${filebot.namespace}")
     private String KUBERNETES_NAMESPACE;
 
-    @Value("${lavanda.volumes.data.path}")
+    @Value("${filebot.volumes.data.path}")
     private String HOST_PATH_DATA_VOLUME;
 
-    @Value("${lavanda.user}")
+    @Value("${filebot.user}")
     private String USER;
 
     @Override

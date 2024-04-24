@@ -35,7 +35,7 @@ public class FilebotParserServiceImpl implements FilebotParserService {
     @Autowired
     private FilebotParser filebotParser;
 
-    @Value("${filebot.path.reports}")
+    @Value("${filebot.path.data}")
     private String FILEBOT_PATH;
 
 

@@ -46,7 +46,7 @@ public class FilebotExecutionServiceImpl implements FilebotExecutionService {
     @Autowired
     private FilebotService filebotService;
 
-    @Value("${lavanda.namespace}")
+    @Value("${filebot.namespace}")
     private String KUBERNETES_NAMESPACE;
 
     @Override
