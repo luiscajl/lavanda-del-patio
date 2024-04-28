@@ -219,7 +219,7 @@ public class FilebotServiceImpl implements FilebotService {
                                                 .name(containerName)
                                                 .image(filebotUtils.getImageTag())
                                                 .command(Arrays.asList("/bin/sh", "-c"))
-                                                .args(Collections.singletonList("sleep 1000000"))
+                                                .args(Collections.singletonList(command))
                                                 .env(getEnvVars())
                                                 .volumeMounts(getVolumeMounts())
                                                 .securityContext(new V1SecurityContext().privileged(true).runAsUser(Long.valueOf(USER)))))

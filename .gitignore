@@ -24,4 +24,5 @@ gradle-app.setting
 build
 
 .DS_Store
+.vscode
 application-dev.yml
