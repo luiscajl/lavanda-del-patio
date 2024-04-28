@@ -239,7 +239,7 @@ public class FilebotServiceImpl implements FilebotService {
                 .mountPath(filebotUtils.getFilebotPathData());
         V1VolumeMount mediaVolumeMount = new V1VolumeMount()
                 .name("data")
-                .mountPath(filebotUtils.getFilebotPathInput())
+                .mountPath(filebotUtils.getFilebotPathOutput())
                 .mountPropagation("Bidirectional");
         return Arrays.asList(mediaVolumeMount, filebotConfigVolumeMount);
     }
