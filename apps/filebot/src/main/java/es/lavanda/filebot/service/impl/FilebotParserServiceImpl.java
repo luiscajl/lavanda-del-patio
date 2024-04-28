@@ -41,6 +41,7 @@ public class FilebotParserServiceImpl implements FilebotParserService {
 
     private String getHtmlData(String filePath) {
         try {
+            log.info("getHtmlData of {}", filePath);
             return Files.readString(Path.of(filePath));
         } catch (IOException e) {
             log.error("Can not access to path {}", FILEBOT_PATH, e);
@@ -63,7 +64,7 @@ public class FilebotParserServiceImpl implements FilebotParserService {
     public void run() {
         log.info("Start schedule parse new files");
         List<FilebotFile> newFiles = getAllFilesFounded(FILEBOT_PATH);
-        List<FilebotFile> oldFiles = (List<FilebotFile>) filebotFileRepository.findAll();
+        List<FilebotFile> oldFiles = filebotFileRepository.findAll();
         newFiles.removeAll(oldFiles);
         newFiles.forEach(file -> {
             log.info("Parsing new file {}", file.getFilePath());

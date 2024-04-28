@@ -1,4 +1,3 @@
-
 plugins {
     java
     id("org.springframework.boot") version "3.2.3"
@@ -8,7 +7,7 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.0.138"
+version = "0.0.139"
 val dockerLibrary = "lavandadelpatio"
 
 
@@ -47,5 +46,7 @@ jib {
             password = System.getenv("DOCKERHUB_TOKEN")
         }
     }
-
+    container {
+        user = "568"
+    }
 }
