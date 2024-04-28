@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "es.lavanda"
-version = "0.0.139"
+version = "0.0.140"
 val dockerLibrary = "lavandadelpatio"
 
 
@@ -15,7 +15,7 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
 dependencies {
-    implementation("es.lavanda:lib-common:0.1.4")
+    implementation("es.lavanda:lib-common:0.1.5")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-amqp")

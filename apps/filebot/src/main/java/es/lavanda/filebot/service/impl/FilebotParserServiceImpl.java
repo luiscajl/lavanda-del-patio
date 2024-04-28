@@ -42,7 +42,9 @@ public class FilebotParserServiceImpl implements FilebotParserService {
     private String getHtmlData(String filePath) {
         try {
             log.info("getHtmlData of {}", filePath);
-            return Files.readString(Path.of(filePath));
+            Path filePathData = Path.of(filePath);
+            log.info("Path of {}", filePathData);
+            return Files.readString(filePathData);
         } catch (IOException e) {
             log.error("Can not access to path {}", FILEBOT_PATH, e);
             throw new FilebotException("Can not access to path", e);
