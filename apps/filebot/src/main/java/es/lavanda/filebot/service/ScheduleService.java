@@ -16,7 +16,6 @@ public class ScheduleService {
 
     private final FilebotExecutionService filebotExecutorService;
 
-    private final FilebotParserService filebotParserService;
 
     // @Scheduled(cron = "0 0 * * * *")
     @Scheduled(fixedDelay = 60000)
@@ -26,14 +25,8 @@ public class ScheduleService {
 
     // @Scheduled(cron = "0 0/15 * * * *")
     @Scheduled(fixedDelay = 60000)
-
     public void checkPossiblesNewFilebotExecution() {
         filebotExecutorService.checkPossiblesNewFilebotExecution();
     }
 
-    // @Scheduled(cron = "0 0 * * * *")
-    @Scheduled(fixedDelay = 60000)
-    public void runFilebotParser() {
-        filebotParserService.run();
-    }
 }
