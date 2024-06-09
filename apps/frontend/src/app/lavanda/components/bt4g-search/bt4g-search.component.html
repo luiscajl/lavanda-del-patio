@@ -1,0 +1,117 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+
+      <!-- <form class="form-group-search" [formGroup]="form">
+        <div class="field">
+          <label htmlFor="lastname1" class="p-sr-only">Search</label>
+          <input pInputText formControlName="search" id="lastname1" type="text" placeholder="Search" />
+        </div>
+        <button pButton label="Submit" (click)="search()"></button>
+      </form> -->
+
+      <!-- <ng-template pTemplate="header"> -->
+      <div class="flex justify-between items-center w-full">
+        <div class="flex gap-2">
+          <p-dropdown [options]="bt4gSearchsNames" [(ngModel)]="selectedSearch" placeholder="Select a Bt4g Search Batch"
+            [showClear]="true" (onChange)="onChangeSearch($event)"></p-dropdown>
+          <button pButton pRipple label="Delete Search" class="p-button-danger" (click)="removeSearch()"></button>
+        </div>
+        <div class="ml-auto flex gap-2">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input type="search" [(ngModel)]="searchName" pInputText placeholder="Search by Name">
+          </span>
+          <button pButton pRipple label="Search" (click)="search()"></button>
+
+        </div>
+      </div>
+
+      <!-- </ng-template> -->
+
+      <h5>DataView</h5>
+
+      <div class="card px-12 py-12" *ngIf="searchData.length > 0">
+        <p-table styleClass="p-datatable-gridlines" #dt [value]="searchData" [columns]="cols" responsiveLayout="scroll"
+          [rows]="50" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [(selection)]="searchData" selectionMode="multiple" [rowHover]="true" dataKey="id">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="name"> Name <p-sortIcon field="name"></p-sortIcon> </th>
+              <th pSortableColumn="fileSize"> File Size <p-sortIcon field="fileSize"></p-sortIcon> </th>
+              <th pSortableColumn="createTime"> Create Time <p-sortIcon field="createTime"></p-sortIcon> </th>
+              <th pSortableColumn="updated">Updated<p-sortIcon field="updated"></p-sortIcon></th>
+              <th pSortableColumn="seeders"> Seeders<p-sortIcon field="createTime"></p-sortIcon> </th>
+              <th pSortableColumn="leechers">Leechers<p-sortIcon field="leechers"></p-sortIcon></th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-search let-expanded="expanded">
+            <tr>
+              <td style="width: 30%; min-width: 20rem">
+                <span class="p-column-title">Name</span>
+                {{ search.name }}
+              </td>
+              <td style="width: 20%; min-width: 10rem">
+                <span class="p-column-title">File Size</span>
+                {{ search.fileSize }}
+              </td>
+              <td style="width: 20%; min-width: 10rem">
+                <span class="p-column-title">File Size</span>
+                {{ search.createTime | date: "YYYY-MM-dd" }}
+              </td>
+              <td style="width: 20%; min-width: 10rem">
+                <span class="p-column-title">Updated</span>
+                {{ search.updated }}
+              </td>
+              <td style="width: 10%; min-width: 3rem">
+                <span class="p-column-title">Seeders</span>
+                {{ search.seeders }}
+              </td>
+              <td style="width: 10%; min-width: 3rem">
+                <span class="p-column-title">Leechers</span>
+                {{ search.leechers }}
+              </td>
+              <td>
+                <div class="flex">
+                  <button pButton pRipple icon="pi pi-download" pTooltip="Send to Qbittorrent"
+                    (click)="sendToQbittorrent(search)" [showDelay]="600"
+                    class="p-button-rounded p-button-danger mr-2"></button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-executor>
+            <tr>
+              <td colspan="9">
+                <div class="p-3">
+                  <p-table [value]="executor.files" dataKey="file" responsiveLayout="scroll">
+                    <ng-template pTemplate="header">
+            <tr>
+              <th>Files</th>
+              <th>New Files</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-executorFile>
+            <tr>
+              <td>{{ executorFile.file }}</td>
+              <td>{{ executorFile.newFile }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6">No files founded</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      </td>
+      </tr>
+      </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+</div>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

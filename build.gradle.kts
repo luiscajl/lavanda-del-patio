@@ -2,6 +2,7 @@
 allprojects {
     repositories {
         mavenCentral()
+        mavenLocal()
         maven {
             url = uri("https://maven.pkg.github.com/luiscajl/*")
             credentials {

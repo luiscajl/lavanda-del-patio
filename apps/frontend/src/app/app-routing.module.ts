@@ -14,15 +14,21 @@ const routes: Routes = [
     path: 'admin', component: AppLayoutComponent,
     children: [
       { path: 'executors', loadChildren: () => import('./lavanda/components/admin-executor/admin-executor.module').then(m => m.AdminExecutorModule) },
-      { path: 'reports', loadChildren: () => import('./lavanda/components/admin-report/admin-report.module').then(m => m.AdminReportModule) },
-      { path: 'sync', loadChildren: () => import('./lavanda/components/admin-sync/admin-sync.module').then(m => m.AdminSyncModule) },
     ]
   },
   {
-    path: 'elastictranscoder', component: AppLayoutComponent,
+    path: 'bt4g', component: AppLayoutComponent,
     children: [
-      { path: 'media', loadChildren: () => import('./lavanda/components/elastictranscoder-media/elastictranscoder-media.module').then(m => m.ElasticTranscoderMediaModule) },
-      { path: 'progress', loadChildren: () => import('./lavanda/components/elastictranscoder-progress/elastictranscoder-progress.module').then(m => m.ElasticTranscoderProgressModule) },
+      { path: '', loadChildren: () => import('./lavanda/components/bt4g/bt4g.module').then(m => m.Bt4gModule) },
+      { path: 'search', loadChildren: () => import('./lavanda/components/bt4g-search/bt4g-search.module').then(m => m.Bt4gSearchModule) },
+    ]
+  },
+  {
+    path: 'wolfmax4k', component: AppLayoutComponent,
+    children: [
+      { path: 'shows-720p', loadChildren: () => import('./lavanda/components/wolfmax4k/wolfmax4k.module').then(m => m.Wolfmax4kModule) },
+      { path: 'shows-1080p', loadChildren: () => import('./lavanda/components/wolfmax4k/wolfmax4k.module').then(m => m.Wolfmax4kModule) },
+      { path: 'films-1080p', loadChildren: () => import('./lavanda/components/wolfmax4k/wolfmax4k.module').then(m => m.Wolfmax4kModule) },
     ]
   },
   { path: 'notfound', component: NotfoundComponent },

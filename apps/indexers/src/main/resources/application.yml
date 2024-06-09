@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: lavanda-indexer
+  profiles:
+    active: dev
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
