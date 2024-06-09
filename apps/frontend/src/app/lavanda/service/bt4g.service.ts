@@ -22,29 +22,29 @@ export class Bt4gService {
     if (name) {
       params = params.set('name', name);
     }
-    return this.httpClient.get<Pageable>(environment.apiUrl2 + 'bt4g', { params });
+    return this.httpClient.get<Pageable>(environment.apiUrl + 'bt4g', { params });
   }
 
   getAllSearch(): Observable<Search[]> {
-    return this.httpClient.get<Search[]>(environment.apiUrl2 + 'bt4g/search');
+    return this.httpClient.get<Search[]>(environment.apiUrl + 'bt4g/search');
   }
 
   deleteBt4gSearch(id: string): Observable<any> {
-    return this.httpClient.delete<any>(environment.apiUrl2 + 'bt4g/search/' + id);
+    return this.httpClient.delete<any>(environment.apiUrl + 'bt4g/search/' + id);
   }
 
   search(name: string): Observable<Bt4g[]> {
     let bt4g: Bt4g = { name }
-    return this.httpClient.post<Bt4g[]>(environment.apiUrl2 + 'bt4g/search', bt4g);
+    return this.httpClient.post<Bt4g[]>(environment.apiUrl + 'bt4g/search', bt4g);
   }
 
   searchBatch(name: string): Observable<any> {
     let bt4g: Bt4g = { name }
-    return this.httpClient.post<any>(environment.apiUrl2 + 'bt4g/search/batch', bt4g);
+    return this.httpClient.post<any>(environment.apiUrl + 'bt4g/search/batch', bt4g);
   }
 
   updateToDownloaded(id: string): Observable<any> {
-    return this.httpClient.put<any>(environment.apiUrl2 + 'bt4g/' + id, {});
+    return this.httpClient.put<any>(environment.apiUrl + 'bt4g/' + id, {});
   }
 
 }
