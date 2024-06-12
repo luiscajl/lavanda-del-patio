@@ -24,6 +24,14 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/automated-download-shows-0.2.4/automated-download-shows-0.2.4.tgz
     version: 0.2.4
+  bt4g-downloader:
+  - apiVersion: v2
+    created: "2024-06-12T16:37:20.362445403Z"
+    digest: 539a7f82a9f00dcfbed04b0b5076c949aec32c3045cd4880ddbc97c66067221e
+    name: bt4g-downloader
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/bt4g-downloader-0.0.1/bt4g-downloader-0.0.1.tgz
+    version: 0.0.1
   elastictranscoder:
   - apiVersion: v2
     created: "2024-03-31T07:16:29.433544768Z"
@@ -134,6 +142,14 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/frontend-0.1.7/frontend-0.1.7.tgz
     version: 0.1.7
+  indexers:
+  - apiVersion: v2
+    created: "2024-06-12T16:37:20.544509114Z"
+    digest: 92f767c6969cb183a06f68b911c4afc384910ae1fb897e691257070cede7cd46
+    name: indexers
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/indexers-0.0.1/indexers-0.0.1.tgz
+    version: 0.0.1
   jackett:
   - apiVersion: v2
     created: "2024-03-31T07:16:30.054707427Z"
@@ -262,4 +278,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-04-24T09:43:38.724292789Z"
+generated: "2024-06-12T16:37:20.544564791Z"
