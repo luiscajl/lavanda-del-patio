@@ -34,7 +34,7 @@ public class Bt4gCallerService {
 
     private final String BT4ORG_URL = "https://bt4gprx.com";
 
-    @Value("{flaresolverr.url}")
+    @Value("${flaresolverr.url}")
     private String FLARESOLVERR_URL;
 
     private final MagnetService magnetService;
