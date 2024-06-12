@@ -15,6 +15,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -33,7 +34,8 @@ public class Bt4gCallerService {
 
     private final String BT4ORG_URL = "https://bt4gprx.com";
 
-    private final String FLARESOLVERR_URL = "http://localhost:8191/v1";
+    @Value("{flaresolverr.url}")
+    private String FLARESOLVERR_URL;
 
     private final MagnetService magnetService;
 
