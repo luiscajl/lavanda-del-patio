@@ -37,9 +37,9 @@ export class AppMenuComponent implements OnInit {
       {
         label: 'Wolfmax4k',
         items: [
-          { label: 'Shows 720p', icon: 'pi pi-fw pi-arrow-right', routerLink: ['/wolfmax4k/shows-720p'] },
-          { label: 'Shows 1080p', icon: 'pi pi-fw pi-arrow-right', routerLink: ['/wolfmax4k/shows-1080p'] },
-          { label: 'Films 1080p', icon: 'pi pi-fw pi-arrow-right', routerLink: ['/wolfmax4k/films-1080p'] },
+          { label: 'Shows 720p', icon: 'pi pi-fw pi-arrow-right', routerLink: ['/wolfmax4k/shows/720p'] },
+          { label: 'Shows 1080p', icon: 'pi pi-fw pi-arrow-right', routerLink: ['/wolfmax4k/shows/1080p'] },
+          { label: 'Films 1080p', icon: 'pi pi-fw pi-arrow-right', routerLink: ['/wolfmax4k/films/1080p'] },
         ]
       },
     ];

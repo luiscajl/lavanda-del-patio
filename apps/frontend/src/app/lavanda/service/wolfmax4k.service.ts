@@ -14,10 +14,10 @@ export class Wolfmax4kService {
   constructor(private httpClient: HttpClient) { }
 
 
-  getAllByPageable(page: number, pageSize: number, name?: string): Observable<Pageable> {
+  getAllByPageable(page: number, pageSize: number, type: string, quality: string, name?: string): Observable<Pageable> {
     let params = new HttpParams();
     params = params.set('pageSize', pageSize);
     params = params.set('page', page);
-    return this.httpClient.get<Pageable>(environment.apiUrl + 'indexer/wolfmax4k/FILM/FULL_HD', { params });
+    return this.httpClient.get<Pageable>(environment.apiUrl + 'indexer/wolfmax4k/' + type + '/' + quality, { params });
   }
 }

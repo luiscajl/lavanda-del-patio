@@ -10,7 +10,18 @@ import { Bt4gService } from '../../service/bt4g.service';
 import { Bt4g } from '../../api/bt4g.model';
 import { Wolfmax4kService } from '../../service/wolfmax4k.service';
 import { Index } from '../../api/index.model';
+import { ActivatedRoute } from '@angular/router';
 
+export enum Type {
+  TV_SHOW = 'TV_SHOW',
+  FILM = 'FILM'
+}
+
+export enum Quality {
+  HD = 'HD',
+  FULL_HD = 'FULL_HD',
+  ULTRA_HD = 'ULTRA_HD'
+}
 
 @Component({
   templateUrl: './wolfmax4k.component.html',
@@ -31,12 +42,23 @@ export class Wolfmax4kComponent implements OnInit, AfterViewInit {
   totalElements: number = 0;
   layout: string = 'grid';
 
-  constructor(private wolfmax4kService: Wolfmax4kService, private bt4gService: Bt4gService) { }
+  constructor(
+    private wolfmax4kService: Wolfmax4kService,
+    private bt4gService: Bt4gService,
+    private route: ActivatedRoute
+  ) {
+
+  }
 
 
   ngOnInit() {
-    this.wolfmax4kService.getAllByPageable(this.pageNumber, this.pageSize).subscribe(data => this.indexes = data.content);
-    //  "https://wolfmax4k.com/assets/u/p/f/thumbs/nefarious-cuando-habla-el-diablo--2023---BluRay-1080p_29_1029.jpg"
+    this.route.params.subscribe(params => {
+
+      const type = this.mapToType(params['type']);
+      const quality = this.mapToQuality(params['quality']);
+
+      this.wolfmax4kService.getAllByPageable(this.pageNumber, this.pageSize, type.toString(), quality.toString()).subscribe(data => this.indexes = data.content);
+    });
 
     this.sourceCities = [
       { name: 'San Francisco', code: 'SF' },
@@ -63,7 +85,29 @@ export class Wolfmax4kComponent implements OnInit, AfterViewInit {
       { label: 'Price Low to High', value: 'price' }
     ];
   }
+  mapToType(type: string): Type {
+    switch (type) {
+      case 'shows':
+        return Type.TV_SHOW;
+      case 'films':
+        return Type.FILM;
+      default:
+        throw new Error('Invalid type');
+    }
+  }
 
+  mapToQuality(quality: string): Quality {
+    switch (quality) {
+      case '720p':
+        return Quality.HD;
+      case '1080p':
+        return Quality.FULL_HD;
+      case '4k':
+        return Quality.ULTRA_HD;
+      default:
+        throw new Error('Invalid quality');
+    }
+  }
   onSortChange(event: any) {
     const value = event.value;
 

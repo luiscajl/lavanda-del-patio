@@ -10,7 +10,6 @@ import java.util.Date;
 
 @Data
 @Document("index-wolfmax4k")
-@ToString
 public class Index {
     @Id
     private String id;

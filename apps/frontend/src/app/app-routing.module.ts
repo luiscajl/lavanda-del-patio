@@ -26,9 +26,7 @@ const routes: Routes = [
   {
     path: 'wolfmax4k', component: AppLayoutComponent,
     children: [
-      { path: 'shows-720p', loadChildren: () => import('./lavanda/components/wolfmax4k/wolfmax4k.module').then(m => m.Wolfmax4kModule) },
-      { path: 'shows-1080p', loadChildren: () => import('./lavanda/components/wolfmax4k/wolfmax4k.module').then(m => m.Wolfmax4kModule) },
-      { path: 'films-1080p', loadChildren: () => import('./lavanda/components/wolfmax4k/wolfmax4k.module').then(m => m.Wolfmax4kModule) },
+      { path: ':type/:quality', loadChildren: () => import('./lavanda/components/wolfmax4k/wolfmax4k.module').then(m => m.Wolfmax4kModule) },
     ]
   },
   { path: 'notfound', component: NotfoundComponent },

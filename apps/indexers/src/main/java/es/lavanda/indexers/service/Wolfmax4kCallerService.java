@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -30,7 +31,8 @@ public class Wolfmax4kCallerService {
     private final String WOLFMAX4K_SHOWS_1080P = "/series/1080p/";
     private final String WOLFMAX4K_SHOWS_720P = "/series/720p/";
 
-    private final String FLARESOLVERR_URL = "http://localhost:8191/v1";
+    @Value("${flaresolverr.url}")
+    private String FLARESOLVERR_URL;
 
     private final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
 
