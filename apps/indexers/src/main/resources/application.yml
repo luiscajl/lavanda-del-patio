@@ -1,9 +1,14 @@
 spring:
   application:
-    name: lavanda-indexer
+    name: lavanda-indexers
   profiles:
     active: dev
   data:
     web:
       pageable:
         one-indexed-parameters: true
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true

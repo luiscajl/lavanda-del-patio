@@ -3,8 +3,12 @@ spring:
     name: lavanda-bt4g-downloader
   profiles:
     active: dev
-
   data:
     web:
       pageable:
         one-indexed-parameters: true
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
