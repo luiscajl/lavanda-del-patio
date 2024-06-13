@@ -13,12 +13,15 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import es.lavanda.lib.common.model.flaresolverr.input.FlaresolverrIDTO;
 import es.lavanda.lib.common.model.flaresolverr.output.FlaresolverrODTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
@@ -125,13 +128,25 @@ public class Wolfmax4kCallerService {
         return indexes;
     }
 
+    private RestClient configureRestClient() {
+        RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
+        return RestClient.create(restTemplate);
+    }
+
+    private ClientHttpRequestFactory clientHttpRequestFactory() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(60000); // 60 seconds
+        factory.setReadTimeout(120000);    // 120 seconds
+        return factory;
+    }
+
     private FlaresolverrIDTO callWithFlaresolverr(String url) {
         log.info("Calling to flaresolverr for url {}", url);
         FlaresolverrODTO flaresolverrODTO = new FlaresolverrODTO();
         flaresolverrODTO.setCmd("request.get");
         flaresolverrODTO.setMaxTimeout(600000);
         flaresolverrODTO.setUrl(url);
-        RestClient restClient = RestClient.create();
+        RestClient restClient = configureRestClient();
         return restClient
                 .post()
                 .uri(FLARESOLVERR_URL)
