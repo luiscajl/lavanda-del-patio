@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Data
-@Document("index-wolfmax4k")
+@Document("indexes")
 public class Index {
     @Id
     private String id;

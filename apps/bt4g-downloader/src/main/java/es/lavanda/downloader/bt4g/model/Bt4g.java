@@ -3,6 +3,7 @@ package es.lavanda.downloader.bt4g.model;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ public class Bt4g {
 
     private String magnet;
 
+    @Indexed(unique = true)
     private String magnetHash;
 
     private Date createTime;
