@@ -30,7 +30,7 @@ public class Wolfmax4kService {
     }
 
 
-//    @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.HOURS)
+    @Scheduled(fixedDelay = 4, timeUnit = TimeUnit.HOURS)
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
         List<Index> indexes = wolfmax4kCallerService.getAllFromAllPages();
