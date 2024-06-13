@@ -38,7 +38,7 @@ public class Wolfmax4kCallerWithThreadsService {
     @Value("${flaresolverr.url}")
     private String FLARESOLVERR_URL;
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(20);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
     public List<Index> getAllFromAllPages() {
         List<Future<List<Index>>> futures = new ArrayList<>();
