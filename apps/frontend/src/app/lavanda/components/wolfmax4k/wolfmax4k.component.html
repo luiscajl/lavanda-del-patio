@@ -10,7 +10,7 @@
           <div class="surface-50 flex justify-content-center border-round p-3">
             <div class="relative mx-auto">
               <img class="border-round w-full" [src]="product.image" [alt]="product.name | slice:0:20"
-                [pTooltip]="product.name!" style="max-width: 200px;" />
+                [pTooltip]="product.indexName!" style="max-width: 200px;" />
               <!-- <p-tag [value]="product.name!" class="absolute" [style.left.px]="4" [style.top.px]="4" /> -->
             </div>
           </div>
@@ -18,7 +18,7 @@
             <div class="flex flex-row justify-content-between align-items-start gap-2">
               <div>
                 <!-- <span class="font-medium text-secondary text-sm">{{ product.name }}</span> -->
-                <div class="text-lg font-medium text-900 mt-1" [pTooltip]="product.name!">{{ product.name | slice:0:30}}
+                <div class="text-lg font-medium text-900 mt-1" [pTooltip]="product.indexName!">{{ product.name | slice:0:30}}
                 </div>
               </div>
               <!-- <div class="surface-100 p-1" style="border-radius: 30px">
