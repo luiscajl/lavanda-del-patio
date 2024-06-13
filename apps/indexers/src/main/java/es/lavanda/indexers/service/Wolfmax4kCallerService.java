@@ -38,14 +38,18 @@ public class Wolfmax4kCallerService {
 
     private final String HTTPS = "https:";
 
-
-    public List<Index> getAllFromAllPages() {
-        List<Index> allWolfmax4k = new ArrayList<>();
-        allWolfmax4k.addAll(getIndexFromPage(WOLFMAX4K_FILMS_1080P, Index.Type.FILM, Index.Quality.FULL_HD));
-        allWolfmax4k.addAll(getIndexFromMultiPage(WOLFMAX4K_SHOWS_1080P, Index.Type.TV_SHOW, Index.Quality.FULL_HD));
-        allWolfmax4k.addAll(getIndexFromMultiPage(WOLFMAX4K_SHOWS_720P, Index.Type.TV_SHOW, Index.Quality.HD));
-        return allWolfmax4k;
+    public List<Index> getIndexFilmsFullHd() {
+        return getIndexFromPage(WOLFMAX4K_FILMS_1080P, Index.Type.FILM, Index.Quality.FULL_HD);
     }
+
+    public List<Index> getIndexShowsFullHd() {
+        return getIndexFromMultiPage(WOLFMAX4K_SHOWS_1080P, Index.Type.TV_SHOW, Index.Quality.FULL_HD);
+    }
+
+    public List<Index> getIndexShowsHd() {
+        return getIndexFromMultiPage(WOLFMAX4K_SHOWS_720P, Index.Type.TV_SHOW, Index.Quality.HD);
+    }
+
 
     private List<Index> getIndexFromPage(String path, Index.Type type, Index.Quality quality) {
         log.info("Calling To Wolfmax4K with url path {}", path);
@@ -53,23 +57,28 @@ public class Wolfmax4kCallerService {
         String html = callWithFlaresolverr(WOLFMAX4K_URL + path).getSolution().getResponse();
         Document document = Jsoup.parse(html);
         Elements colLg2Elements = document.getElementsByClass("col-lg-2");
-        for (Element colLg2 : colLg2Elements) {
-            if (Objects.requireNonNull(colLg2.children().first()).tagName().equals("a")) {
-                Index index = new Index();
-                index.setName(colLg2.getElementsByTag("h3").text());
-                String url = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
-                index.setUrl(WOLFMAX4K_URL + url);
-                String htmlIndividual = callWithFlaresolverr(index.getUrl()).getSolution().getResponse();
-                Document documentIndividual = Jsoup.parse(htmlIndividual);
-                index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").first().text());
-                index.setDomain(DOMAIN_WOLFMAX4K);
-                String imageUrl = Objects.requireNonNull(colLg2.getElementsByClass("img-fluid rounded-1").first()).attr("src");
-                index.setImage(getByteArrayFromImageURL(HTTPS + imageUrl));
-                index.setQuality(quality);
-                index.setCreateTime(new Date());
-                index.setType(type);
-                indexes.add(index);
+        try {
+            for (Element colLg2 : colLg2Elements) {
+                if (Objects.requireNonNull(colLg2.children().first()).tagName().equals("a")) {
+                    Index index = new Index();
+                    index.setName(colLg2.getElementsByTag("h3").text());
+                    String url = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
+                    index.setUrl(WOLFMAX4K_URL + url);
+                    String htmlIndividual = callWithFlaresolverr(index.getUrl()).getSolution().getResponse();
+                    Document documentIndividual = Jsoup.parse(htmlIndividual);
+                    index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").first().text());
+                    index.setDomain(DOMAIN_WOLFMAX4K);
+                    String imageUrl = Objects.requireNonNull(colLg2.getElementsByClass("img-fluid rounded-1").first()).attr("src");
+                    index.setImage(getByteArrayFromImageURL(HTTPS + imageUrl));
+                    index.setQuality(quality);
+                    index.setCreateTime(new Date());
+                    index.setType(type);
+                    indexes.add(index);
+                }
             }
+        } catch (Exception e) {
+            log.error("Error getIndexFromPage for exception", e);
+            return indexes;
         }
         log.info("Finish To call Wolfmax4K with url {}", path);
         return indexes;
@@ -81,31 +90,36 @@ public class Wolfmax4kCallerService {
         String html = callWithFlaresolverr(WOLFMAX4K_URL + path).getSolution().getResponse();
         Document document = Jsoup.parse(html);
         Elements colLg2Elements = document.getElementsByClass("col-lg-2");
-        for (Element colLg2 : colLg2Elements) {
-            if (Objects.requireNonNull(colLg2.children().first()).tagName().equals("a")) {
-                String urlForTemps = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
-                String htmlShowWithTemps = callWithFlaresolverr(WOLFMAX4K_URL + urlForTemps).getSolution().getResponse();
-                Document documentShowWithTemps = Jsoup.parse(htmlShowWithTemps);
-                Elements tempElements = documentShowWithTemps.getElementsByClass("row gx-lg-4 gx-0");
-                for (Element tempElement : tempElements) {
-                    Index index = new Index();
-                    index.setName(colLg2.getElementsByTag("h3").text());
-                    Elements elementsa = tempElement.getElementsByTag("a");
-                    for (Element elementA : elementsa) {
-                        String htmlShowChapter = callWithFlaresolverr(WOLFMAX4K_URL + elementA.attr("href")).getSolution().getResponse();
-                        Document documentShowChapter = Jsoup.parse(htmlShowChapter);
-                        index.setUrl(WOLFMAX4K_URL + elementA.attr("href"));
-                        index.setIndexName(Objects.requireNonNull(documentShowChapter.getElementsByClass("h3 fw-semibold mb-1").first()).text());
-                        index.setDomain(DOMAIN_WOLFMAX4K);
-                        String imageUrl = Objects.requireNonNull(documentShowChapter.getElementsByClass("img-fluid rounded-1").first()).attr("src");
-                        index.setImage(getByteArrayFromImageURL(HTTPS + imageUrl));
-                        index.setQuality(quality);
-                        index.setCreateTime(new Date());
-                        index.setType(type);
-                        indexes.add(index);
+        try {
+            for (Element colLg2 : colLg2Elements) {
+                if (Objects.requireNonNull(colLg2.children().first()).tagName().equals("a")) {
+                    String urlForTemps = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
+                    String htmlShowWithTemps = callWithFlaresolverr(WOLFMAX4K_URL + urlForTemps).getSolution().getResponse();
+                    Document documentShowWithTemps = Jsoup.parse(htmlShowWithTemps);
+                    Elements tempElements = documentShowWithTemps.getElementsByClass("row gx-lg-4 gx-0");
+                    for (Element tempElement : tempElements) {
+                        Index index = new Index();
+                        index.setName(colLg2.getElementsByTag("h3").text());
+                        Elements elementsa = tempElement.getElementsByTag("a");
+                        for (Element elementA : elementsa) {
+                            String htmlShowChapter = callWithFlaresolverr(WOLFMAX4K_URL + elementA.attr("href")).getSolution().getResponse();
+                            Document documentShowChapter = Jsoup.parse(htmlShowChapter);
+                            index.setUrl(WOLFMAX4K_URL + elementA.attr("href"));
+                            index.setIndexName(Objects.requireNonNull(documentShowChapter.getElementsByClass("h3 fw-semibold mb-1").first()).text());
+                            index.setDomain(DOMAIN_WOLFMAX4K);
+                            String imageUrl = Objects.requireNonNull(documentShowChapter.getElementsByClass("img-fluid rounded-1").first()).attr("src");
+                            index.setImage(getByteArrayFromImageURL(HTTPS + imageUrl));
+                            index.setQuality(quality);
+                            index.setCreateTime(new Date());
+                            index.setType(type);
+                            indexes.add(index);
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            log.error("Error getIndexFromMultiPage for exception", e);
+            return indexes;
         }
         log.info("Finish To call Wolfmax4K with url {}", path);
         return indexes;
