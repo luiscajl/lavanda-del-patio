@@ -7,6 +7,8 @@ spring:
     web:
       pageable:
         one-indexed-parameters: true
+    mongodb:
+      auto-index-creation: true
 management:
   endpoint:
     health:
