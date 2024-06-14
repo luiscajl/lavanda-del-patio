@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface IndexRepository extends MongoRepository<Index, String> {
 
     Page<Index> findAllByTypeAndQualityAndDomain(Pageable pageable, Index.Type type, Index.Quality quality, String domain);
+
+    boolean existsByIndexName(String indexName);
 }

@@ -29,23 +29,21 @@ public class Wolfmax4kService {
         return indexRepository.findAllByTypeAndQualityAndDomain(pageable, type, quality, DOMAIN_WOLFMAX4K);
     }
 
-    @Scheduled(fixedDelay = 4, timeUnit = TimeUnit.HOURS)
+    @Scheduled(fixedDelay = 15, timeUnit = TimeUnit.MINUTES)
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
-        List<Index> indexesFilmsFullHd = wolfmax4kCallerService.getIndexFilmsFullHd();
-        List<Index> indexesShowsFullHd = wolfmax4kCallerService.getIndexShowsFullHd();
-        List<Index> indexesShowsHd = wolfmax4kCallerService.getIndexShowsHd();
-        saveList(indexesFilmsFullHd);
-        saveList(indexesShowsFullHd);
-        saveList(indexesShowsHd);
+        saveList(wolfmax4kCallerService.getIndexForMainPage());
         log.info("Finish Wolfmax4k Indexes");
     }
 
     private void saveList(List<Index> indexes) {
         for (Index index : indexes) {
             try {
-                log.info("Trying to save index {}", index.toString());
-                indexRepository.save(index);
+                log.debug("Checking if exist index {}", index);
+                if (Boolean.FALSE.equals(indexRepository.existsByIndexName(index.getIndexName()))) {
+                    log.info("Trying to save new index {}", index);
+                    indexRepository.save(index);
+                }
             } catch (Exception e) {
                 log.error("Can't save object by:", e);
             }

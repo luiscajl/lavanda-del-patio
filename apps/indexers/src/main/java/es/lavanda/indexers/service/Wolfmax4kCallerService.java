@@ -41,6 +41,36 @@ public class Wolfmax4kCallerService {
 
     private final String HTTPS = "https:";
 
+
+    public List<Index> getIndexForMainPage() {
+
+        List<Index> indexes = new ArrayList<>();
+        String html = callWithFlaresolverr(WOLFMAX4K_URL).getSolution().getResponse();
+        Document document = Jsoup.parse(html);
+        Elements layoutSectionElements = document.getElementsByClass("layout-section");
+        indexes.addAll(getNewReleases(layoutSectionElements, "Peliculas bluray 1080p", Index.Type.FILM, Index.Quality.FULL_HD));
+        indexes.addAll(getNewReleases(layoutSectionElements, "Series 720p", Index.Type.TV_SHOW, Index.Quality.HD));
+        indexes.addAll(getNewReleases(layoutSectionElements, "Series 1080p", Index.Type.TV_SHOW, Index.Quality.FULL_HD));
+        return indexes;
+    }
+
+    private List<Index> getNewReleases(Elements elements, String filter, Index.Type type, Index.Quality quality) {
+        List<Index> indexes = new ArrayList<>();
+        try {
+            for (Element element : elements) {
+                if (Objects.nonNull(element.getElementsByClass("layout-title").first())
+                        && Objects.requireNonNull(element.getElementsByClass("layout-title").first()).text().equals(filter)) {
+                    log.info("Founded elements on {}", filter);
+                    return getIndexFromColLg2(element.getElementsByClass("col-lg-2"), type, quality);
+                }
+            }
+        } catch (NullPointerException e) {
+            log.error("Exception by nullPointer ", e);
+            return indexes;
+        }
+        return indexes;
+    }
+
     public List<Index> getIndexFilmsFullHd() {
         return getIndexFromPage(WOLFMAX4K_FILMS_1080P, Index.Type.FILM, Index.Quality.FULL_HD);
     }
@@ -53,6 +83,33 @@ public class Wolfmax4kCallerService {
         return getIndexFromMultiPage(WOLFMAX4K_SHOWS_720P, Index.Type.TV_SHOW, Index.Quality.HD);
     }
 
+    private List<Index> getIndexFromColLg2(Elements colLg2Elements, Index.Type type, Index.Quality quality) {
+        List<Index> indexes = new ArrayList<>();
+        try {
+            for (Element colLg2 : colLg2Elements) {
+                if (Objects.requireNonNull(colLg2.children().first()).tagName().equals("a")) {
+                    Index index = new Index();
+                    index.setName(colLg2.getElementsByTag("h3").text());
+                    String url = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
+                    index.setUrl(WOLFMAX4K_URL + url);
+                    String htmlIndividual = callWithFlaresolverr(index.getUrl()).getSolution().getResponse();
+                    Document documentIndividual = Jsoup.parse(htmlIndividual);
+                    index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").first().text());
+                    index.setDomain(DOMAIN_WOLFMAX4K);
+                    String imageUrl = Objects.requireNonNull(colLg2.getElementsByClass("img-fluid rounded-1").first()).attr("src");
+                    index.setImage(getByteArrayFromImageURL(HTTPS + imageUrl));
+                    index.setQuality(quality);
+                    index.setCreateTime(new Date());
+                    index.setType(type);
+                    indexes.add(index);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error getIndexFromColLg2 for exception", e);
+            return indexes;
+        }
+        return indexes;
+    }
 
     private List<Index> getIndexFromPage(String path, Index.Type type, Index.Quality quality) {
         log.info("Calling To Wolfmax4K with url path {}", path);
