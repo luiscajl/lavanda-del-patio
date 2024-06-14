@@ -38,16 +38,24 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.sp.show();
     this.initializeForm();
-    // this.bt4gservice.search("name").subscribe(response => {
-    //   this.searchData = response;
-    // });
+    this.reloadSearch();
+  }
+
+  reloadSearch() {
+    this.sp.show();
     this.bt4gservice.getAllSearch().subscribe(response => {
       this.bt4gSearchs = response;
       this.bt4gSearchsNames = response.map(search => search.name);
       this.sp.hide();
-    });
+      if (this.bt4gSearchs.length === 0) {
+        this.messageService.add({ severity: 'info', detail: 'No data found', life: 3000 });
+      }
+    },
+      error => {
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+        this.sp.hide()
+      });
   }
 
   search() {
@@ -90,12 +98,13 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
 
   removeSearch() {
     const selectedObject = this.bt4gSearchs.find(search => search.name === this.selectedSearch);
-
-    this.bt4gservice.deleteBt4gSearch(selectedObject?.id!).subscribe(response => {
-      this.bt4gservice.getAllSearch().subscribe(response => {
-        // this.selectSearch = response;
-        console.log(response);
+    this.sp.show();
+    this.bt4gservice.deleteBt4gSearch(selectedObject?.id!).subscribe(
+      response => {
+        this.reloadSearch();
+      },
+      error => {
+        this.reloadSearch();
       });
-    });
   }
 }

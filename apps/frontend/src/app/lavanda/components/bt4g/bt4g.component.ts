@@ -1,21 +1,18 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Subscription, debounceTime, take } from 'rxjs';
-import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { FilebotExecutor, FilebotExecutorAction, FilebotExecutorCategory, FilebotExecutorStatus } from '../../api/filebot-executor.model';
-import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Bt4gService } from '../../service/bt4g.service';
-import { Bt4g } from '../../api/bt4g.model';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MessageService } from 'primeng/api';
+import { debounceTime } from 'rxjs';
+import { Bt4g } from '../../api/bt4g.model';
+import { FilebotExecutorStatus } from '../../api/filebot-executor.model';
+import { Bt4gService } from '../../service/bt4g.service';
 
 
 @Component({
   templateUrl: './bt4g.component.html',
   providers: [MessageService]
 })
-export class Bt4gComponent implements OnInit, AfterViewInit {
+export class Bt4gComponent implements OnInit {
 
   form!: FormGroup;
   status: String[] = [];
@@ -37,11 +34,10 @@ export class Bt4gComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.initializeForm();
+    this.search();
+  }
 
-    this.bt4gservice.getAllByPageable(this.pageNumber, this.pageSize).subscribe(response => {
-      this.data = response.content;
-      this.totalElements = response.totalElements
-    });
+  initializeForm() {
     this.form = new UntypedFormGroup({
       name: new UntypedFormControl(''),
     });
@@ -50,34 +46,27 @@ export class Bt4gComponent implements OnInit, AfterViewInit {
     ).subscribe(changes => this.formChanged(changes));
   }
 
-
-
-  initializeForm() {
-    this.form = new UntypedFormGroup({
-      search: new UntypedFormControl(''),
-    });
-    this.form = new FormGroup({
-      search: new FormControl<string | null>(null),
-    });
-  }
   search(name?: string) {
     this.sp.show();
-    this.bt4gservice.getAllByPageable(this.pageNumber, this.pageSize, name).subscribe(response => {
-      this.data = response.content;
-      this.sp.hide();
-    });
+    this.bt4gservice.getAllByPageable(this.pageNumber, this.pageSize, name).subscribe(
+      response => {
+        this.data = response.content;
+        this.totalElements = response.totalElements;
+        this.sp.hide();
+        if (this.data.length === 0) {
+          this.messageService.add({ severity: 'info', detail: 'No data found', life: 3000 });
+        }
+      },
+      error => {
+        this.sp.hide()
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      });
   }
 
 
-  ngAfterViewInit() {
-
-  }
   sendToQbittorrent(search: Bt4g) {
     console.log("Send to qbittorrent" + search);
-
   }
-
-
 
   formChanged(currentValue: any) {
     let name = this.form!.get('name')!.value;

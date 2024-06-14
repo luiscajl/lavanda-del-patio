@@ -1,16 +1,6 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-
-      <!-- <form class="form-group-search" [formGroup]="form">
-        <div class="field">
-          <label htmlFor="lastname1" class="p-sr-only">Search</label>
-          <input pInputText formControlName="search" id="lastname1" type="text" placeholder="Search" />
-        </div>
-        <button pButton label="Submit" (click)="search()"></button>
-      </form> -->
-
-      <!-- <ng-template pTemplate="header"> -->
       <div class="flex justify-between items-center w-full">
         <div class="flex gap-2">
           <p-dropdown [options]="bt4gSearchsNames" [(ngModel)]="selectedSearch" placeholder="Select a Bt4g Search Batch"
@@ -26,11 +16,6 @@
 
         </div>
       </div>
-
-      <!-- </ng-template> -->
-
-      <h5>DataView</h5>
-
       <div class="card px-12 py-12" *ngIf="searchData.length > 0">
         <p-table styleClass="p-datatable-gridlines" #dt [value]="searchData" [columns]="cols" responsiveLayout="scroll"
           [rows]="50" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -115,3 +100,5 @@
 </div>
 </div>
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+<p-toast></p-toast>

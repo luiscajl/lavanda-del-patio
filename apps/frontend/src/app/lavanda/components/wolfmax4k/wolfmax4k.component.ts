@@ -1,16 +1,11 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Subscription, debounceTime, take } from 'rxjs';
-import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { FilebotExecutor, FilebotExecutorAction, FilebotExecutorCategory, FilebotExecutorStatus } from '../../api/filebot-executor.model';
-import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Bt4gService } from '../../service/bt4g.service';
-import { Bt4g } from '../../api/bt4g.model';
-import { Wolfmax4kService } from '../../service/wolfmax4k.service';
-import { Index } from '../../api/index.model';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MessageService } from 'primeng/api';
+import { Index } from '../../api/index.model';
+import { Bt4gService } from '../../service/bt4g.service';
+import { Wolfmax4kService } from '../../service/wolfmax4k.service';
 
 export enum Type {
   TV_SHOW = 'TV_SHOW',
@@ -25,66 +20,60 @@ export enum Quality {
 
 @Component({
   templateUrl: './wolfmax4k.component.html',
+  styleUrls: ['./wolfmax4k.component.scss'],
   providers: [MessageService]
 })
-export class Wolfmax4kComponent implements OnInit, AfterViewInit {
-
+export class Wolfmax4kComponent implements OnInit {
 
   indexes: Index[] = [];
-  sortOptions: any[] = [];
-  sortOrder: number = 0;
-  sortField: string = '';
-  sourceCities: any[] = [];
-  targetCities: any[] = [];
-  orderCities: any[] = [];
+
   pageNumber = 0;
   pageSize: number = 20;
   totalElements: number = 0;
   layout: string = 'grid';
+  type: Type = undefined!;
+  quality: Quality = undefined!;
 
   constructor(
     private wolfmax4kService: Wolfmax4kService,
     private bt4gService: Bt4gService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService,
+    private sp: NgxSpinnerService,
+    private sanitizer: DomSanitizer
   ) {
 
   }
 
-
   ngOnInit() {
     this.route.params.subscribe(params => {
-
-      const type = this.mapToType(params['type']);
-      const quality = this.mapToQuality(params['quality']);
-
-      this.wolfmax4kService.getAllByPageable(this.pageNumber, this.pageSize, type.toString(), quality.toString()).subscribe(data => this.indexes = data.content);
+      this.type = this.mapToType(params['type']);
+      this.quality = this.mapToQuality(params['quality']);
+      this.searchData();
     });
-
-    this.sourceCities = [
-      { name: 'San Francisco', code: 'SF' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Paris', code: 'PRS' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Berlin', code: 'BRL' },
-      { name: 'Barcelona', code: 'BRC' },
-      { name: 'Rome', code: 'RM' }];
-
-    this.targetCities = [];
-
-    this.orderCities = [
-      { name: 'San Francisco', code: 'SF' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Paris', code: 'PRS' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Berlin', code: 'BRL' },
-      { name: 'Barcelona', code: 'BRC' },
-      { name: 'Rome', code: 'RM' }];
-
-    this.sortOptions = [
-      { label: 'Price High to Low', value: '!price' },
-      { label: 'Price Low to High', value: 'price' }
-    ];
   }
+
+  searchData(name?: string) {
+    this.sp.show();
+    this.wolfmax4kService.getAllByPageable(this.pageNumber, this.pageSize, this.type.toString(), this.quality.toString(), name).subscribe(
+      response => {
+        this.indexes = response.content
+        this.totalElements = response.totalElements;
+        console.log('totalElements: ' + this.totalElements)
+        console.log('content: ' + this.indexes.length)
+        this.sp.hide();
+        if (this.indexes.length === 0) {
+          this.messageService.add({ severity: 'info', detail: 'No data found', life: 3000 });
+        }
+      },
+      error => {
+        this.sp.hide()
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      }
+
+    );
+  }
+
   mapToType(type: string): Type {
     switch (type) {
       case 'shows':
@@ -108,30 +97,15 @@ export class Wolfmax4kComponent implements OnInit, AfterViewInit {
         throw new Error('Invalid quality');
     }
   }
-  onSortChange(event: any) {
-    const value = event.value;
-
-    if (value.indexOf('!') === 0) {
-      this.sortOrder = -1;
-      this.sortField = value.substring(1, value.length);
-    } else {
-      this.sortOrder = 1;
-      this.sortField = value;
-    }
-  }
-
-  ngAfterViewInit(): void {
-    // throw new Error('Method not implemented.');
-  }
-
-  // onFilter(dv: DataView, event: Event) {
-  //   dv.filter((event.target as HTMLInputElement).value);
-  // }
 
   addToBt4GBatch(index: Index) {
     this.bt4gService.searchBatch(index.indexName!).subscribe(() => {
       console.log('searchBatch success')
     });
+  }
+
+  getSanitizedImageUrl(base64String: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + base64String);
   }
 
 }

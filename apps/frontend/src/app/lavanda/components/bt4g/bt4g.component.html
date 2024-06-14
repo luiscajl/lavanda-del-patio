@@ -1,7 +1,7 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <div class="card px-12 py-12">
+      <!-- <div class="card px-12 py-12"> -->
         <p-table styleClass="p-datatable-gridlines" #dt [value]="data" [columns]="cols" responsiveLayout="scroll"
           [rows]="50" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           [(selection)]="data" selectionMode="multiple" [rowHover]="true" dataKey="id">
@@ -92,8 +92,10 @@
       </p-table>
       <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="pageSize"
         [totalRecords]="totalElements" [rowsPerPageOptions]="rowsPerPageOptions"></p-paginator>
-    </div>
+    <!-- </div> -->
   </div>
 </div>
 </div>
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<p-toast></p-toast>
+

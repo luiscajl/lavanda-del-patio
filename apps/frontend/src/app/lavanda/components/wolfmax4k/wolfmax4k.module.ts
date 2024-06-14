@@ -26,6 +26,7 @@ import { Wolfmax4kRoutingModule } from './wolfmax4k-routing.module';
 import { OrderListModule } from 'primeng/orderlist';
 import { DataViewModule } from 'primeng/dataview';
 import { TagModule } from 'primeng/tag';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { TagModule } from 'primeng/tag';
     TooltipModule,
     ReactiveFormsModule,
     DataViewModule,
+    NgxSpinnerModule
   ],
   declarations: [Wolfmax4kComponent]
 })
