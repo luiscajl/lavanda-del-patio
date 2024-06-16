@@ -10,6 +10,7 @@ import { Bt4gService } from '../../service/bt4g.service';
 import { Bt4g } from '../../api/bt4g.model';
 import { Search } from '../../api/search.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { QbittorrentService } from '../../service/qbittorrent.service';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
   searchName: string = "";
   constructor(private messageService: MessageService,
     private readonly bt4gservice: Bt4gService,
-    private sp: NgxSpinnerService
+    private sp: NgxSpinnerService,
+    private qbittorrentService: QbittorrentService
   ) {
     this.status = Object.keys(FilebotExecutorStatus).filter((v) => isNaN(Number(v)));
     this.status.unshift(undefined!);
@@ -93,7 +95,18 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
   }
   sendToQbittorrent(search: Bt4g) {
     console.log("Send to qbittorrent" + search);
-
+    this.sp.show();
+    this.qbittorrentService.addTorrent(search.magnet!).subscribe(
+      response => {
+        this.bt4gservice.updateToDownloaded(search.id!).subscribe((response) => {
+          this.sp.hide();
+          this.messageService.add({ severity: 'info', detail: 'Torrent added', life: 3000 });
+        })
+      },
+      error => {
+        this.sp.hide()
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      });
   }
 
   removeSearch() {
