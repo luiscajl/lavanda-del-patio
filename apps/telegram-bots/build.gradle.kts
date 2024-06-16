@@ -17,12 +17,12 @@ java {
 }
 
 dependencies {
-    implementation("es.lavanda:lib-common:0.1.3")
+    implementation("es.lavanda:lib-common:0.1.5")
     implementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.telegram:telegrambots:6.9.7.1")
+    implementation("org.telegram:telegrambots-spring-boot-starter:6.9.7.1")
     testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("org.modelmapper:modelmapper:3.2.0") {
@@ -40,3 +40,4 @@ tasks.named<BootBuildImage>("bootBuildImage") {
     environment = mapOf("BP_NATIVE_IMAGE" to "true")
     environment = mapOf("TZ" to "Europe/Madrid")
 }
+

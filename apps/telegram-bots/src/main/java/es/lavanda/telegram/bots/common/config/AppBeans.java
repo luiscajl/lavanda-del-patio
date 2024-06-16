@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethodMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.ApiResponse;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.BotSession;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -20,7 +23,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 @EnableMongoAuditing
 @Slf4j
 @EnableScheduling
-@RegisterReflectionForBinding(org.telegram.telegrambots.meta.api.objects.ApiResponse.class)
+@RegisterReflectionForBinding({ApiResponse.class, DefaultBotSession.class, BotApiMethodMessage.class})
 public class AppBeans {
 
     // @Autowired
