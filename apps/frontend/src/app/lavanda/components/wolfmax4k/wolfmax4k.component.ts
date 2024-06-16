@@ -99,9 +99,16 @@ export class Wolfmax4kComponent implements OnInit {
   }
 
   addToBt4GBatch(index: Index) {
-    this.bt4gService.searchBatch(index.indexName!).subscribe(() => {
-      console.log('searchBatch success')
-    });
+    this.sp.show();
+    this.bt4gService.searchBatch(index.indexName!).subscribe(
+      (response) => {
+        this.sp.hide();
+        this.messageService.add({ severity: 'success', detail: 'Added to batch', life: 3000 });
+      }, (error) => {
+        this.sp.hide();
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      }
+    );
   }
 
   getSanitizedImageUrl(base64String: string): SafeUrl {
