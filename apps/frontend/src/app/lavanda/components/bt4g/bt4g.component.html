@@ -56,7 +56,7 @@
                 <div class="flex">
                   <button pButton pRipple icon="pi pi-download" pTooltip="Send to Qbittorrent"
                     (click)="sendToQbittorrent(search)" [showDelay]="600"
-                    class="p-button-rounded p-button-danger mr-2"></button>
+                    [ngClass]="getClassForDownloadButton(search)"></button>
                 </div>
               </td>
             </tr>

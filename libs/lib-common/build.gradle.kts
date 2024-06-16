@@ -6,7 +6,7 @@ plugins {
     id("io.freefair.lombok") version "8.6"
 }
 group = "es.lavanda"
-version = "0.1.6"
+version = "0.1.7"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21

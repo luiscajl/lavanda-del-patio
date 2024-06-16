@@ -6,6 +6,7 @@ import { debounceTime } from 'rxjs';
 import { Bt4g } from '../../api/bt4g.model';
 import { FilebotExecutorStatus } from '../../api/filebot-executor.model';
 import { Bt4gService } from '../../service/bt4g.service';
+import { QbittorrentService } from '../../service/qbittorrent.service';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { Bt4gService } from '../../service/bt4g.service';
   providers: [MessageService]
 })
 export class Bt4gComponent implements OnInit {
+
 
   form!: FormGroup;
   status: String[] = [];
@@ -26,7 +28,8 @@ export class Bt4gComponent implements OnInit {
 
   constructor(private messageService: MessageService,
     private readonly bt4gservice: Bt4gService,
-    private sp: NgxSpinnerService
+    private sp: NgxSpinnerService,
+    private qbittorrentService: QbittorrentService
   ) {
     this.status = Object.keys(FilebotExecutorStatus).filter((v) => isNaN(Number(v)));
     this.status.unshift(undefined!);
@@ -66,6 +69,19 @@ export class Bt4gComponent implements OnInit {
 
   sendToQbittorrent(search: Bt4g) {
     console.log("Send to qbittorrent" + search);
+    this.sp.show();
+    this.qbittorrentService.addTorrent(search.magnet!).subscribe(
+      response => {
+        this.bt4gservice.updateToDownloaded(search.id!).subscribe((response) => {
+          this.sp.hide();
+          this.messageService.add({ severity: 'info', detail: 'Torrent added', life: 3000 });
+          this.search(this.form!.get('name')!.value);
+        })
+      },
+      error => {
+        this.sp.hide()
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      });
   }
 
   formChanged(currentValue: any) {
@@ -78,6 +94,10 @@ export class Bt4gComponent implements OnInit {
     this.pageNumber = event.page + 1;
     this.pageSize = event.rows;
     this.search();
+  }
+
+  getClassForDownloadButton(search: Bt4g): string {
+    return search.downloaded ? 'p-button-rounded p-button-success mr-2' : 'p-button-rounded p-button-danger mr-2';
   }
 
 }

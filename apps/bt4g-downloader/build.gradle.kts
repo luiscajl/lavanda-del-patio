@@ -8,7 +8,7 @@ plugins {
     id("io.freefair.lombok") version "8.6"
 }
 
-version = "0.0.8"
+version = "0.0.9"
 group = "es.lavanda"
 val dockerLibrary = "lavandadelpatio"
 
@@ -17,7 +17,7 @@ java {
 }
 
 dependencies {
-    implementation("es.lavanda:lib-common:0.1.6")
+    implementation("es.lavanda:lib-common:0.1.7")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")

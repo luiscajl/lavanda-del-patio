@@ -34,12 +34,12 @@ export class Bt4gService {
   }
 
   search(name: string): Observable<Bt4g[]> {
-    let bt4g: Bt4g = { name }
+    let bt4g = { name }
     return this.httpClient.post<Bt4g[]>(environment.apiUrl + 'bt4g/search', bt4g);
   }
 
   searchBatch(name: string): Observable<any> {
-    let bt4g: Bt4g = { name }
+    let bt4g = { name }
     return this.httpClient.post<any>(environment.apiUrl + 'bt4g/search/batch', bt4g);
   }
 
