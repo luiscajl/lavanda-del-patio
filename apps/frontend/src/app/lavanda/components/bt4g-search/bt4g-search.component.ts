@@ -101,12 +101,16 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
         this.bt4gservice.updateToDownloaded(search.id!).subscribe((response) => {
           this.sp.hide();
           this.messageService.add({ severity: 'info', detail: 'Torrent added', life: 3000 });
+          this.updateStatusColor(search);
         })
       },
       error => {
         this.sp.hide()
         this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
       });
+  }
+  updateStatusColor(search: Bt4g) {
+    search.downloaded = true;
   }
 
   removeSearch() {
@@ -120,4 +124,9 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
         this.reloadSearch();
       });
   }
+
+  getClassForDownloadButton(search: Bt4g): string {
+    return search.downloaded ? 'p-button-rounded p-button-success mr-2' : 'p-button-rounded p-button-danger mr-2';
+  }
+
 }
