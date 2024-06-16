@@ -119,6 +119,15 @@ entries:
     version: 0.0.1
   flaresolverr:
   - apiVersion: v2
+    created: "2024-06-16T06:03:46.762808993Z"
+    description: A Helm chart for Kubernetes
+    digest: 128e6561ec96925985e2c3a90dc21b2d28fe3e8124c2d025c0eac24c3073e72d
+    name: flaresolverr
+    type: application
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/flaresolverr-0.0.4/flaresolverr-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2024-03-31T07:16:29.866247868Z"
     description: A Helm chart for Kubernetes
     digest: 367b11f363e5015325afa65f71af732ed9a17d10b9feb3c7e20200ae06aa895c
@@ -174,6 +183,14 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/plex-rclone-wireguard-1.0.19/plex-rclone-wireguard-1.0.19.tgz
     version: 1.0.19
+  qbittorrent-client:
+  - apiVersion: v2
+    created: "2024-06-16T06:03:46.936343602Z"
+    digest: 20df5212f5f95818f4da1d99c42084dce5132136d93d526bf144049078a96944
+    name: qbittorrent-client
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/qbittorrent-client-0.0.1/qbittorrent-client-0.0.1.tgz
+    version: 0.0.1
   qbittorrentvpn:
   - apiVersion: v2
     created: "2024-03-31T07:16:30.377560895Z"
@@ -278,4 +295,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-06-12T16:37:20.544564791Z"
+generated: "2024-06-16T06:03:46.936401089Z"
