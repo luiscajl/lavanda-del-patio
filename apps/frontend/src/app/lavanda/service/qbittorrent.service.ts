@@ -11,7 +11,7 @@ export class QbittorrentService {
 
   addTorrent(magnet: string): Observable<any> {
     let body = { "url": magnet }
-    return this.httpClient.post<any>(environment.apiUrl + 'qbittorrent/add', { body });
+    return this.httpClient.post<any>(environment.apiUrl + 'qbittorrent/add', body);
   }
 
 }
