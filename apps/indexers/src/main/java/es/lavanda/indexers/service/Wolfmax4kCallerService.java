@@ -1,12 +1,17 @@
 package es.lavanda.indexers.service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import es.lavanda.downloader.bt4g.exception.Bt4gException;
 import es.lavanda.indexers.model.Index;
 import lombok.RequiredArgsConstructor;
+import okhttp3.*;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,7 +45,8 @@ public class Wolfmax4kCallerService {
     private final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
 
     private final String HTTPS = "https:";
-
+    private final OkHttpClient client = new OkHttpClient();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<Index> getIndexForMainPage() {
 
@@ -185,17 +191,6 @@ public class Wolfmax4kCallerService {
         return indexes;
     }
 
-    private RestClient configureRestClient() {
-        RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
-        return RestClient.create(restTemplate);
-    }
-
-    private ClientHttpRequestFactory clientHttpRequestFactory() {
-        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(60000); // 60 seconds
-        factory.setReadTimeout(120000);    // 120 seconds
-        return factory;
-    }
 
     private FlaresolverrIDTO callWithFlaresolverr(String url) {
         log.info("Calling to flaresolverr for url {}", url);
@@ -203,13 +198,22 @@ public class Wolfmax4kCallerService {
         flaresolverrODTO.setCmd("request.get");
         flaresolverrODTO.setMaxTimeout(600000);
         flaresolverrODTO.setUrl(url);
-        RestClient restClient = configureRestClient();
-        return restClient
-                .post()
-                .uri(FLARESOLVERR_URL)
-                .body(flaresolverrODTO)
-                .retrieve()
-                .body(FlaresolverrIDTO.class);
+        try {
+            String json = objectMapper.writeValueAsString(flaresolverrODTO);
+            RequestBody body = RequestBody.create(json, MediaType.get("application/json; charset=utf-8"));
+            Request request = new Request.Builder()
+                    .url(FLARESOLVERR_URL)
+                    .post(body)
+                    .build();
+            try (Response response = client.newCall(request).execute()) {
+                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                return objectMapper.readValue(response.body().string(), FlaresolverrIDTO.class);
+            }
+        } catch (IOException e) {
+            log.error("", e);
+            throw new Bt4gException("Can't call with Flaresolverr because :", e);
+        }
+
     }
 
     private String getByteArrayFromImageURL(String url) {
