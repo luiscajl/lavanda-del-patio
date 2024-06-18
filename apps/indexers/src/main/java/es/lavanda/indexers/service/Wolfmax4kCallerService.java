@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +46,11 @@ public class Wolfmax4kCallerService {
     private final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
 
     private final String HTTPS = "https:";
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<Index> getIndexForMainPage() {
