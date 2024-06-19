@@ -37,7 +37,7 @@ public class Wolfmax4kService implements CommandLineRunner {
         return indexRepository.findAllByTypeAndQualityAndDomain(pageable, type, quality, DOMAIN_WOLFMAX4K);
     }
 
-//    @Scheduled(fixedDelay = 15, timeUnit = TimeUnit.MINUTES)
+    //    @Scheduled(fixedDelay = 15, timeUnit = TimeUnit.MINUTES)
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
         saveList(wolfmax4kCallerService.getIndexForMainPage());
@@ -58,10 +58,16 @@ public class Wolfmax4kService implements CommandLineRunner {
         }
     }
 
+    private final String WOLFMAX4K_URL = "https://wolfmax4k.com";
+
     @Override
     public void run(String... args) throws Exception {
-        log.info(callWithFlaresolverrV2("https://wolfmax4k.com").getSolution().getResponse());
-        log.info(callWithFlaresolverrV2("https://bt4gprx.com/search/Sound of Freedom (2023) [4k 2160p][Esp]").getSolution().getResponse());
+        String html = callWithFlaresolverrV2(WOLFMAX4K_URL).getSolution().getResponse();
+
+        log.info(callWithFlaresolverrV2("https://wolfmax4k.com").getSolution().getStatus());
+        log.info(callWithFlaresolverrV2("https://wolfmax4k.com/descargar/cine-alta-definicion-hd/amigos-imaginarios-if--2024-/bluray-1080p/").getSolution().getStatus());
+        log.info(callWithFlaresolverrV2("https://wolfmax4k.com/descargar/cine-alta-definicion-hd/buscando-a-coque-2024-/bluray-1080p/").getSolution().getStatus());
+        log.info(callWithFlaresolverrV2("https://bt4gprx.com/search/Sound of Freedom (2023) [4k 2160p][Esp]").getSolution().getStatus());
     }
 
     private RestClient configureRestClient() {

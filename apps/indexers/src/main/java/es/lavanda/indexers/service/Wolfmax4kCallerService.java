@@ -32,27 +32,20 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class Wolfmax4kCallerService {
 
+    @Value("${flaresolverr.url}")
+    private String FLARESOLVERR_URL;
+
     private final String WOLFMAX4K_URL = "https://wolfmax4k.com";
 
     private final String WOLFMAX4K_FILMS_1080P = "/peliculas/bluray-1080p/";
     private final String WOLFMAX4K_SHOWS_1080P = "/series/1080p/";
     private final String WOLFMAX4K_SHOWS_720P = "/series/720p/";
 
-    @Value("${flaresolverr.url}")
-    private String FLARESOLVERR_URL;
-
     private final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
 
     private final String HTTPS = "https:";
-    private final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
-            .build();
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<Index> getIndexForMainPage() {
-
         List<Index> indexes = new ArrayList<>();
         String html = callWithFlaresolverrV2(WOLFMAX4K_URL).getSolution().getResponse();
         Document document = Jsoup.parse(html);
@@ -219,31 +212,6 @@ public class Wolfmax4kCallerService {
                 .body(flaresolverrODTO)
                 .retrieve()
                 .body(FlaresolverrIDTO.class);
-    }
-
-
-    private FlaresolverrIDTO callWithFlaresolverrConError(String url) {
-        log.info("Calling to flaresolverr for url {}", url);
-        FlaresolverrODTO flaresolverrODTO = new FlaresolverrODTO();
-        flaresolverrODTO.setCmd("request.get");
-        flaresolverrODTO.setMaxTimeout(600000);
-        flaresolverrODTO.setUrl(url);
-        try {
-            String json = objectMapper.writeValueAsString(flaresolverrODTO);
-            RequestBody body = RequestBody.create(json, MediaType.get("application/json; charset=utf-8"));
-            Request request = new Request.Builder()
-                    .url(FLARESOLVERR_URL)
-                    .post(body)
-                    .build();
-            try (Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-                return objectMapper.readValue(response.body().string(), FlaresolverrIDTO.class);
-            }
-        } catch (IOException e) {
-            log.error("", e);
-            throw new IndexerException("Can't call with Flaresolverr because :", e);
-        }
-
     }
 
     private String getByteArrayFromImageURL(String url) {
