@@ -111,8 +111,12 @@ export class Wolfmax4kComponent implements OnInit {
     );
   }
 
-  getSanitizedImageUrl(base64String: string): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + base64String);
+  getSanitizedImageUrl(image: string): SafeUrl {
+    if (image.startsWith('http')) {
+      return this.sanitizer.bypassSecurityTrustUrl(image);
+    } else {
+      return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + image);
+    }
   }
 
 }
