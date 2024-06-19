@@ -162,13 +162,18 @@ public class Wolfmax4KCallerServiceChatGPTVersion {
     }
 
     private FlaresolverrIDTO getHtmlResponse(String url) {
-        log.info("Calling to flaresolverr for url {}", url);
-        FlaresolverrODTO request = new FlaresolverrODTO();
-        request.setCmd("request.get");
-        request.setUrl(url);
-        request.setMaxTimeout(600000);
-        RestClient restClient = configureRestClient();
-        return restClient.post().uri(flaresolverrUrl).body(request).retrieve().body(FlaresolverrIDTO.class);
+        try {
+            log.info("Calling to flaresolverr for url {}", url);
+            FlaresolverrODTO request = new FlaresolverrODTO();
+            request.setCmd("request.get");
+            request.setUrl(url);
+            request.setMaxTimeout(600000);
+            RestClient restClient = configureRestClient();
+            return restClient.post().uri(flaresolverrUrl).body(request).retrieve().body(FlaresolverrIDTO.class);
+        } catch (Exception e) {
+            log.error("Exception getting htmlResponse {}", e.getMessage());
+            return getHtmlResponse(url);
+        }
     }
 
     private String getImageAsBase64(String imageUrl) {
