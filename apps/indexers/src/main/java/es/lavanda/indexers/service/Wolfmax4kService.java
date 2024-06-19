@@ -25,11 +25,11 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class Wolfmax4kService implements CommandLineRunner {
+public class Wolfmax4kService {
 
     private final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
 
-    private final Wolfmax4kCallerService wolfmax4kCallerService;
+    private final Wolfmax4KCallerServiceChatGPTVersion wolfmax4kCallerService;
 
     private final IndexRepository indexRepository;
 
@@ -37,7 +37,7 @@ public class Wolfmax4kService implements CommandLineRunner {
         return indexRepository.findAllByTypeAndQualityAndDomain(pageable, type, quality, DOMAIN_WOLFMAX4K);
     }
 
-    //    @Scheduled(fixedDelay = 15, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 20, timeUnit = TimeUnit.MINUTES)
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
         saveList(wolfmax4kCallerService.getIndexForMainPage());
@@ -57,46 +57,4 @@ public class Wolfmax4kService implements CommandLineRunner {
             }
         }
     }
-
-    private final String WOLFMAX4K_URL = "https://wolfmax4k.com";
-
-    @Override
-    public void run(String... args) throws Exception {
-        String html = callWithFlaresolverrV2(WOLFMAX4K_URL).getSolution().getResponse();
-
-        log.info(callWithFlaresolverrV2("https://wolfmax4k.com").getSolution().getStatus());
-        log.info(callWithFlaresolverrV2("https://wolfmax4k.com/descargar/cine-alta-definicion-hd/amigos-imaginarios-if--2024-/bluray-1080p/").getSolution().getStatus());
-        log.info(callWithFlaresolverrV2("https://wolfmax4k.com/descargar/cine-alta-definicion-hd/buscando-a-coque-2024-/bluray-1080p/").getSolution().getStatus());
-        log.info(callWithFlaresolverrV2("https://bt4gprx.com/search/Sound of Freedom (2023) [4k 2160p][Esp]").getSolution().getStatus());
-    }
-
-    private RestClient configureRestClient() {
-        RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
-        return RestClient.create(restTemplate);
-    }
-
-    private ClientHttpRequestFactory clientHttpRequestFactory() {
-        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(60000); // 60 seconds
-        factory.setReadTimeout(120000);    // 120 seconds
-        return factory;
-    }
-
-    private FlaresolverrIDTO callWithFlaresolverrV2(String url) {
-        log.info("Calling to flaresolverr for url {}", url);
-        FlaresolverrODTO flaresolverrODTO = new FlaresolverrODTO();
-        flaresolverrODTO.setCmd("request.get");
-        flaresolverrODTO.setMaxTimeout(600000);
-        flaresolverrODTO.setUrl(url);
-        RestClient restClient = configureRestClient();
-        return restClient
-                .post()
-                .uri(FLARESOLVERR_URL)
-                .body(flaresolverrODTO)
-                .retrieve()
-                .body(FlaresolverrIDTO.class);
-    }
-
-    @Value("${flaresolverr.url}")
-    private String FLARESOLVERR_URL;
 }

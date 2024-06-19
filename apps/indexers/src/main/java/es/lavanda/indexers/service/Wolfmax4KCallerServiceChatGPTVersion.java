@@ -30,6 +30,7 @@ import es.lavanda.lib.common.model.flaresolverr.output.FlaresolverrODTO;
 @Slf4j
 @RequiredArgsConstructor
 public class Wolfmax4KCallerServiceChatGPTVersion {
+
     @Value("${flaresolverr.url}")
     private String flaresolverrUrl;
 
@@ -120,8 +121,8 @@ public class Wolfmax4KCallerServiceChatGPTVersion {
                 for (Element tempElement : tempElements) {
                     Elements elementAnchors = tempElement.getElementsByTag("a");
                     for (Element elementA : elementAnchors) {
-                        FlaresolverrIDTO flaresolverrIDTO2 = getHtmlResponse(WOLFMAX4K_URL + elementA.attr("href"));
-                        Document documentShowChapter = Jsoup.parse(flaresolverrIDTO2.getSolution().getResponse());
+//                        FlaresolverrIDTO flaresolverrIDTO2 = getHtmlResponse(WOLFMAX4K_URL + elementA.attr("href"));
+//                        Document documentShowChapter = Jsoup.parse(flaresolverrIDTO2.getSolution().getResponse());
                         Index index = buildIndex(colLg2, type, quality, elementA.attr("href"));
                         indexes.add(index);
                     }
@@ -175,7 +176,7 @@ public class Wolfmax4KCallerServiceChatGPTVersion {
             byte[] imageBytes = IOUtils.toByteArray(in);
             return Base64.getEncoder().encodeToString(imageBytes);
         } catch (IOException e) {
-            log.error("Error while fetching image", e);
+            log.error("Error while fetching image");
             return imageUrl;
         }
     }
