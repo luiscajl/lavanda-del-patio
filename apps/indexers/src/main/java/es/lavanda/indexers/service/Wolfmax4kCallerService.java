@@ -3,13 +3,11 @@ package es.lavanda.indexers.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import es.lavanda.downloader.bt4g.exception.Bt4gException;
+import es.lavanda.indexers.exception.IndexerException;
 import es.lavanda.indexers.model.Index;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
@@ -56,7 +54,7 @@ public class Wolfmax4kCallerService {
     public List<Index> getIndexForMainPage() {
 
         List<Index> indexes = new ArrayList<>();
-        String html = callWithFlaresolverr(WOLFMAX4K_URL).getSolution().getResponse();
+        String html = callWithFlaresolverrV2(WOLFMAX4K_URL).getSolution().getResponse();
         Document document = Jsoup.parse(html);
         Elements layoutSectionElements = document.getElementsByClass("layout-section");
         indexes.addAll(getNewReleases(layoutSectionElements, "Peliculas bluray 1080p", Index.Type.FILM, Index.Quality.FULL_HD));
@@ -103,7 +101,7 @@ public class Wolfmax4kCallerService {
                     index.setName(colLg2.getElementsByTag("h3").text());
                     String url = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
                     index.setUrl(WOLFMAX4K_URL + url);
-                    String htmlIndividual = callWithFlaresolverr(index.getUrl()).getSolution().getResponse();
+                    String htmlIndividual = callWithFlaresolverrV2(index.getUrl()).getSolution().getResponse();
                     Document documentIndividual = Jsoup.parse(htmlIndividual);
                     index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").first().text());
                     index.setDomain(DOMAIN_WOLFMAX4K);
@@ -125,7 +123,7 @@ public class Wolfmax4kCallerService {
     private List<Index> getIndexFromPage(String path, Index.Type type, Index.Quality quality) {
         log.info("Calling To Wolfmax4K with url path {}", path);
         List<Index> indexes = new ArrayList<>();
-        String html = callWithFlaresolverr(WOLFMAX4K_URL + path).getSolution().getResponse();
+        String html = callWithFlaresolverrV2(WOLFMAX4K_URL + path).getSolution().getResponse();
         Document document = Jsoup.parse(html);
         Elements colLg2Elements = document.getElementsByClass("col-lg-2");
         try {
@@ -135,7 +133,7 @@ public class Wolfmax4kCallerService {
                     index.setName(colLg2.getElementsByTag("h3").text());
                     String url = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
                     index.setUrl(WOLFMAX4K_URL + url);
-                    String htmlIndividual = callWithFlaresolverr(index.getUrl()).getSolution().getResponse();
+                    String htmlIndividual = callWithFlaresolverrV2(index.getUrl()).getSolution().getResponse();
                     Document documentIndividual = Jsoup.parse(htmlIndividual);
                     index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").first().text());
                     index.setDomain(DOMAIN_WOLFMAX4K);
@@ -158,14 +156,14 @@ public class Wolfmax4kCallerService {
     private List<Index> getIndexFromMultiPage(String path, Index.Type type, Index.Quality quality) {
         log.info("Calling To Wolfmax4K with url path {}", path);
         List<Index> indexes = new ArrayList<>();
-        String html = callWithFlaresolverr(WOLFMAX4K_URL + path).getSolution().getResponse();
+        String html = callWithFlaresolverrV2(WOLFMAX4K_URL + path).getSolution().getResponse();
         Document document = Jsoup.parse(html);
         Elements colLg2Elements = document.getElementsByClass("col-lg-2");
         try {
             for (Element colLg2 : colLg2Elements) {
                 if (Objects.requireNonNull(colLg2.children().first()).tagName().equals("a")) {
                     String urlForTemps = Objects.requireNonNull(colLg2.getElementsByTag("a").first()).attr("href");
-                    String htmlShowWithTemps = callWithFlaresolverr(WOLFMAX4K_URL + urlForTemps).getSolution().getResponse();
+                    String htmlShowWithTemps = callWithFlaresolverrV2(WOLFMAX4K_URL + urlForTemps).getSolution().getResponse();
                     Document documentShowWithTemps = Jsoup.parse(htmlShowWithTemps);
                     Elements tempElements = documentShowWithTemps.getElementsByClass("row gx-lg-4 gx-0");
                     for (Element tempElement : tempElements) {
@@ -173,7 +171,7 @@ public class Wolfmax4kCallerService {
                         index.setName(colLg2.getElementsByTag("h3").text());
                         Elements elementsa = tempElement.getElementsByTag("a");
                         for (Element elementA : elementsa) {
-                            String htmlShowChapter = callWithFlaresolverr(WOLFMAX4K_URL + elementA.attr("href")).getSolution().getResponse();
+                            String htmlShowChapter = callWithFlaresolverrV2(WOLFMAX4K_URL + elementA.attr("href")).getSolution().getResponse();
                             Document documentShowChapter = Jsoup.parse(htmlShowChapter);
                             index.setUrl(WOLFMAX4K_URL + elementA.attr("href"));
                             index.setIndexName(Objects.requireNonNull(documentShowChapter.getElementsByClass("h3 fw-semibold mb-1").first()).text());
@@ -196,8 +194,35 @@ public class Wolfmax4kCallerService {
         return indexes;
     }
 
+    private RestClient configureRestClient() {
+        RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
+        return RestClient.create(restTemplate);
+    }
 
-    private FlaresolverrIDTO callWithFlaresolverr(String url) {
+    private ClientHttpRequestFactory clientHttpRequestFactory() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(60000); // 60 seconds
+        factory.setReadTimeout(120000);    // 120 seconds
+        return factory;
+    }
+
+    private FlaresolverrIDTO callWithFlaresolverrV2(String url) {
+        log.info("Calling to flaresolverr for url {}", url);
+        FlaresolverrODTO flaresolverrODTO = new FlaresolverrODTO();
+        flaresolverrODTO.setCmd("request.get");
+        flaresolverrODTO.setMaxTimeout(600000);
+        flaresolverrODTO.setUrl(url);
+        RestClient restClient = configureRestClient();
+        return restClient
+                .post()
+                .uri(FLARESOLVERR_URL)
+                .body(flaresolverrODTO)
+                .retrieve()
+                .body(FlaresolverrIDTO.class);
+    }
+
+
+    private FlaresolverrIDTO callWithFlaresolverrConError(String url) {
         log.info("Calling to flaresolverr for url {}", url);
         FlaresolverrODTO flaresolverrODTO = new FlaresolverrODTO();
         flaresolverrODTO.setCmd("request.get");
@@ -216,7 +241,7 @@ public class Wolfmax4kCallerService {
             }
         } catch (IOException e) {
             log.error("", e);
-            throw new Bt4gException("Can't call with Flaresolverr because :", e);
+            throw new IndexerException("Can't call with Flaresolverr because :", e);
         }
 
     }
