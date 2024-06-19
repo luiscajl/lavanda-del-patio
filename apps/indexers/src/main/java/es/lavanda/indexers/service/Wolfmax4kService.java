@@ -37,7 +37,7 @@ public class Wolfmax4kService implements CommandLineRunner {
         return indexRepository.findAllByTypeAndQualityAndDomain(pageable, type, quality, DOMAIN_WOLFMAX4K);
     }
 
-    @Scheduled(fixedDelay = 15, timeUnit = TimeUnit.MINUTES)
+//    @Scheduled(fixedDelay = 15, timeUnit = TimeUnit.MINUTES)
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
         saveList(wolfmax4kCallerService.getIndexForMainPage());
