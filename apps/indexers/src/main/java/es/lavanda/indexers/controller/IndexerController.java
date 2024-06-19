@@ -1,6 +1,7 @@
 package es.lavanda.indexers.controller;
 
 import es.lavanda.indexers.model.Index;
+import es.lavanda.indexers.service.Wolfmax4KCallerServiceChatGPTVersion;
 import es.lavanda.indexers.service.Wolfmax4kCallerService;
 import es.lavanda.indexers.service.Wolfmax4kService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class IndexerController {
     private final Wolfmax4kService wolfmax4kService;
 
     private final Wolfmax4kCallerService wolfmax4kCallerService;
+    private final Wolfmax4KCallerServiceChatGPTVersion wolfmax4KCallerServiceChatGPTVersion;
 
     @GetMapping("/wolfmax4k/{type}/{quality}")
     public ResponseEntity<?> getAll(Pageable pageable, @PathVariable("type") Index.Type type, @PathVariable("quality") Index.Quality quality) {
@@ -32,7 +34,7 @@ public class IndexerController {
 
     @PostMapping
     public ResponseEntity<?> execute() {
-        wolfmax4kCallerService.getIndexForMainPage();
+        wolfmax4KCallerServiceChatGPTVersion.getIndexForMainPage();
         return ResponseEntity.ok().build();
     }
 
