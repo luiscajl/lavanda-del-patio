@@ -34,7 +34,7 @@ public class Wolfmax4kService {
     private final IndexRepository indexRepository;
 
     public Page<Index> getAllPageable(Pageable pageable, Index.Type type, Index.Quality quality) {
-        return indexRepository.findAllByTypeAndQualityAndDomain(pageable, type, quality, DOMAIN_WOLFMAX4K);
+        return indexRepository.findAllByTypeAndQualityAndDomainOrderByCreateTimeDesc(pageable, type, quality, DOMAIN_WOLFMAX4K);
     }
 
     @Scheduled(fixedDelay = 20, timeUnit = TimeUnit.MINUTES)
