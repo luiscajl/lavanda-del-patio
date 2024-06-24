@@ -19,7 +19,7 @@ export class FilebotExecutorService {
     else {
       let params = new HttpParams();
       // ?page = ' + page + ' & size=' + pageSize + ' & path=' + path + ' & status=' + status
-      params = params.set('pageSize', pageSize);
+      params = params.set('size', pageSize);
       params = params.set('page', page);
 
       if (path) {

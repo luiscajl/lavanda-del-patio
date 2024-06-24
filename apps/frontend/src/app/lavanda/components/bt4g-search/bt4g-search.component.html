@@ -10,12 +10,18 @@
         <div class="ml-auto flex gap-2">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input type="search" [(ngModel)]="searchName" pInputText placeholder="Search by Name">
+            <input type="search" [(ngModel)]="searchNameBatch" pInputText placeholder="Batch">
           </span>
-          <button pButton pRipple label="Search" (click)="search()"></button>
-
+          <button class="p-button-help" pButton pRipple label="Search Batch" (click)="batchSearch()"></button>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input type="search" [(ngModel)]="searchName" pInputText placeholder="Manual">
+          </span>
+          <button pButton pRipple label="Search Manual" (click)="manualSearch()"></button>
         </div>
       </div>
+      <br>
+      <br>
       <div class="card px-12 py-12" *ngIf="searchData.length > 0">
         <p-table styleClass="p-datatable-gridlines" #dt [value]="searchData" [columns]="cols" responsiveLayout="scroll"
           [rows]="50" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -95,6 +101,8 @@
       </tr>
       </ng-template>
       </p-table>
+      <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="pageSize" [totalRecords]="totalElements"
+        [rowsPerPageOptions]="rowsPerPageOptions"></p-paginator>
     </div>
   </div>
 </div>

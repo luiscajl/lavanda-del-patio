@@ -6,6 +6,8 @@ import { MessageService } from 'primeng/api';
 import { Index } from '../../api/index.model';
 import { Bt4gService } from '../../service/bt4g.service';
 import { Wolfmax4kService } from '../../service/wolfmax4k.service';
+import { DataView } from 'primeng/dataview';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 export enum Type {
   TV_SHOW = 'TV_SHOW',
@@ -25,6 +27,7 @@ export enum Quality {
 })
 export class Wolfmax4kComponent implements OnInit {
 
+
   indexes: Index[] = [];
 
   pageNumber = 0;
@@ -33,6 +36,10 @@ export class Wolfmax4kComponent implements OnInit {
   layout: string = 'grid';
   type: Type = undefined!;
   quality: Quality = undefined!;
+  rowsPerPageOptions = [10, 20, 50]
+  debounceTime = 500;
+  filterName: string = '';
+  filterUpdate = new Subject<string>();
 
   constructor(
     private wolfmax4kService: Wolfmax4kService,
@@ -50,6 +57,12 @@ export class Wolfmax4kComponent implements OnInit {
       this.type = this.mapToType(params['type']);
       this.quality = this.mapToQuality(params['quality']);
       this.searchData();
+      this.filterUpdate.pipe(
+        debounceTime(400),
+        distinctUntilChanged())
+        .subscribe(value => {
+          this.searchData(this.filterName);
+        });
     });
   }
 
@@ -59,8 +72,6 @@ export class Wolfmax4kComponent implements OnInit {
       response => {
         this.indexes = response.content
         this.totalElements = response.totalElements;
-        console.log('totalElements: ' + this.totalElements)
-        console.log('content: ' + this.indexes.length)
         this.sp.hide();
         if (this.indexes.length === 0) {
           this.messageService.add({ severity: 'info', detail: 'No data found', life: 3000 });
@@ -117,6 +128,12 @@ export class Wolfmax4kComponent implements OnInit {
     } else {
       return this.sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + image);
     }
+  }
+  onPageChange(event: any) {
+    console.log("Page Change event: ", event);
+    this.pageNumber = event.page + 1;
+    this.pageSize = event.rows;
+    this.searchData();
   }
 
 }

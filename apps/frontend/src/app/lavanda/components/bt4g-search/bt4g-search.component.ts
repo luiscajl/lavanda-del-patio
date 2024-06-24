@@ -11,37 +11,52 @@ import { Bt4g } from '../../api/bt4g.model';
 import { Search } from '../../api/search.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { QbittorrentService } from '../../service/qbittorrent.service';
+import { error } from 'console';
 
 
 @Component({
   templateUrl: './bt4g-search.component.html',
   providers: [MessageService]
 })
-export class Bt4gSearchComponent implements OnInit, AfterViewInit {
+export class Bt4gSearchComponent implements OnInit {
 
   form!: FormGroup;
-  status: String[] = [];
   cols: any[] = [];
 
 
   searchData: any[] = [];
   bt4gSearchsNames: string[] = [];
   bt4gSearchs: Search[] = [];
+  rowsPerPageOptions = [10, 20, 30]
+  pageNumber = 1;
+  pageSize: number = 20;
+  totalElements: number = 0;
 
   selectedSearch: string = undefined!;
+
   searchName: string = "";
+
+  searchNameBatch: string = "";
+
   constructor(private messageService: MessageService,
     private readonly bt4gservice: Bt4gService,
     private sp: NgxSpinnerService,
     private qbittorrentService: QbittorrentService
   ) {
-    this.status = Object.keys(FilebotExecutorStatus).filter((v) => isNaN(Number(v)));
-    this.status.unshift(undefined!);
   }
 
   ngOnInit() {
     this.initializeForm();
     this.reloadSearch();
+  }
+
+  initializeForm() {
+    this.form = new UntypedFormGroup({
+      search: new UntypedFormControl(''),
+    });
+    this.form = new FormGroup({
+      search: new FormControl<string | null>(null),
+    });
   }
 
   reloadSearch() {
@@ -60,39 +75,50 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
       });
   }
 
-  search() {
+
+  manualSearch() {
     this.sp.show();
+    this.selectedSearch = this.searchName;
     this.bt4gservice.search(this.searchName).subscribe(response => {
       this.searchData = response;
       this.sp.hide();
-    });
+    },
+      error => {
+        this.sp.hide();
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      }
+    );
   }
 
-  initializeForm() {
-    this.form = new UntypedFormGroup({
-      search: new UntypedFormControl(''),
-    });
-    this.form = new FormGroup({
-      search: new FormControl<string | null>(null),
-    });
+  batchSearch() {
+    this.sp.show();
+    this.selectedSearch = this.searchNameBatch;
+    this.bt4gservice.searchBatch(this.searchNameBatch).subscribe(response => {
+      this.sp.hide();
+      this.messageService.add({ severity: 'info', detail: 'Added batch', life: 3000 });
+      this.reloadSearch();
+    },
+      error => {
+        this.sp.hide();
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      });
   }
 
-  selectSearch(event: any) {
-    console.log(event);
 
-  }
   onChangeSearch(event: any) {
     this.sp.show();
-    this.bt4gservice.getAllByPageable(1, 100, this.selectedSearch).subscribe(response => {
+    this.bt4gservice.getAllByPageable(1, 100, this.selectedSearch, true).subscribe(response => {
       this.searchData = response.content;
       this.sp.hide();
-    });
+    },
+      error => {
+        this.sp.hide();
+        this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
+      }
+    );
   }
 
 
-  ngAfterViewInit() {
-
-  }
   sendToQbittorrent(search: Bt4g) {
     console.log("Send to qbittorrent" + search);
     this.sp.show();
@@ -127,6 +153,13 @@ export class Bt4gSearchComponent implements OnInit, AfterViewInit {
 
   getClassForDownloadButton(search: Bt4g): string {
     return search.downloaded ? 'p-button-rounded p-button-success mr-2' : 'p-button-rounded p-button-danger mr-2';
+  }
+
+  onPageChange(event: any) {
+    console.log("Page Change event: ", event);
+    this.pageNumber = event.page + 1;
+    this.pageSize = event.rows;
+    this.onChangeSearch(null);
   }
 
 }

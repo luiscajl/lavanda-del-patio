@@ -15,12 +15,15 @@ export class Bt4gService {
   constructor(private httpClient: HttpClient) { }
 
 
-  getAllByPageable(page: number, pageSize: number, name?: string): Observable<Pageable> {
+  getAllByPageable(page: number, pageSize: number, name?: string, searchList?: boolean): Observable<Pageable> {
     let params = new HttpParams();
-    params = params.set('pageSize', pageSize);
+    params = params.set('size', pageSize);
     params = params.set('page', page);
     if (name) {
       params = params.set('name', name);
+    }
+    if (searchList) {
+      params = params.set('searchList', searchList);
     }
     return this.httpClient.get<Pageable>(environment.apiUrl + 'bt4g', { params });
   }

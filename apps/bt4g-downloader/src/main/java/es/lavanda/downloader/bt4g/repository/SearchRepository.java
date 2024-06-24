@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface SearchRepository extends MongoRepository<Search, String> {
 
     void deleteByName(String name);
+
+    Search findByName(String name);
 }

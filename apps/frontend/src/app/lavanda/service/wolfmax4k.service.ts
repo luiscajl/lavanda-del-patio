@@ -16,8 +16,11 @@ export class Wolfmax4kService {
 
   getAllByPageable(page: number, pageSize: number, type: string, quality: string, name?: string): Observable<Pageable> {
     let params = new HttpParams();
-    params = params.set('pageSize', pageSize);
+    params = params.set('size', pageSize);
     params = params.set('page', page);
+    if (name) {
+      params = params.set('name', name);
+    }
     return this.httpClient.get<Pageable>(environment.apiUrl + 'indexer/wolfmax4k/' + type + '/' + quality, { params });
   }
 }

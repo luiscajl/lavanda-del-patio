@@ -9,7 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IndexRepository extends MongoRepository<Index, String> {
 
-    Page<Index> findAllByTypeAndQualityAndDomainOrderByCreateTimeDesc(Pageable pageable, Index.Type type, Index.Quality quality, String domain);
+    Page<Index> findAllByTypeAndQualityAndDomainOrderByCreateTimeDesc(Pageable pageable, Index.Type type, Index.Quality quality, String domainWolfmax4K);
+
+    Page<Index> findAllByTypeAndQualityAndDomainAndNameContainingIgnoreCaseOrderByCreateTimeDesc(Pageable pageable, Index.Type type, Index.Quality quality, String domainWolfmax4K, String name);
+
 
     boolean existsByIndexName(String indexName);
+
 }

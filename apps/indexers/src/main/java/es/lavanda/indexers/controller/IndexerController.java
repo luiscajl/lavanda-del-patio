@@ -24,9 +24,9 @@ public class IndexerController {
     private final Wolfmax4KCallerServiceChatGPTVersion wolfmax4KCallerServiceChatGPTVersion;
 
     @GetMapping("/wolfmax4k/{type}/{quality}")
-    public ResponseEntity<?> getAll(Pageable pageable, @PathVariable("type") Index.Type type, @PathVariable("quality") Index.Quality quality) {
+    public ResponseEntity<?> getAll(@PathVariable("type") Index.Type type, @PathVariable("quality") Index.Quality quality, @RequestParam(required = false) String name, Pageable pageable) {
         try {
-            return ResponseEntity.ok(wolfmax4kService.getAllPageable(pageable, type, quality));
+            return ResponseEntity.ok(wolfmax4kService.getAllPageable(pageable, type, quality, name));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("Not found type or quality on this indexer");
         }

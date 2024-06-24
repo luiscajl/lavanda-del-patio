@@ -20,6 +20,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -33,8 +34,12 @@ public class Wolfmax4kService {
 
     private final IndexRepository indexRepository;
 
-    public Page<Index> getAllPageable(Pageable pageable, Index.Type type, Index.Quality quality) {
-        return indexRepository.findAllByTypeAndQualityAndDomainOrderByCreateTimeDesc(pageable, type, quality, DOMAIN_WOLFMAX4K);
+    public Page<Index> getAllPageable(Pageable pageable, Index.Type type, Index.Quality quality, String name) {
+        if (Objects.nonNull(name)) {
+            return indexRepository.findAllByTypeAndQualityAndDomainAndNameContainingIgnoreCaseOrderByCreateTimeDesc(pageable, type, quality, DOMAIN_WOLFMAX4K, name);
+        } else {
+            return indexRepository.findAllByTypeAndQualityAndDomainOrderByCreateTimeDesc(pageable, type, quality, DOMAIN_WOLFMAX4K);
+        }
     }
 
     @Scheduled(fixedDelay = 20, timeUnit = TimeUnit.MINUTES)
