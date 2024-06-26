@@ -44,7 +44,7 @@ public class Bt4gCallerService {
 
     public List<Bt4g> callToBT4G(String search) {
         log.info("Call To BT4G");
-        String html = callWithCurl(BT4ORG_URL + "/search/" + search);
+        String html = callWithFlaresolverr(BT4ORG_URL + "/search/" + search).getSolution().getResponse();
         Document document = Jsoup.parse(html);
         if (document.toString().contains("Web server is returning an unknown error")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Web server is returning an unknown error");
@@ -80,7 +80,7 @@ public class Bt4gCallerService {
     }
 
     private String getHash(String url) {
-        String html = callWithCurl(url);
+        String html = callWithFlaresolverr(url).getSolution().getResponse();
         return html.split("urn:btih:")[1].split("&")[0];
     }
 
