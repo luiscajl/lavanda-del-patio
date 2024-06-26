@@ -1,5 +1,6 @@
 package es.lavanda.downloader.bt4g.service;
 
+import java.io.StringReader;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -8,12 +9,19 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import es.lavanda.downloader.bt4g.exception.Bt4gException;
 import es.lavanda.downloader.bt4g.model.Bt4g;
+import es.lavanda.downloader.bt4g.model.Rss;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -45,6 +53,22 @@ public class Bt4gCallerService {
     public List<Bt4g> callToBT4G(String search) {
         log.info("Call To BT4G");
         String html = callWithFlaresolverr(BT4ORG_URL + "/search/" + search).getSolution().getResponse();
+        String rssString = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&page=rss").getSolution().getResponse();
+        Rss rss = null;
+        try {
+            Document document = Jsoup.parse(rssString, "", Parser.xmlParser());
+            Element rssElement = document.selectFirst("rss");
+            if (Objects.isNull(rssElement)) {
+                throw new Bt4gException("No se encontró el elemento <rss> en el HTML");
+            }
+            String rssXml = rssElement.outerHtml();
+            JAXBContext jaxbContext = JAXBContext.newInstance(Rss.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            rss = (Rss) unmarshaller.unmarshal(new StringReader(rssXml));
+        } catch (JAXBException e) {
+            log.error("Error unmarshalling response", e);
+            throw new Bt4gException(e);
+        }
         Document document = Jsoup.parse(html);
         if (document.toString().contains("Web server is returning an unknown error")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Web server is returning an unknown error");
@@ -55,7 +79,7 @@ public class Bt4gCallerService {
             Bt4g bt4g = new Bt4g();
             bt4g.setName(magnetObject.child(0).attr("title"));
             bt4g.setUrl(BT4ORG_URL + magnetObject.child(0).attr("href"));
-            String hash = getHash(bt4g.getUrl());
+            String hash = getHash(rss, bt4g.getName());
             bt4g.setMagnetHash(hash);
             bt4g.setMagnet(magnetService.getMagnetWithTrackers(hash.toUpperCase(), bt4g.getName()));
             bt4g.setSeeders(Integer.parseInt(magnetObject.parent().getElementById("seeders").text()));
@@ -79,6 +103,14 @@ public class Bt4gCallerService {
         return allBt4g;
     }
 
+    private String getHash(Rss rss, String name) {
+        for (Rss.Channel.Item item : rss.getChannel().getItem())
+            if (item.getTitle().equals(name)) {
+                return item.getLink().split("urn:btih:")[1].split("&")[0];
+            }
+        throw new Bt4gException("Not found hash");
+    }
+
     private String getHash(String url) {
         String html = callWithFlaresolverr(url).getSolution().getResponse();
         return html.split("urn:btih:")[1].split("&")[0];
@@ -95,6 +127,7 @@ public class Bt4gCallerService {
         factory.setReadTimeout(120000);    // 120 seconds
         return factory;
     }
+
     private FlaresolverrIDTO callWithFlaresolverr(String url) {
         log.info("Calling to flaresolverr for url {}", url);
         FlaresolverrODTO flaresolverrODTO = new FlaresolverrODTO();
@@ -108,16 +141,6 @@ public class Bt4gCallerService {
                 .body(flaresolverrODTO)
                 .retrieve()
                 .body(FlaresolverrIDTO.class);
-    }
-
-    private String callWithCurl(String url) {
-        log.info("Calling to bt4g using curl for url {}", url);
-        RestClient restClient = configureRestClient();
-        return restClient
-                .get()
-                .uri(url)
-                .retrieve()
-                .body(String.class);
     }
 
     private String getByteArrayFromImageURL(String url) {
