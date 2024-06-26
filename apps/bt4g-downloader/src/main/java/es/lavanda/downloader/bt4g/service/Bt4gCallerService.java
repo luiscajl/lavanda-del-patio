@@ -44,7 +44,7 @@ public class Bt4gCallerService {
 
     public List<Bt4g> callToBT4G(String search) {
         log.info("Call To BT4G");
-        String html = callWithFlaresolverr(BT4ORG_URL + "/search/" + search).getSolution().getResponse();
+        String html = callWithCurl(BT4ORG_URL + "/search/" + search);
         Document document = Jsoup.parse(html);
         if (document.toString().contains("Web server is returning an unknown error")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Web server is returning an unknown error");
@@ -80,7 +80,7 @@ public class Bt4gCallerService {
     }
 
     private String getHash(String url) {
-        String html = callWithFlaresolverr(url).getSolution().getResponse();
+        String html = callWithCurl(url);
         return html.split("urn:btih:")[1].split("&")[0];
     }
 
@@ -108,6 +108,16 @@ public class Bt4gCallerService {
                 .body(flaresolverrODTO)
                 .retrieve()
                 .body(FlaresolverrIDTO.class);
+    }
+
+    private String callWithCurl(String url) {
+        log.info("Calling to bt4g using curl for url {}", url);
+        RestClient restClient = configureRestClient();
+        return restClient
+                .get()
+                .uri(url)
+                .retrieve()
+                .body(String.class);
     }
 
     private String getByteArrayFromImageURL(String url) {
