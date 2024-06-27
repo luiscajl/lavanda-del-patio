@@ -1,14 +1,12 @@
 <div class="grid">
   <div class="col-12">
     <div class="card">
-      <p-dataView #dv [value]="indexes" [paginator]="true" [rows]="pageSize" filterBy="name"
-        [rowsPerPageOptions]="rowsPerPageOptions" layout="list">
+      <p-dataView #dv [value]="indexes" filterBy="name" layout="list">
         <ng-template pTemplate="header">
           <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
             <span class="p-input-icon-left">
               <i class="pi pi-search"></i>
-              <input type="search" pInputText placeholder="Search by Name"
-              [(ngModel)]="filterName"
+              <input type="search" pInputText placeholder="Search by Name" [(ngModel)]="filterName"
                 (ngModelChange)="this.filterUpdate.next($event)">
             </span>
             <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
@@ -55,6 +53,8 @@
           </div>
         </ng-template>
       </p-dataView>
+      <p-paginator (onPageChange)="onPageChange($event)" [first]="0" [rows]="pageSize" [totalRecords]="totalElements"
+        [rowsPerPageOptions]="rowsPerPageOptions"></p-paginator>
     </div>
   </div>
 </div>

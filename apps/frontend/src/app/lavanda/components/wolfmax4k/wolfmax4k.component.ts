@@ -102,7 +102,7 @@ export class Wolfmax4kComponent implements OnInit {
         return Quality.HD;
       case '1080p':
         return Quality.FULL_HD;
-      case '4k':
+      case '2160p':
         return Quality.ULTRA_HD;
       default:
         throw new Error('Invalid quality');

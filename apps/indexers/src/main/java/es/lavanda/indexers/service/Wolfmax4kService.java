@@ -30,7 +30,7 @@ public class Wolfmax4kService {
 
     private final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
 
-    private final Wolfmax4KCallerServiceChatGPTVersion wolfmax4kCallerService;
+    private final Wolfmax4KCallerService wolfmax4kCallerService;
 
     private final IndexRepository indexRepository;
 

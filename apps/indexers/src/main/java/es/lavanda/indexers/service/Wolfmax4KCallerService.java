@@ -46,9 +46,11 @@ public class Wolfmax4KCallerServiceChatGPTVersion {
         FlaresolverrIDTO flaresolverrIDTOWolfmax4k = getHtmlResponse(WOLFMAX4K_URL);
         Document document = Jsoup.parse(flaresolverrIDTOWolfmax4k.getSolution().getResponse());
         Elements layoutSectionElements = document.getElementsByClass("layout-section");
-        indexes.addAll(getNewReleases(layoutSectionElements, "Peliculas bluray 1080p", Index.Type.FILM, Index.Quality.FULL_HD));
         indexes.addAll(getNewReleases(layoutSectionElements, "Series 720p", Index.Type.TV_SHOW, Index.Quality.HD));
         indexes.addAll(getNewReleases(layoutSectionElements, "Series 1080p", Index.Type.TV_SHOW, Index.Quality.FULL_HD));
+        indexes.addAll(getNewReleases(layoutSectionElements, "Series 4K 2160p", Index.Type.FILM, Index.Quality.ULTRA_HD));
+        indexes.addAll(getNewReleases(layoutSectionElements, "Peliculas bluray 1080p", Index.Type.FILM, Index.Quality.FULL_HD));
+        indexes.addAll(getNewReleases(layoutSectionElements, "Peliculas 4K 2160p", Index.Type.FILM, Index.Quality.ULTRA_HD));
         return indexes;
     }
 
