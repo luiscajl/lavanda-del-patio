@@ -29,7 +29,7 @@ import es.lavanda.lib.common.model.flaresolverr.output.FlaresolverrODTO;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class Wolfmax4KCallerServiceChatGPTVersion {
+public class Wolfmax4KCallerService {
 
     @Value("${flaresolverr.url}")
     private String flaresolverrUrl;
@@ -46,9 +46,11 @@ public class Wolfmax4KCallerServiceChatGPTVersion {
         FlaresolverrIDTO flaresolverrIDTOWolfmax4k = getHtmlResponse(WOLFMAX4K_URL);
         Document document = Jsoup.parse(flaresolverrIDTOWolfmax4k.getSolution().getResponse());
         Elements layoutSectionElements = document.getElementsByClass("layout-section");
+        //TVSHOW
         indexes.addAll(getNewReleases(layoutSectionElements, "Series 720p", Index.Type.TV_SHOW, Index.Quality.HD));
         indexes.addAll(getNewReleases(layoutSectionElements, "Series 1080p", Index.Type.TV_SHOW, Index.Quality.FULL_HD));
-        indexes.addAll(getNewReleases(layoutSectionElements, "Series 4K 2160p", Index.Type.FILM, Index.Quality.ULTRA_HD));
+        indexes.addAll(getNewReleases(layoutSectionElements, "Series 4K 2160p", Index.Type.TV_SHOW, Index.Quality.ULTRA_HD));
+        //FILM
         indexes.addAll(getNewReleases(layoutSectionElements, "Peliculas bluray 1080p", Index.Type.FILM, Index.Quality.FULL_HD));
         indexes.addAll(getNewReleases(layoutSectionElements, "Peliculas 4K 2160p", Index.Type.FILM, Index.Quality.ULTRA_HD));
         return indexes;
@@ -64,18 +66,6 @@ public class Wolfmax4KCallerServiceChatGPTVersion {
                     indexes.addAll(getIndexFromColLg2(element.getElementsByClass("col-lg-2"), type, quality));
                 });
         return indexes;
-    }
-
-    public List<Index> getIndexFilmsFullHd() {
-        return getIndexFromPage(WOLFMAX4K_FILMS_1080P, Index.Type.FILM, Index.Quality.FULL_HD);
-    }
-
-    public List<Index> getIndexShowsFullHd() {
-        return getIndexFromMultiPage(WOLFMAX4K_SHOWS_1080P, Index.Type.TV_SHOW, Index.Quality.FULL_HD);
-    }
-
-    public List<Index> getIndexShowsHd() {
-        return getIndexFromMultiPage(WOLFMAX4K_SHOWS_720P, Index.Type.TV_SHOW, Index.Quality.HD);
     }
 
     private List<Index> getIndexFromColLg2(Elements colLg2Elements, Index.Type type, Index.Quality quality) {
