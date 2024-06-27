@@ -53,22 +53,9 @@ public class Bt4gCallerService {
     public List<Bt4g> callToBT4G(String search) {
         log.info("Call To BT4G");
         String html = callWithFlaresolverr(BT4ORG_URL + "/search/" + search).getSolution().getResponse();
-        String rssString = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&page=rss").getSolution().getResponse();
-        Rss rss = null;
-        try {
-            Document document = Jsoup.parse(rssString, "", Parser.xmlParser());
-            Element rssElement = document.selectFirst("rss");
-            if (Objects.isNull(rssElement)) {
-                throw new Bt4gException("No se encontró el elemento <rss> en el HTML");
-            }
-            String rssXml = rssElement.outerHtml();
-            JAXBContext jaxbContext = JAXBContext.newInstance(Rss.class);
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            rss = (Rss) unmarshaller.unmarshal(new StringReader(rssXml));
-        } catch (JAXBException e) {
-            log.error("Error unmarshalling response", e);
-            throw new Bt4gException(e);
-        }
+        String rssString = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&page=rss").getSolution()
+                .getResponse();
+
         Document document = Jsoup.parse(html);
         if (document.toString().contains("Web server is returning an unknown error")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Web server is returning an unknown error");
@@ -79,7 +66,7 @@ public class Bt4gCallerService {
             Bt4g bt4g = new Bt4g();
             bt4g.setName(magnetObject.child(0).attr("title"));
             bt4g.setUrl(BT4ORG_URL + magnetObject.child(0).attr("href"));
-            String hash = getHash(rss, bt4g.getName());
+            String hash = getHash(rssString, bt4g.getName());
             bt4g.setMagnetHash(hash);
             bt4g.setMagnet(magnetService.getMagnetWithTrackers(hash.toUpperCase(), bt4g.getName()));
             bt4g.setSeeders(Integer.parseInt(magnetObject.parent().getElementById("seeders").text()));
@@ -94,20 +81,27 @@ public class Bt4gCallerService {
                     LocalDate.parse(
                             magnetObject.parent().html().split("<span>Create Time:&nbsp;<b>")[1].split("</b>")[0],
                             formatter)));
-            bt4g.setFiles(new ArrayList<>());//FIXME: ADD FILES
-            bt4g.setUpdated(null);//FIXME: setUpdated
+            bt4g.setFiles(new ArrayList<>());// FIXME: ADD FILES
+            bt4g.setUpdated(null);// FIXME: setUpdated
             allBt4g.add(bt4g);
         }
-        //FIXME: SCAN ANOTHER PAGE.
+        // FIXME: SCAN ANOTHER PAGE.
         log.info("Finish call To BT4G");
         return allBt4g;
     }
 
-    private String getHash(Rss rss, String name) {
-        for (Rss.Channel.Item item : rss.getChannel().getItem())
-            if (item.getTitle().equals(name)) {
-                return item.getLink().split("urn:btih:")[1].split("&")[0];
+    private String getHash(String rssString, String name) {
+        Document documentRss = Jsoup.parse(rssString, "", Parser.xmlParser());
+        Element rssElement = documentRss.selectFirst("rss");
+        if (Objects.isNull(rssElement)) {
+            throw new Bt4gException("No se encontró el elemento <rss> en el HTML");
+        }
+        Elements items = rssElement.getElementsByTag("item");
+        for (Element item : items) {
+            if (item.getElementsByTag("title").text().equals(name)) {
+                return item.getElementsByTag("link").first().text().split("urn:btih:")[1].split("&")[0];
             }
+        }
         throw new Bt4gException("Not found hash");
     }
 
@@ -124,7 +118,7 @@ public class Bt4gCallerService {
     private ClientHttpRequestFactory clientHttpRequestFactory() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(60000); // 60 seconds
-        factory.setReadTimeout(120000);    // 120 seconds
+        factory.setReadTimeout(120000); // 120 seconds
         return factory;
     }
 
