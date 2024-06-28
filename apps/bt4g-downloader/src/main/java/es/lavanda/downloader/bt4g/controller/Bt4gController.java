@@ -25,7 +25,7 @@ public class Bt4gController {
     private final Bt4gService bt4gService;
 
     @GetMapping
-    public ResponseEntity<Page<Bt4gDTO>> getAll(Pageable pageable, @RequestParam(required = false) String name, @RequestParam(required = false) Boolean searchList) {
+    public ResponseEntity<Page<Bt4gDTO>> getAll(Pageable pageable, @RequestParam(required = false) String name, @RequestParam(required = false) boolean searchList) {
         return ResponseEntity.ok(bt4gService.getAllPageable(pageable, name, searchList));
     }
 

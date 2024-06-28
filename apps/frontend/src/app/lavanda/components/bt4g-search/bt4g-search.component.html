@@ -20,17 +20,17 @@
               <input id="Batch" type="text" pInputText placeholder="Batch" [(ngModel)]="searchNameBatch"
                 pTooltip="Enter your batch name">
             </span>
-            <button class="p-button-help mr-2" pButton pRipple label="Search Batch" (click)="batchSearch()"></button>
+            <button class="p-button-help mr-2" pButton pRipple label="Search Async" (click)="batchSearch()"></button>
           </div>
         </ng-template>
 
         <ng-template pTemplate="right">
           <div class="flex align-items-center gap-2">
             <span>
-              <input id="Batch" type="text" pInputText placeholder="Manual" [(ngModel)]="searchNameBatch"
-                pTooltip="Enter your batch name">
+              <input id="Manual" type="text" pInputText placeholder="Manual" [(ngModel)]="searchName"
+                pTooltip="Enter your manual name">
             </span>
-            <button class="p-button-info mr-2" pButton pRipple label="Manual search" (click)="manualSearch()"></button>
+            <button class="p-button-info mr-2" pButton pRipple label="Search Sync" (click)="manualSearch()"></button>
           </div>
         </ng-template>
 

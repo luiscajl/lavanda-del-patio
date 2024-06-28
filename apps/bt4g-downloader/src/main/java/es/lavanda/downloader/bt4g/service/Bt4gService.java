@@ -87,7 +87,7 @@ public class Bt4gService {
         searchRepository.deleteById(id);
     }
 
-    public Page<Bt4gDTO> getAllPageable(Pageable pageable, String name, Boolean searchList) {
+    public Page<Bt4gDTO> getAllPageable(Pageable pageable, String name, boolean searchList) {
         Page<Bt4g> bt4gs = null;
         if (Objects.nonNull(name) && Boolean.FALSE.equals(searchList)) {
             bt4gs = bt4gRepository.findByNameContainingIgnoreCase(pageable, name);

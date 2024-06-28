@@ -8,6 +8,7 @@ import { Bt4gService } from '../../service/bt4g.service';
 import { Wolfmax4kService } from '../../service/wolfmax4k.service';
 import { DataView } from 'primeng/dataview';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 export enum Type {
   TV_SHOW = 'TV_SHOW',
@@ -40,6 +41,7 @@ export class Wolfmax4kComponent implements OnInit {
   debounceTime = 500;
   filterName: string = '';
   filterUpdate = new Subject<string>();
+  form!: FormGroup;
 
   constructor(
     private wolfmax4kService: Wolfmax4kService,
@@ -57,13 +59,17 @@ export class Wolfmax4kComponent implements OnInit {
       this.type = this.mapToType(params['type']);
       this.quality = this.mapToQuality(params['quality']);
       this.searchData();
-      this.filterUpdate.pipe(
-        debounceTime(400),
-        distinctUntilChanged())
-        .subscribe(value => {
-          this.searchData(this.filterName);
-        });
     });
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.form = new UntypedFormGroup({
+      name: new UntypedFormControl(''),
+    });
+    this.form.valueChanges.pipe(
+      debounceTime(this.debounceTime),
+    ).subscribe(changes => this.formChanged(changes));
   }
 
   searchData(name?: string) {
@@ -120,6 +126,11 @@ export class Wolfmax4kComponent implements OnInit {
         this.messageService.add({ severity: 'error', detail: 'Error: ' + error.message, life: 3000 });
       }
     );
+  }
+
+  formChanged(currentValue: any) {
+    let name = this.form!.get('name')!.value;
+    this.searchData(name);
   }
 
   getSanitizedImageUrl(image: string): SafeUrl {

@@ -51,7 +51,7 @@ export class Bt4gComponent implements OnInit {
 
   search(name?: string) {
     this.sp.show();
-    this.bt4gservice.getAllByPageable(this.pageNumber, this.pageSize, name).subscribe(
+    this.bt4gservice.getAllByPageable(this.pageNumber, this.pageSize, name, false).subscribe(
       response => {
         this.data = response.content;
         this.totalElements = response.totalElements;

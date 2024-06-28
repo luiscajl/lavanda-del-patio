@@ -4,11 +4,12 @@
       <p-dataView #dv [value]="indexes" filterBy="name" layout="list">
         <ng-template pTemplate="header">
           <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input type="search" pInputText placeholder="Search by Name" [(ngModel)]="filterName"
-                (ngModelChange)="this.filterUpdate.next($event)">
-            </span>
+            <form class="form-group-search" [formGroup]="form">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" formControlName="name" placeholder="Search by Name" class="w-full" />
+              </span>
+            </form>
             <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
           </div>
         </ng-template>
@@ -58,3 +59,5 @@
     </div>
   </div>
 </div>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<p-toast></p-toast>
