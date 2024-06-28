@@ -1,0 +1,3 @@
+apiVersion: v2
+name: bt4g-downloader
+version: 0.0.1

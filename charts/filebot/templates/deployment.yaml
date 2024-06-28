@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "filebot.fullname" . }}
+  labels:
+    {{- include "filebot.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "filebot.selectorLabels" . | nindent 6 }}
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "filebot.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "filebot.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      initContainers:
+        - name: filebot-scripts-config
+          image: "busybox"
+          command:
+            - cp
+          args:
+            - -v
+            - /in/liveness.sh
+            - /out/liveness.sh
+          volumeMounts:
+          - name: config-data
+            mountPath: /in
+          - name: config
+            mountPath: /out
+        - name: permission-fix
+          image: busybox
+          command: ['sh', '-c']
+          args: ['chmod -R 777 /out']
+          volumeMounts:
+          - name: config
+            mountPath: /out
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.spring.profile}}
+            - name: SPRING_DATA_MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-uri
+                  key: secret
+            - name: SPRING_RABBITMQ_USERNAME
+              value: user
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq
+                  key: rabbitmq-password
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+            {{- range .Values.environmentVariables }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 12
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 8
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /home/apps
+              name: filebot-config
+            - mountPath: /media
+              mountPropagation: Bidirectional
+              name: data
+            - mountPath: /health
+              name: config
+      volumes:
+        - name: data
+          hostPath:
+            path: {{ .Values.data.path }}
+            type: Directory
+        - name: filebot-config
+          persistentVolumeClaim:
+            claimName: filebot-config-rwm
+        - name: config-data
+          configMap:
+            name: filebot-health
+            items:
+              - key: liveness.sh
+                path: liveness.sh
+        - name: config
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

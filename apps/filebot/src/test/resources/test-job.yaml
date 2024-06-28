@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: filebot-job
+spec:
+  template:
+    spec:
+      containers:
+        - name: filebot
+          image: rednoah/filebot
+          command: ["/bin/sh", "-c"]
+          args: ["filebot -script 'fn:amc' --output \"/Users/luiscarlos/Documents/Github/LavandaDelPatio/filebot-executor/src/main/resources/filebot_output/\" --action move --def movieDB=TheMovieDB seriesDB=TheMovieDB::TV animeDB=AniDB musicDB=ID3 --lang en --order Airdate -no-xattr \"/Users/luiscarlos/Documents/Github/LavandaDelPatio/filebot-executor/src/main/resources/filebot/NoFile\" --def 'movieFormat=/media/Peliculas/{n} ({y})/{n} ({y})_{audioLanguages}_{vf}_{bitrate}' 'seriesFormat=/media/Series-EN/{n}/ Season {s}/{n} s{s.pad(2)}e{e.pad(2)}_{audioLanguages}_{vf}_{bitrate}' --def 'storeReport=/home/filebot/.reports' 'unsortedFormat=/media/Unsorted/{fn}.{ext}' --q \"71912\" --def \"ut_label=tv\""]
+      restartPolicy: Never
+  backoffLimit: 4

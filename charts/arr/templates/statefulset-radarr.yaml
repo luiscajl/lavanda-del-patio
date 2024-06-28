@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: radarr-{{ include "arr.fullname" . }}
+  labels:
+    app.kubernetes.io/instance: radarr
+    app.kubernetes.io/name: radarr
+spec:
+  replicas: {{ .Values.replicaCount }}
+  serviceName: {{ include "arr.fullname" . }} 
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: radarr
+      app.kubernetes.io/name: radarr
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app.kubernetes.io/instance: radarr
+        app.kubernetes.io/name: radarr
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "arr.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:      
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repositoryRadarr }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - mountPath: /config
+              name: {{ include "arr.fullname" . }}-radarr-config  
+            - mountPath: /data
+              name: data               
+          env:
+            {{- range .Values.environmentVariables }}
+            - name: {{ .name }}
+              value: "{{ .value }}"
+            {{- end }}     
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.radarr.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: http
+              # httpHeaders:
+              #   - name: Authorization
+              #     value: Basic YWRtaW46YWRtaW4=
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 3                 
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: http
+              # httpHeaders:
+              #   - name: Authorization
+              #     value: Basic YWRtaW46YWRtaW4=
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5  
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: data
+          hostPath:
+            path: {{ .Values.data.path }}
+            type: Directory  
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "arr.fullname" . }}-radarr-config  
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi

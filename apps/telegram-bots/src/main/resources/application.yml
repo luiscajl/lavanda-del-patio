@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: lavanda-filebot-bot
+  profiles:
+    active: dev
+server.port: 0      

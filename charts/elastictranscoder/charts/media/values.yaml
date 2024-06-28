@@ -1,0 +1,64 @@
+replicaCount: 1
+
+image:
+  repository: elastictranscoder/media
+  pullPolicy: IfNotPresent
+  tag: "627e21dc"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: 
+  runAsNonRoot: true
+  runAsUser: 1500
+  runAsGroup: 3000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  annotations: 
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.lavandadelpatio.es/oauth2/start?rd=https://$host$request_uri$is_args$args"
+    nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.oauth2-proxy.svc.cluster.local:4180/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-response-headers: Authorization
+    nginx.ingress.kubernetes.io/auth-snippet: |
+      proxy_method $request_method;
+  hosts:
+    - host: api.lavandadelpatio.es
+      paths:
+      - path: /media
+  tls: []
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

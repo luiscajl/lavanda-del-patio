@@ -1,0 +1,30 @@
+[
+  {
+    "id": "64a149d53b41070615559561",
+    "mediaFiles": [
+      {
+        "id": "64a14a2d7e5ccb67bd5e2f84",
+        "name": "Evil Dead Rise (2023)_[spa, eng]_2160p_26 Mbps.mkv",
+        "fullPath": "/Users/luiscarlos/Documents/DescargasTransmission/MEGA/Peliculas/Evil Dead Rise (2023)/Evil Dead Rise (2023)_[spa, eng]_2160p_26 Mbps.mkv",
+        "extension": "mkv",
+        "provider": "mega"
+      }
+    ],
+    "name": "Evil Dead Rise (2023)",
+    "category": "peliculas"
+  },
+  {
+    "id": "64a14ca47e5ccb67bd5e2f87",
+    "mediaFiles": [
+      {
+        "id": "64a14f1038aecd724b980819",
+        "name": "From s01e01_[eng]_1080p_3.5 Mbps.mkv",
+        "fullPath": "/Users/luiscarlos/Documents/DescargasTransmission/MEGA/Series-EN/From/Season 1/From s01e01_[eng]_1080p_3.5 Mbps.mkv",
+        "extension": "mkv",
+        "provider": "mega"
+      }
+    ],
+    "name": "From",
+    "category": "series-en"
+  }
+]

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: lavanda-qbittorrent-client
+  profiles:
+    active: dev
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
