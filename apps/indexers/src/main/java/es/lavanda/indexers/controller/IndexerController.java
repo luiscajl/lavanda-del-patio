@@ -34,4 +34,10 @@ public class IndexerController {
 //        return ResponseEntity.ok();
 //    }
 
+    @DeleteMapping("/wolfmax4k/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable String id) {
+        wolfmax4kService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

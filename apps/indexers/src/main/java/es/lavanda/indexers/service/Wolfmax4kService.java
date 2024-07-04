@@ -30,22 +30,35 @@ public class Wolfmax4kService {
 
     private final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
 
+    private static final String WOLFMAX4K_URL = "https://wolfmax4k.com";
+    private static final String WOLFMAX4K_FILMS_1080P = "/peliculas/bluray-1080p/";
+    private static final String WOLFMAX4K_FILMS_2160P = "/peliculas/4k-2160p/";
+    private static final String WOLFMAX4K_SHOWS_2160P = "/series/4k-2160p/";
+    private static final String WOLFMAX4K_SHOWS_1080P = "/series/1080p/";
+    private static final String WOLFMAX4K_SHOWS_720P = "/series/720p/";
+
     private final Wolfmax4KCallerService wolfmax4kCallerService;
 
     private final IndexRepository indexRepository;
 
     public Page<Index> getAllPageable(Pageable pageable, Index.Type type, Index.Quality quality, String name) {
         if (Objects.nonNull(name)) {
-            return indexRepository.findAllByTypeAndQualityAndDomainAndNameContainingIgnoreCaseOrderByCreateTimeDesc(pageable, type, quality, DOMAIN_WOLFMAX4K, name);
+            return indexRepository.findAllByTypeAndQualityAndDomainAndIndexNameContainingIgnoreCaseOrderByCreateTimeDesc(pageable, type, quality, DOMAIN_WOLFMAX4K, name);
         } else {
             return indexRepository.findAllByTypeAndQualityAndDomainOrderByCreateTimeDesc(pageable, type, quality, DOMAIN_WOLFMAX4K);
         }
     }
 
-    @Scheduled(fixedDelay = 20, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 2, timeUnit = TimeUnit.HOURS)
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
-        saveList(wolfmax4kCallerService.getIndexForMainPage());
+        //SHOWS
+        saveList(wolfmax4kCallerService.getIndexForMainPageV2(WOLFMAX4K_URL + WOLFMAX4K_SHOWS_720P, Index.Type.TV_SHOW, Index.Quality.HD, true));
+        saveList(wolfmax4kCallerService.getIndexForMainPageV2(WOLFMAX4K_URL + WOLFMAX4K_SHOWS_1080P, Index.Type.TV_SHOW, Index.Quality.FULL_HD, true));
+        saveList(wolfmax4kCallerService.getIndexForMainPageV2(WOLFMAX4K_URL + WOLFMAX4K_SHOWS_2160P, Index.Type.TV_SHOW, Index.Quality.ULTRA_HD, true));
+        //FILM
+        saveList(wolfmax4kCallerService.getIndexForMainPageV2(WOLFMAX4K_URL + WOLFMAX4K_FILMS_1080P, Index.Type.FILM, Index.Quality.FULL_HD, false));
+        saveList(wolfmax4kCallerService.getIndexForMainPageV2(WOLFMAX4K_URL + WOLFMAX4K_FILMS_2160P, Index.Type.FILM, Index.Quality.ULTRA_HD, false));
         log.info("Finish Wolfmax4k Indexes");
     }
 
@@ -61,5 +74,9 @@ public class Wolfmax4kService {
                 log.error("Can't save object by:", e);
             }
         }
+    }
+
+    public void deleteById(String id) {
+        indexRepository.deleteById(id);
     }
 }

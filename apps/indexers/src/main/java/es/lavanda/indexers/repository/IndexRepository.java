@@ -11,7 +11,7 @@ public interface IndexRepository extends MongoRepository<Index, String> {
 
     Page<Index> findAllByTypeAndQualityAndDomainOrderByCreateTimeDesc(Pageable pageable, Index.Type type, Index.Quality quality, String domainWolfmax4K);
 
-    Page<Index> findAllByTypeAndQualityAndDomainAndNameContainingIgnoreCaseOrderByCreateTimeDesc(Pageable pageable, Index.Type type, Index.Quality quality, String domainWolfmax4K, String name);
+    Page<Index> findAllByTypeAndQualityAndDomainAndIndexNameContainingIgnoreCaseOrderByCreateTimeDesc(Pageable pageable, Index.Type type, Index.Quality quality, String domainWolfmax4K, String name);
 
 
     boolean existsByIndexName(String indexName);
