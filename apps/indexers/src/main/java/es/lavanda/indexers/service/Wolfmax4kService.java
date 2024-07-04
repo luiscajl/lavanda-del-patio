@@ -49,7 +49,7 @@ public class Wolfmax4kService {
         }
     }
 
-    @Scheduled(fixedDelay = 2, timeUnit = TimeUnit.HOURS)
+    @Scheduled(fixedDelay = 24, timeUnit = TimeUnit.HOURS)
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
         //SHOWS
