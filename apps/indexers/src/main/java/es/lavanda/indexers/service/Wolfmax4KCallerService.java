@@ -93,6 +93,9 @@ public class Wolfmax4KCallerService {
         FlaresolverrIDTO flaresolverrIDTOMainShow = getHtmlResponse(urlMainShow);
         Document documentMainShow = Jsoup.parse(flaresolverrIDTOMainShow.getSolution().getResponse());
         Element rowAfterLayoutSection = documentMainShow.getElementsByClass("row gx-lg-4 gx-0").first();
+        if (Objects.isNull(rowAfterLayoutSection)) {
+            buildIndex(colLg2, type, quality, url);
+        }
         String imageElement = colLg2.getElementsByClass("img-fluid rounded-1").attr("src");
         String imageUrl = getImageUrl(imageElement);
         String imageBase64 = getImageAsBase64(imageUrl);
@@ -150,7 +153,7 @@ public class Wolfmax4KCallerService {
             RestClient restClient = configureRestClient();
             return restClient.post().uri(flaresolverrUrl).body(request).retrieve().body(FlaresolverrIDTO.class);
         } catch (Exception e) {
-            log.error("Exception getting htmlResponse {}", e.getMessage());
+            log.error("Exception getting htmlResponse: {}", e.getMessage());
             return getHtmlResponse(url);
         }
     }
@@ -162,7 +165,7 @@ public class Wolfmax4KCallerService {
             byte[] imageBytes = IOUtils.toByteArray(in);
             return Base64.getEncoder().encodeToString(imageBytes);
         } catch (IOException e) {
-            log.error("Error while fetching image as Base64", e);
+            log.error("Error while fetching image as Base64: {}", e.getLocalizedMessage());
             return imageUrl;
         }
     }
