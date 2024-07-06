@@ -93,7 +93,7 @@ public class Wolfmax4KCallerService {
         FlaresolverrIDTO flaresolverrIDTOMainShow = getHtmlResponse(urlMainShow);
         Document documentMainShow = Jsoup.parse(flaresolverrIDTOMainShow.getSolution().getResponse());
         Element rowAfterLayoutSection = documentMainShow.getElementsByClass("row gx-lg-4 gx-0").first();
-        if (Objects.isNull(rowAfterLayoutSection)) {
+        if (Objects.isNull(rowAfterLayoutSection.getElementsByClass("temp-serie"))) {
             buildIndex(colLg2, type, quality, url);
         }
         String imageElement = colLg2.getElementsByClass("img-fluid rounded-1").attr("src");
