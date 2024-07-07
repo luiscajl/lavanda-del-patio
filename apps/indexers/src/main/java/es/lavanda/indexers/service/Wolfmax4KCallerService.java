@@ -104,13 +104,7 @@ public class Wolfmax4KCallerService {
                 Index index = new Index();
                 index.setName(colLg2.getElementsByTag("h3").text());
                 index.setUrl(WOLFMAX4K_URL + a.attr("href"));
-                try {
-                    index.setIndexName(
-                            Jsoup.parse(getHtmlResponse(index.getUrl()).getSolution().getResponse()).getElementsByClass("h3 fw-semibold mb-1").first().text());
-                } catch (Exception e) {
-                    log.error("Exception trying get indexName", e);
-                    index.setIndexName(a.text());
-                }
+                index.setIndexName(getIndexName(index.getUrl()));
                 index.setDomain(DOMAIN_WOLFMAX4K);
                 index.setImage(imageBase64);
                 index.setQuality(quality);
@@ -120,6 +114,18 @@ public class Wolfmax4KCallerService {
             }
         }
         return indexes;
+    }
+
+    private String getIndexName(String url) {
+        try {
+            String indexNameString = getHtmlResponse(url).getSolution().getResponse();
+            Document documentOneShow = Jsoup.parse(indexNameString);
+            Element indexName = documentOneShow.getElementsByClass("h3 fw-semibold mb-1").first();
+            return indexName.text();
+        } catch (Exception e) {
+            log.error("Exception trying get indexName: {}", e.getLocalizedMessage());
+            return getIndexName(url);
+        }
     }
 
     private RestClient configureRestClient() {
