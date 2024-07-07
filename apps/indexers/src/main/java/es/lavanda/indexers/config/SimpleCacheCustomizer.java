@@ -13,6 +13,6 @@ public class SimpleCacheCustomizer
 
     @Override
     public void customize(ConcurrentMapCacheManager cacheManager) {
-        cacheManager.setCacheNames(List.of("images", "urls"));
+        cacheManager.setCacheNames(List.of("images"));
     }
 }
