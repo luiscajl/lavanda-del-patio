@@ -37,7 +37,7 @@ public class Wolfmax4kService {
     private static final String WOLFMAX4K_SHOWS_1080P = "/series/1080p/";
     private static final String WOLFMAX4K_SHOWS_720P = "/series/720p/";
 
-    private final Wolfmax4KCallerService wolfmax4kCallerService;
+    private final Wolfmax4KCallerServiceV2 wolfmax4kCallerService;
 
     private final IndexRepository indexRepository;
 

@@ -74,6 +74,9 @@ export class Wolfmax4kComponent implements OnInit {
 
   searchData(name?: string) {
     this.sp.show();
+    if (name){
+      this.pageNumber = 0;
+    }
     this.wolfmax4kService.getAllByPageable(this.pageNumber, this.pageSize, this.type.toString(), this.quality.toString(), name).subscribe(
       response => {
         this.indexes = response.content
