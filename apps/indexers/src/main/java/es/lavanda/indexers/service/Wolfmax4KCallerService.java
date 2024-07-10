@@ -60,9 +60,9 @@ public class Wolfmax4KCallerService {
     public void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
         //SHOWS
-//        for (String url : SHOWS_URLS) {
-//            getIndexForMainPageV2(WOLFMAX4K_URL + url, Index.Type.TV_SHOW, getQualityFromUrl(url), true);
-//        }
+        for (String url : SHOWS_URLS) {
+            getIndexForMainPageV2(WOLFMAX4K_URL + url, Index.Type.TV_SHOW, getQualityFromUrl(url), true);
+        }
         //FILMS
         for (String url : FILMS_URLS) {
             getIndexForMainPageV2(WOLFMAX4K_URL + url, Index.Type.FILM, getQualityFromUrl(url), false);
