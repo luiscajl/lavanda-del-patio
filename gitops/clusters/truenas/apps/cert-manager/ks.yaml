@@ -4,7 +4,7 @@ metadata:
   name: cert-manager-controller
   namespace: flux-system
 spec:
-  path: ./clusters/truenas/apps/cert-manager/controller
+  path: ./gitops/clusters/truenas/apps/cert-manager/controller
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,7 +24,7 @@ metadata:
   name: cert-manager-certs
   namespace: flux-system
 spec:
-  path: ./clusters/truenas/apps/cert-manager/certs
+  path: ./gitops/clusters/truenas/apps/cert-manager/certs
   prune: true
   sourceRef:
     kind: GitRepository

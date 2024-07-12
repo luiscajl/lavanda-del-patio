@@ -4,7 +4,7 @@ metadata:
   name: ingress-nginx-controller
   namespace: flux-system
 spec:
-  path: ./clusters/truenas/apps/ingress-nginx/controller
+  path: ./gitops/clusters/truenas/apps/ingress-nginx/controller
   prune: true
   sourceRef:
     kind: GitRepository

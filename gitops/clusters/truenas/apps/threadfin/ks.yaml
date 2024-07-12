@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./clusters/truenas/apps/threadfin/controller
+  path: ./gitops/clusters/truenas/apps/threadfin/controller
   prune: true
   sourceRef:
     kind: GitRepository

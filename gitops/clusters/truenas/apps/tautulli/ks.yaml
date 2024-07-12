@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./clusters/truenas/apps/tautulli/controller
+  path: ./gitops/clusters/truenas/apps/tautulli/controller
   prune: true
   sourceRef:
     kind: GitRepository

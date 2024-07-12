@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./clusters/truenas/apps/personal-apps/image-automation
+  path: ./gitops/clusters/truenas/apps/personal-apps/image-automation
   prune: true
   sourceRef:
     kind: GitRepository
@@ -19,7 +19,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./clusters/truenas/apps/personal-apps/config
+  path: ./gitops/clusters/truenas/apps/personal-apps/config
   prune: true
   sourceRef:
     kind: GitRepository
@@ -32,7 +32,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  path: ./clusters/truenas/apps/personal-apps/personal-releases
+  path: ./gitops/clusters/truenas/apps/personal-apps/personal-releases
   prune: true
   sourceRef:
     kind: GitRepository

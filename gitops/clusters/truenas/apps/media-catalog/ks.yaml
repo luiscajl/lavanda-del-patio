@@ -4,7 +4,7 @@ metadata:
   name: media-catalog-arr
   namespace: flux-system
 spec:
-  path: ./clusters/truenas/apps/media-catalog/arr
+  path: ./gitops/clusters/truenas/apps/media-catalog/arr
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ metadata:
   name: media-catalog-flaresolverr
   namespace: flux-system
 spec:
-  path: ./clusters/truenas/apps/media-catalog/flaresolverr
+  path: ./gitops/clusters/truenas/apps/media-catalog/flaresolverr
   prune: true
   sourceRef:
     kind: GitRepository
@@ -45,7 +45,7 @@ metadata:
   name: media-catalog-jackett
   namespace: flux-system
 spec:
-  path: ./clusters/truenas/apps/media-catalog/jackett
+  path: ./gitops/clusters/truenas/apps/media-catalog/jackett
   prune: true
   sourceRef:
     kind: GitRepository
@@ -65,7 +65,7 @@ metadata:
   name: media-catalog-qbittorrent-controllers
   namespace: flux-system
 spec:
-  path: ./clusters/truenas/apps/media-catalog/qbittorrent/controllers
+  path: ./gitops/clusters/truenas/apps/media-catalog/qbittorrent/controllers
   prune: true
   sourceRef:
     kind: GitRepository
@@ -77,6 +77,4 @@ spec:
     substitute:
       oauth2_url: https://oauth2.lavandadelpatio.es
       host: qbittorrentvpn.lavandadelpatio.es
-      external_dns_target: ingress-nginx.lavandadelpatio.es  
-  dependsOn:
-    - name: media-catalog-qbittorrent-config
+      external_dns_target: ingress-nginx.lavandadelpatio.es
