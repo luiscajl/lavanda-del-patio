@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent-client
+  namespace: flux-system
+spec:
+  releaseName: qbittorrent-client
+  chart:
+    spec:
+      chart: qbittorrent-client
+      sourceRef:
+        kind: HelmRepository
+        name: lavanda
+        namespace: flux-system
+      version: "0.0.1"
+  interval: 1m0s
+  targetNamespace: lavanda
+  install:
+    createNamespace: true
+    timeout: 2m
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: uninstall
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        external-dns.alpha.kubernetes.io/target: ${external_dns_target}
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+      - host: ${host_backend}
+        paths:
+        - path: /qbittorrent
+          pathType: ImplementationSpecific
+      tls:
+      - hosts:
+        - ${host_backend}
+        secretName: backend-tls
+    image:
+      tag: 0.0.1 # {"$imagepolicy": "flux-system:lavanda-qbittorrent-client-policy:tag"}
+      repository: lavandadelpatio/qbittorrent-client
+    spring:
+      profile: pro
+    environmentVariables:
+    - name: QBITTORRENT_URL
+      value: "http://qbittorrentvpn.media-catalog.svc.cluster.local:8081/api/v2"

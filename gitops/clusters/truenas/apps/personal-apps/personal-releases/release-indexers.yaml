@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: indexers
+  namespace: flux-system
+spec:
+  releaseName: indexers
+  chart:
+    spec:
+      chart: indexers
+      sourceRef:
+        kind: HelmRepository
+        name: lavanda
+        namespace: flux-system
+      version: "0.0.1"
+  interval: 1m0s
+  targetNamespace: lavanda
+  install:
+    createNamespace: true
+    timeout: 2m
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: uninstall
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        external-dns.alpha.kubernetes.io/target: ${external_dns_target}
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+      - host: ${host_backend}
+        paths:
+        - path: /indexer
+          pathType: ImplementationSpecific
+      tls:
+      - hosts:
+        - ${host_backend}
+        secretName: backend-tls
+    image:
+      tag: 0.0.32 # {"$imagepolicy": "flux-system:lavanda-indexers-policy:tag"}
+      repository: lavandadelpatio/indexers
+    spring:
+      profile: pro
+    environmentVariables:
+    - name: FLARESOLVERR_URL
+      value: "http://flaresolverr.media-catalog.svc.cluster.local:8191/v1"
+    - name: PROXY_HOST
+      value: "qbittorrentvpn.media-catalog.svc.cluster.local"
+    - name: PROXY_PORT
+      value: "8118"

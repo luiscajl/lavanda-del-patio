@@ -1,0 +1,33 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: filebot-bot
+  namespace: flux-system
+spec:
+  releaseName: filebot-bot
+  chart:
+    spec:
+      chart: filebot-bot
+      sourceRef:
+        kind: HelmRepository
+        name: lavanda
+        namespace: flux-system
+      version: "0.0.11"
+  interval: 1m0s
+  targetNamespace: lavanda
+  install:
+    createNamespace: true
+    timeout: 1m
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: uninstall
+  values:
+    image:
+      tag: 0.0.76
+      
+      # {"$imagepolicy": "flux-system:lavanda-filebot-bot-policy:tag"}    
+    spring:
+      profile: pro

@@ -1,0 +1,63 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: lavanda-tmdb-repository
+  namespace: flux-system
+spec:
+  image: lavandadelpatio/tmdb
+  interval: 3m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: lavanda-telegram-bots-repository
+  namespace: flux-system
+spec:
+  image: lavandadelpatio/telegram-bots
+  interval: 3m0s  
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: lavanda-filebot-repository
+  namespace: flux-system
+spec:
+  image: lavandadelpatio/filebot
+  interval: 3m0s    
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: lavanda-frontend-repository
+  namespace: flux-system
+spec:
+  image: lavandadelpatio/frontend
+  interval: 3m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: lavanda-indexers-repository
+  namespace: flux-system
+spec:
+  image: lavandadelpatio/indexers
+  interval: 3m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: lavanda-bt4g-downloader-repository
+  namespace: flux-system
+spec:
+  image: lavandadelpatio/bt4g-downloader
+  interval: 3m0s    
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: lavanda-qbittorrent-client-repository
+  namespace: flux-system
+spec:
+  image: lavandadelpatio/qbittorrent-client
+  interval: 3m0s    

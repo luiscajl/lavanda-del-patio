@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tautulli
+  namespace: tautulli
+spec:
+  releaseName: tautulli
+  chart:
+    spec:
+      chart: tautulli
+      sourceRef:
+        kind: HelmRepository
+        name: lavanda
+        namespace: flux-system
+      version: "0.0.15"
+  interval: 1m0s
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        # nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.oauth2-proxy.svc.cluster.local:80/oauth2/auth"
+        # nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.lavandadelpatio.es/oauth2/start?rd=https://$host$request_uri$is_args$args"
+        external-dns.alpha.kubernetes.io/target: ingress-nginx.lavandadelpatio.es
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+       - host: tautulli.lavandadelpatio.es
+         paths:
+           - path: /
+             pathType: ImplementationSpecific
+      tls:
+        - hosts:
+          - tautulli.lavandadelpatio.es
+          secretName: tautulli-tls       
+   

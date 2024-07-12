@@ -1,0 +1,72 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: filebot
+  namespace: flux-system
+spec:
+  releaseName: filebot
+  chart:
+    spec:
+      chart: filebot
+      sourceRef:
+        kind: HelmRepository
+        name: lavanda
+        namespace: flux-system
+      version: "2.0.1"
+  interval: 1m0s
+  targetNamespace: lavanda
+  install:
+    createNamespace: true
+    timeout: 2m
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: uninstall
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        external-dns.alpha.kubernetes.io/target: ${external_dns_target}
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+      - host: ${host_backend}
+        paths:
+        - path: /filebot-executor
+          pathType: ImplementationSpecific
+        - path: /filebot
+          pathType: ImplementationSpecific
+      tls:
+      - hosts:
+        - ${host_backend}
+        secretName: backend-tls
+    image:
+      tag: 0.0.143 # {"$imagepolicy": "flux-system:lavanda-filebot-policy:tag"}
+      repository: lavandadelpatio/filebot
+    spring:
+      profile: pro
+    securityContext:
+      runAsUser: 568
+    data:
+      path: "/mnt/raw-data/plex-data"
+    environmentVariables:
+    - name: FILEBOT_USER
+      value: 568
+    - name: FILEBOT_NAMESPACE
+      value: "lavanda"
+    - name: FILEBOT_IMAGE_TAG
+      value: "luiscajl/filebot:latest"
+    - name: FILEBOT_PATH_INPUT
+      value: "/media/qbittorrentvpn-data-downloaded"
+    - name: FILEBOT_PATH_OUTPUT
+      value: "/media"
+    - name: FILEBOT_PATH_DATA
+      value: "/data"
+    - name: FILEBOT_TEST_ENABLED
+      value: false
+    - name: FILEBOT_VOLUMES_CONFIG_CLAIMNAME
+      value: "filebot-config-rwm"
+    - name: FILEBOT_VOLUMES_DATA_PATH
+      value: "/mnt/raw-data/plex-data"
