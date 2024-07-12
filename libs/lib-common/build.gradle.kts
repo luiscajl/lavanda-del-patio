@@ -37,7 +37,7 @@ publishing {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:3.2.5")
-    implementation("commons-io:commons-io:2.16.0")
+    implementation("commons-io:commons-io:2.16.1")
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.17.2")
 }
 
