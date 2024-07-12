@@ -8,7 +8,7 @@ spec:
   interval: 10m0s
   # dependsOn:
   #   - name: crds
-  path: ./clusters/truenas/apps
+  path: ./gitops/clusters/truenas/apps
   prune: true
   sourceRef:
     kind: GitRepository
