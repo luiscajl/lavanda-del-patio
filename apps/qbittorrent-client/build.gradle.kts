@@ -26,7 +26,7 @@ dependencies {
     implementation("org.modelmapper:modelmapper:3.2.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
-    compileOnly("org.projectlombok:lombok:1.18.30")
+    compileOnly("org.projectlombok:lombok:1.18.34")
 
 }
 
