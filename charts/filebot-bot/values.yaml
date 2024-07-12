@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: lavandadelpatio/filebot-bot
   pullPolicy: Always
-  tag: "0.0.1-SNAPSHOT"
+  tag: "0.0.76-SNAPSHOT"
 
 imagePullSecrets: []
 nameOverride: ""
