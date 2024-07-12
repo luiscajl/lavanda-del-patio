@@ -1,0 +1,39 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: threadfin
+  namespace: flux-system
+spec:
+  releaseName: threadfin
+  chart:
+    spec:
+      chart: threadfin
+      sourceRef:
+        kind: HelmRepository
+        name: lavanda
+        namespace: flux-system
+      version: "0.1.2"
+  interval: 1m0s
+  targetNamespace: threadfin
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  values: 
+    ingress: 
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        external-dns.alpha.kubernetes.io/target: ${external_dns_target}
+        # nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.oauth2-proxy.svc.cluster.local:80/oauth2/auth"
+        # nginx.ingress.kubernetes.io/auth-signin: "${oauth2_url}/oauth2/start?rd=https://$host$request_uri$is_args$args"
+        cert-manager.io/cluster-issuer: letsencrypt-production        
+      hosts:
+        - host: ${host_threadfin}
+          paths: 
+            - path: /
+              pathType: ImplementationSpecific        
+      tls:
+      - hosts:
+          - ${host_threadfin}
+        secretName: threadfin-tls               

@@ -1,0 +1,47 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: personal-apps-image-automation
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: ./clusters/truenas/apps/personal-apps/image-automation
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: personal-apps-config
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: ./clusters/truenas/apps/personal-apps/config
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: personal-apps
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: ./clusters/truenas/apps/personal-apps/personal-releases
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system      
+  dependsOn:
+  - name: personal-apps-config         
+  postBuild:
+    substitute:
+      oauth2_url: https://oauth2.lavandadelpatio.es
+      host_backend: api.lavandadelpatio.es
+      host_frontend: lavandadelpatio.es
+      external_dns_target: ingress-nginx.lavandadelpatio.es 

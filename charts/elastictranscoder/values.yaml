@@ -1,0 +1,12 @@
+global:
+  aws:
+    accessKeyId: 
+    secretAccessKey: 
+  okta:
+    issuer: 
+    clientId: 
+    clientSecret:  
+  nfs:
+    server:
+    path:
+            

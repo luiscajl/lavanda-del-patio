@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: lavanda-indexers
+  profiles:
+    active: dev
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+    mongodb:
+      auto-index-creation: true
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true

@@ -1,0 +1,254 @@
+[
+  {
+    "id": "64a149d53b41070615559561",
+    "mediaFiles": [
+      {
+        "id": "64a14a2d7e5ccb67bd5e2f84",
+        "name": "Evil Dead Rise (2023)_[spa, eng]_2160p_26 Mbps.mkv",
+        "fullPath": "/Users/luiscarlos/Documents/DescargasTransmission/MEGA/Peliculas/Evil Dead Rise (2023)/Evil Dead Rise (2023)_[spa, eng]_2160p_26 Mbps.mkv",
+        "extension": "mkv",
+        "provider": "mega",
+        "streams": [
+          {
+            "index": 0,
+            "codecName": "hevc",
+            "codecType": "video",
+            "width": 3840,
+            "height": 2160,
+            "channels": 0,
+            "bitRate": null,
+            "channelLayout": null,
+            "tags": {
+              "language": "spa",
+              "bps": "24562828",
+              "bpsEng": "24562828",
+              "duration": "01:36:25.113000000",
+              "durationEng": "01:36:25.113000000",
+              "numberOfFrames": "138704",
+              "numberOfFramesEng": "138704",
+              "numberOfBytes": "17762342235",
+              "numberOfBytesEng": "17762342235"
+            }
+          },
+          {
+            "index": 1,
+            "codecName": "ac3",
+            "codecType": "audio",
+            "width": 0,
+            "height": 0,
+            "channels": 6,
+            "bitRate": "640000",
+            "channelLayout": "5.1(side)",
+            "tags": {
+              "language": "spa",
+              "bps": "640000",
+              "bpsEng": "640000",
+              "duration": "01:36:25.120000000",
+              "durationEng": "01:36:25.120000000",
+              "numberOfFrames": "180785",
+              "numberOfFramesEng": "180785",
+              "numberOfBytes": "462809600",
+              "numberOfBytesEng": "462809600"
+            }
+          },
+          {
+            "index": 2,
+            "codecName": "eac3",
+            "codecType": "audio",
+            "width": 0,
+            "height": 0,
+            "channels": 6,
+            "bitRate": "768000",
+            "channelLayout": "5.1(side)",
+            "tags": {
+              "language": "eng",
+              "bps": "768000",
+              "bpsEng": "768000",
+              "duration": "01:36:25.120000000",
+              "durationEng": "01:36:25.120000000",
+              "numberOfFrames": "180785",
+              "numberOfFramesEng": "180785",
+              "numberOfBytes": "555371520",
+              "numberOfBytesEng": "555371520"
+            }
+          },
+          {
+            "index": 3,
+            "codecName": "subrip",
+            "codecType": "subtitle",
+            "width": 0,
+            "height": 0,
+            "channels": 0,
+            "bitRate": null,
+            "channelLayout": null,
+            "tags": {
+              "language": "spa",
+              "bps": "0",
+              "bpsEng": "0",
+              "duration": "01:25:19.453000000",
+              "durationEng": "01:25:19.453000000",
+              "numberOfFrames": "22",
+              "numberOfFramesEng": "22",
+              "numberOfBytes": "506",
+              "numberOfBytesEng": "506"
+            }
+          },
+          {
+            "index": 4,
+            "codecName": "subrip",
+            "codecType": "subtitle",
+            "width": 0,
+            "height": 0,
+            "channels": 0,
+            "bitRate": null,
+            "channelLayout": null,
+            "tags": {
+              "language": "spa",
+              "bps": "25",
+              "bpsEng": "25",
+              "duration": "01:35:10.752000000",
+              "durationEng": "01:35:10.752000000",
+              "numberOfFrames": "619",
+              "numberOfFramesEng": "619",
+              "numberOfBytes": "17947",
+              "numberOfBytesEng": "17947"
+            }
+          },
+          {
+            "index": 5,
+            "codecName": "subrip",
+            "codecType": "subtitle",
+            "width": 0,
+            "height": 0,
+            "channels": 0,
+            "bitRate": null,
+            "channelLayout": null,
+            "tags": {
+              "language": "eng",
+              "bps": "27",
+              "bpsEng": "27",
+              "duration": "01:27:56.009000000",
+              "durationEng": "01:27:56.009000000",
+              "numberOfFrames": "656",
+              "numberOfFramesEng": "656",
+              "numberOfBytes": "18237",
+              "numberOfBytesEng": "18237"
+            }
+          }
+        ],
+        "format": {
+          "filename": "/Users/luiscarlos/Documents/DescargasTransmission/MEGA/Peliculas/Evil Dead Rise (2023)/Evil Dead Rise (2023)_[spa, eng]_2160p_26 Mbps.mkv",
+          "nbStreams": 6,
+          "duration": "5785.120000"
+        }
+      }
+    ],
+    "name": "Evil Dead Rise (2023)",
+    "category": "peliculas"
+  },
+  {
+    "id": "64a14ca47e5ccb67bd5e2f87",
+    "mediaFiles": [
+      {
+        "id": "64a14f1038aecd724b980819",
+        "name": "From s01e01_[eng]_1080p_3.5 Mbps.mkv",
+        "fullPath": "/Users/luiscarlos/Documents/DescargasTransmission/MEGA/Series-EN/From/Season 1/From s01e01_[eng]_1080p_3.5 Mbps.mkv",
+        "extension": "mkv",
+        "provider": "mega",
+        "streams": [
+          {
+            "index": 0,
+            "codecName": "hevc",
+            "codecType": "video",
+            "width": 1920,
+            "height": 958,
+            "channels": 0,
+            "bitRate": null,
+            "channelLayout": null,
+            "tags": {
+              "language": null,
+              "bps": "2814383",
+              "bpsEng": null,
+              "duration": "00:52:27.273000000",
+              "durationEng": null,
+              "numberOfFrames": "75459",
+              "numberOfFramesEng": null,
+              "numberOfBytes": "1107204221",
+              "numberOfBytesEng": null
+            }
+          },
+          {
+            "index": 1,
+            "codecName": "eac3",
+            "codecType": "audio",
+            "width": 0,
+            "height": 0,
+            "channels": 6,
+            "bitRate": "640000",
+            "channelLayout": "5.1(side)",
+            "tags": {
+              "language": "eng",
+              "bps": "640000",
+              "bpsEng": null,
+              "duration": "00:52:27.264000000",
+              "durationEng": null,
+              "numberOfFrames": "98352",
+              "numberOfFramesEng": null,
+              "numberOfBytes": "251781120",
+              "numberOfBytesEng": null
+            }
+          },
+          {
+            "index": 2,
+            "codecName": "subrip",
+            "codecType": "subtitle",
+            "width": 0,
+            "height": 0,
+            "channels": 0,
+            "bitRate": null,
+            "channelLayout": null,
+            "tags": {
+              "language": "eng",
+              "bps": "53",
+              "bpsEng": null,
+              "duration": "00:50:28.417000000",
+              "durationEng": null,
+              "numberOfFrames": "736",
+              "numberOfFramesEng": null,
+              "numberOfBytes": "20371",
+              "numberOfBytesEng": null
+            }
+          },
+          {
+            "index": 3,
+            "codecName": "subrip",
+            "codecType": "subtitle",
+            "width": 0,
+            "height": 0,
+            "channels": 0,
+            "bitRate": null,
+            "channelLayout": null,
+            "tags": {
+              "language": "eng",
+              "bps": "63",
+              "bpsEng": null,
+              "duration": "00:51:26.388000000",
+              "durationEng": null,
+              "numberOfFrames": "872",
+              "numberOfFramesEng": null,
+              "numberOfBytes": "24478",
+              "numberOfBytesEng": null
+            }
+          }
+        ],
+        "format": {
+          "filename": "/Users/luiscarlos/Documents/DescargasTransmission/MEGA/Series-EN/From/Season 1/From s01e01_[eng]_1080p_3.5 Mbps.mkv",
+          "nbStreams": 4,
+          "duration": "3147.278000"
+        }
+      }
+    ],
+    "name": "From",
+    "category": "series-en"
+  }
+]

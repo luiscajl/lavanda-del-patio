@@ -1,0 +1,95 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lavanda-tmdb-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lavanda-tmdb-repository
+    namespace: flux-system  
+  policy:
+    semver:
+      range: ^0.0.x
+
+---      
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lavanda-filebot-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lavanda-filebot-repository
+    namespace: flux-system  
+  policy:
+    semver:
+      range: ^0.0.x    
+---      
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lavanda-indexers-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lavanda-indexers-repository
+    namespace: flux-system  
+  policy:
+    semver:
+      range: ^0.0.x       
+---      
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lavanda-bt4g-downloader-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lavanda-bt4g-downloader-repository
+    namespace: flux-system  
+  policy:
+    semver:
+      range: ^0.0.x            
+---      
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lavanda-qbittorrent-client-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lavanda-qbittorrent-client-repository
+    namespace: flux-system  
+  policy:
+    semver:
+      range: ^0.0.x           
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lavanda-telegram-bots-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lavanda-telegram-bots-repository
+    namespace: flux-system  
+  policy:
+    semver:
+      range: ^0.0.x
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: lavanda-frontend-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: lavanda-frontend-repository 
+    namespace: flux-system  
+  filterTags:
+    ## use "pattern: '[a-f0-9]+-(?P<ts>[0-9]+)'" if you copied the workflow example using github.run_number
+    pattern: '^main-[a-f0-9]+-(?P<ts>[0-9]+)'
+    extract: '$ts'
+  policy:
+    numerical:
+      order: asc

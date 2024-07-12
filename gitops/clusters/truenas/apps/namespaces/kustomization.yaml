@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - lavanda.yaml
+  - cert-manager.yaml
+  - media-catalog.yaml
+  - external-dns.yaml

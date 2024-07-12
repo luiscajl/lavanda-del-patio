@@ -1,0 +1,82 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: media-catalog-arr
+  namespace: flux-system
+spec:
+  path: ./clusters/truenas/apps/media-catalog/arr
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      oauth2_url: https://oauth2.lavandadelpatio.es
+      host_sonarr: sonarr.lavandadelpatio.es   
+      host_sonarr_en: sonarr-en.lavandadelpatio.es
+      host_radarr: radarr.lavandadelpatio.es
+      external_dns_target: ingress-nginx.lavandadelpatio.es      
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: media-catalog-flaresolverr
+  namespace: flux-system
+spec:
+  path: ./clusters/truenas/apps/media-catalog/flaresolverr
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      host: flaresolverr.lavandadelpatio.es   
+      external_dns_target: ingress-nginx.lavandadelpatio.es       
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: media-catalog-jackett
+  namespace: flux-system
+spec:
+  path: ./clusters/truenas/apps/media-catalog/jackett
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      host: jackett.lavandadelpatio.es   
+      external_dns_target: ingress-nginx.lavandadelpatio.es  
+      oauth2_url: https://oauth2.lavandadelpatio.es         
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: media-catalog-qbittorrent-controllers
+  namespace: flux-system
+spec:
+  path: ./clusters/truenas/apps/media-catalog/qbittorrent/controllers
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      oauth2_url: https://oauth2.lavandadelpatio.es
+      host: qbittorrentvpn.lavandadelpatio.es
+      external_dns_target: ingress-nginx.lavandadelpatio.es  
+  dependsOn:
+    - name: media-catalog-qbittorrent-config

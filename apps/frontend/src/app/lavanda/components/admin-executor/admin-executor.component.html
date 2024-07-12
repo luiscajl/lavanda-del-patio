@@ -1,0 +1,236 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-12 py-12">
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-12">
+        <ng-template pTemplate="center">
+          <div class="flex flex-wrap gap-2">
+            <button [disabled]="selectedExecutors.length>0" pButton pRipple label="New" icon="pi pi-plus"
+              class="p-button-primary mr-2" (click)="createNew()"></button>
+            <button [disabled]="selectedExecutors.length>0" pButton pRipple label="Reload" icon="pi pi-refresh"
+              class="p-button-success mr-2" (click)="reload()"></button>
+            <button [disabled]="selectedExecutors.length>0" pButton pRipple label="Manual Execution" icon="pi pi-play"
+              class="p-button-danger mr-2" (click)="executeManually()"></button>
+            <button *ngIf="selectedExecutors.length>0" pButton pRipple label="Delete Selected" icon="pi pi-play"
+              class="p-button-danger mr-2" (click)="deleteSelectedExecutors()"></button>
+            <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedExecutors()" [disabled]="!selectedExecutors || !selectedExecutors.length"></button> -->
+          </div>
+        </ng-template>
+        <!-- <ng-template pTemplate="right">
+          <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import"
+            class="mr-2 inline-block"></p-fileUpload>
+          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+            (click)="dt.exportCSV()"></button>
+        </ng-template> -->
+      </p-toolbar>
+      <br>
+      <p-table styleClass="p-datatable-gridlines" #dt [value]="executors" [columns]="cols" responsiveLayout="scroll"
+        [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']"
+        [expandedRowKeys]="expandedRows" [paginator]="false" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [(selection)]="selectedExecutors" selectionMode="multiple" [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+          <form class="form-group-search" [formGroup]="form">
+            <div class="formgroup-inline">
+              <div class="field">
+                <!-- <label htmlFor="firstname1" class="p-sr-only">Firstname</label> -->
+                <input pInputText formControlName="search" type="text" placeholder="Search..." />
+              </div>
+              <div class="field">
+                <!-- <label htmlFor="lastname1" class="p-sr-only">Lastname</label> -->
+                <p-dropdown appendTo="body" formControlName="status" placeholder="Status..."
+                  [options]="status"></p-dropdown>
+              </div>
+              <!-- <button pButton label="Submit"></button> -->
+            </div>
+            <!-- <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <h5 class="m-0">Manage Executors</h5>
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" formControlName="search" placeholder="Search..."
+                  class="w-full sm:w-auto" />
+              </span>
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                <i class="pi pi-search"></i>
+
+                <p-dropdown appendTo="body" formControlName="status" placeholder="Status..."
+                  [options]="status"></p-dropdown>
+              </span>
+            </div> -->
+          </form>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="code">Path <p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="name">New Path <p-sortIcon field="name"></p-sortIcon></th>
+            <th>Files</th>
+            <th pSortableColumn="price">Category <p-sortIcon field="price"></p-sortIcon></th>
+            <!-- <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th> -->
+            <!-- <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th> -->
+            <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon>
+            </th>
+            <th></th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-executor let-expanded="expanded">
+          <tr>
+            <td>
+              <p-tableCheckbox [value]="executor"></p-tableCheckbox>
+            </td>
+            <td style="width:30%; min-width:20rem;"><span class="p-column-title">Path</span>
+              {{executor.path || executor.id}}
+            </td>
+            <td style="width:20%; min-width:10rem;">
+              <span class="p-column-title">New Path</span>
+              {{executor.newPath}}
+            </td>
+            <td>
+              <button type="button" pButton pRipple [pRowToggler]="executor"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <!-- <td style="width:14%; min-width:10rem;"><span class="p-column-title">Image</span>
+                            <img [src]="'assets/lavanda/images/executor/' + executor.image" [alt]="executor.name" width="100" class="shadow-4" />
+                        </td> -->
+            <!-- <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Price</span>
+                            {{executor.category | currency:'USD'}}
+                        </td> -->
+            <td style="width:14%; min-width:10rem;">
+              <span class="p-column-title">Category</span>
+              {{executor.category}}
+            </td>
+            <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+              <span
+                [class]="'executor-badge status-' + (executor.status ? executor.status.toLowerCase() : '')">{{normalizeStatus(executor.status)}}</span>
+            </td>
+            <td>
+              <div class="flex">
+                <button pButton pRipple icon="pi pi-pencil" pTooltip="Edit executor" [showDelay]="600"
+                  class="p-button-rounded p-button-warning mr-2" (click)="editExecutor(executor)"></button>
+                <button pButton pRipple icon="pi pi-trash" pTooltip="Delete executor" [showDelay]="600"
+                  class="p-button-rounded p-button-danger mr-2" (click)="deleteExecutor(executor)"></button>
+                <button pButton pRipple icon="pi pi-download" pTooltip="Download log" [showDelay]="600"
+                  class="p-button-rounded p-button-info mr-2" (click)="downloadLog(executor)"></button>
+                <button pButton pRipple icon="pi pi-replay" pTooltip="Re-execute" [showDelay]="600"
+                  class="p-button-rounded p-button-help" (click)="reExecution(executor)"></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-executor>
+          <tr>
+            <td colspan="9">
+              <div class="p-3">
+                <p-table [value]="executor.files" dataKey="file" responsiveLayout="scroll">
+                  <ng-template pTemplate="header">
+          <tr>
+            <th>Files</th>
+            <th>New Files</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-executorFile>
+          <tr>
+            <td>{{executorFile.file}}</td>
+            <td>{{executorFile.newFile}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">No files founded</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+    <p-paginator (onPageChange)="onPageChange($event)" [first]="pageNumber" [rows]="pageSize"
+      [totalRecords]="totalElements" [rowsPerPageOptions]="rowsPerPageOptions"></p-paginator>
+    <p-dialog [(visible)]="executorDialog" [style]="{width: '450px'}" header="Executor Details" [modal]="true"
+      class="p-fluid">
+      <ng-template pTemplate="content">
+        <div class="field">
+          <!-- <label for="price">Path/File to select: {{executor.path}} </label> -->
+          <span class="text-900 font-medium mr-2 mb-1 md:mb-0">Path/File to select:</span>
+          <div class="mt-1 text-600">{{executor.path}} </div>
+        </div>
+        <!-- <img [src]="'assets/lavanda/images/executor/' + executor.image" [alt]="executor.image" width="150"
+                class="mt-0 mx-auto mb-5 block shadow-2" *ngIf="executor.image"> -->
+        <div class="field">
+          <!-- <label for="price">File or Path</label> -->
+          <p-dropdown appendTo="body" [options]="allFiles" [(ngModel)]="executor.path"
+            placeholder="File or Path..."></p-dropdown>
+        </div>
+        <div class="formgrid grid">
+          <div class="field col">
+            <label for="price">Category</label>
+            <p-dropdown appendTo="body" [options]="executorCategorys" [(ngModel)]="executor.category"
+              placeholder="Category..." [showClear]="true"></p-dropdown>
+          </div>
+          <div class="field col">
+            <label for="quantity">Action</label>
+            <p-dropdown appendTo="body" [options]="executorActions" [(ngModel)]="executor.action"
+              placeholder="Action..." [showClear]="true"></p-dropdown>
+          </div>
+        </div>
+        <!-- <div class="field">
+                    <h5>Category & Action</h5>
+                    <p-dropdown [options]="executorCategorys" [(ngModel)]="executor.category" placeholder="Category..."
+                        [showClear]="true"></p-dropdown>
+                    <p-dropdown [options]="executorActions" [(ngModel)]="executor.action" placeholder="Action..."
+                        [showClear]="true"></p-dropdown>
+                </div> -->
+        <div *ngIf="!isCreatingNew" class="field">
+          <p-checkbox name="groupname" value="val1" label="Redo command?" [(ngModel)]="redoEnabled"></p-checkbox>
+        </div>
+        <div *ngIf="!isCreatingNew" class="field">
+          <label class="mb-3">Edit command</label>
+          <div class="formgrid grid">
+            <textarea rows="5" cols="30" pInputTextarea [disabled]="!redoEnabled"
+              [(ngModel)]="executor.command"></textarea>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveExecutor()"></button>
+      </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="deleteExecutorDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span *ngIf="executor">Are you sure you want to delete <b>{{executor.path}}</b>?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+          (click)="deleteExecutorDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+      </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="deleteExecutorsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>Are you sure you want to delete selected executors?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+          (click)="deleteExecutorsDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+          (click)="confirmDeleteSelected()"></button>
+      </ng-template>
+    </p-dialog>
+
+  </div>
+</div>

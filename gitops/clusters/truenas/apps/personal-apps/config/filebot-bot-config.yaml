@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-filebotbot
+  namespace: lavanda
+data: 
+  TELEGRAM_FILEBOTBOT_AUTHORIZED_USERNAMES: luisca_jl, CarlUndert, Vatalx, chemg, Neblinio

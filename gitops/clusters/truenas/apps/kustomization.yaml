@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+ - namespaces
+ - sources
+ - ./cert-manager/ks.yaml
+ - ./external-dns/ks.yaml
+ - ./ingress-nginx/ks.yaml
+ - ./media-catalog/ks.yaml
+ - ./personal-apps/ks.yaml
+ - ./tautulli/ks.yaml
+ - ./threadfin/ks.yaml

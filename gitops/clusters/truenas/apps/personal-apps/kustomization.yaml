@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: lavanda
+resources:
+  - namespace.yaml
+  - mongodb
+  - rabbitmq
+  - keda
+  - filebrowser
+  - mongodb-credentials.yaml
+  - release-tmdb.yaml
+  - release-filebot-reports.yaml
+  - release-frontend.yaml
+  - filebot-cronjob-parser.yaml
+  - filebot-pvc-RWM.yaml
+  - release-filebot-bot.yaml
+  - release-filebot-executor.yaml
+  - filebot-bot-config.yaml
+  - telegram-credentials.yaml
+  - ingress-filebot-executor.yaml
+  - ingress-secret-basic-auth.yaml
+  - release-torznab-atomohd.yaml
+  - wireguard-config.yaml
+  - rclone-config.yaml
+

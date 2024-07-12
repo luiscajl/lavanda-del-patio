@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: frontend
+  namespace: flux-system
+spec:
+  releaseName: frontend
+  chart:
+    spec:
+      chart: frontend
+      sourceRef:
+        kind: HelmRepository
+        name: lavanda
+        namespace: flux-system
+      version: "0.1.8"
+  interval: 1m0s
+  targetNamespace: lavanda
+  install:
+    createNamespace: true
+    timeout: 1m
+    remediation:
+      retries: -1
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: uninstall
+  values:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        # nginx.ingress.kubernetes.io/auth-url: "http://oauth2-proxy.oauth2-proxy.svc.cluster.local:80/oauth2/auth"
+        # nginx.ingress.kubernetes.io/auth-signin: "${oauth2_url}/oauth2/start?rd=https://$host$request_uri$is_args$args"
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      hosts:
+      - host: ${host_frontend}
+        paths:
+        - path: /
+          pathType: ImplementationSpecific
+      tls:
+      - hosts:
+        - ${host_frontend}
+        secretName: frontend-tls
+    image:
+      tag: graalvm-21-test-62045a49 
+      
+      # {"$imagepolicy": "flux-system:lavanda-frontend-policy:tag"}
