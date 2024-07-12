@@ -1,5 +1,6 @@
 package es.lavanda.tmdb.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,18 +25,21 @@ public class TmdbUtil {
     // private static final String TMDB_API_LANGUAGE_ES = "&language=es-ES";
     /* INFO IMAGES: https://goo.gl/9UqTKn */
     private static final String URI_PHOTOS_FRONT_TMDB = "https://image.tmdb.org/t/p/w300_and_h450_bestv2";
-    private static final String URI_PHOTOS_ORIGINAL_TMDB  = "https://image.tmdb.org/t/p/original";
+    private static final String URI_PHOTOS_ORIGINAL_TMDB = "https://image.tmdb.org/t/p/original";
     private static final String URI_PHOTOS_W500_TMDB = "https://image.tmdb.org/t/p/w500";
     private static final String URI_PHOTOS_W780_TMDB = "https://image.tmdb.org/t/p/w780";
 
-    
+
     private static final String URI_PHOTOS_STILL_TMDB = "https://image.tmdb.org/t/p/w300";
 
     private static final String URI_SEARCH_MOVIE_PAGE = "&page=1&year=";
 
     private static final String TMDB_API_MOVIE_INIT = "https://api.themoviedb.org/3/movie/";
     private static final String TMDB_API_MOVIE_SEARCH = "https://api.themoviedb.org/3/search/movie";
-    private static final String TMDB_API_KEY = "1012d785312735b8039a9f7f172354cb";
+
+    @Value("${tmdb.apikey}")
+    private static String TMDB_API_KEY;
+
     private static final String TMDB_CREDITS = "/credits";
 
     private static final String TMDB_API_LANGUAGE_ES = "es-ES";
@@ -59,9 +63,11 @@ public class TmdbUtil {
     public static String getOriginalImage(String path) {
         return URI_PHOTOS_ORIGINAL_TMDB + path;
     }
+
     public static String getW500Image(String path) {
         return URI_PHOTOS_W500_TMDB + path;
     }
+
     public static String getW780Image(String path) {
         return URI_PHOTOS_W780_TMDB + path;
     }

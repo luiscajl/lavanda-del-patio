@@ -53,9 +53,6 @@ spec:
             httpGet:
               path: /status
               port: http
-              # httpHeaders:
-              #   - name: Authorization
-              #     value: Basic YWRtaW46YWRtaW4=
             initialDelaySeconds: 10
             timeoutSeconds: 10
             periodSeconds: 20
@@ -65,9 +62,6 @@ spec:
             httpGet:
               path: /status
               port: http
-              # httpHeaders:
-              #   - name: Authorization
-              #     value: Basic YWRtaW46YWRtaW4=
             initialDelaySeconds: 10
             timeoutSeconds: 10
             periodSeconds: 20

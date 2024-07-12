@@ -49,9 +49,6 @@ spec:
             - name: http
               containerPort: {{ .Values.service.sonarr.port }}
               protocol: TCP
-              # httpHeaders:
-              #   - name: Authorization
-              #     value: Basic YWRtaW46YWRtaW4=              
           livenessProbe:
             httpGet:
               path: /status
@@ -65,9 +62,6 @@ spec:
             httpGet:
               path: /status
               port: http
-              # httpHeaders:
-              #   - name: Authorization
-              #     value: Basic YWRtaW46YWRtaW4=              
             initialDelaySeconds: 30
             timeoutSeconds: 10
             periodSeconds: 20
