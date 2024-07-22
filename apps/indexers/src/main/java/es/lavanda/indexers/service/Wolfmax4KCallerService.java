@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import es.lavanda.indexers.exception.IndexerException;
 import es.lavanda.indexers.model.Index;
 import es.lavanda.indexers.repository.IndexRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,6 @@ public class Wolfmax4KCallerService {
     @Value("${proxy.port}")
     private Integer PROXY_PORT;
 
-
     private final Wolfmax4kService wolfmax4kService;
 
     private static final String WOLFMAX4K_URL = "https://wolfmax4k.com";
@@ -55,9 +55,10 @@ public class Wolfmax4KCallerService {
             "/peliculas/bluray-1080p/",
             "/peliculas/4k-2160p/"
     };
+    private boolean doubleCheck = false;
 
     @Scheduled(fixedDelay = 24, timeUnit = TimeUnit.HOURS)
-    public void updateIndex() {
+    private void updateIndex() {
         log.info("Updating Wolfmax4k Indexes");
         //SHOWS
         for (String url : SHOWS_URLS) {
@@ -84,14 +85,13 @@ public class Wolfmax4KCallerService {
             List<Element> colLg2Elements = rowElement.getElementsByClass("col-lg-2");
             for (int i = colLg2Elements.size() - 1; i >= 0; i--) {
                 Element colLg2Element = colLg2Elements.get(i);
-                try {
-                    if (multipleOnAPage) {
-                        processShow(colLg2Element, type, quality);
-                    } else {
-                        wolfmax4kService.save(buildIndex(colLg2Element, type, quality));
+                if (multipleOnAPage) {
+                    processShow(colLg2Element, type, quality);
+                } else {
+                    Index indexToSave = buildIndex(colLg2Element, type, quality);
+                    if (Objects.nonNull(indexToSave)) {
+                        wolfmax4kService.save(indexToSave);
                     }
-                } catch (NoSuchElementException e) {
-                    log.error("Not found element ");
                 }
             }
         }
@@ -112,7 +112,10 @@ public class Wolfmax4KCallerService {
                 for (int j = tempSerie.getElementsByTag("a").size() - 1; j >= 0; j--) {
                     Element aElement = tempSerie.getElementsByTag("a").get(j);
                     String nameShow = colLg2.getElementsByTag("h3").text();
-                    wolfmax4kService.save(buildIndexForShow(nameShow, aElement, type, quality));
+                    Index indexToSave = buildIndexForShow(nameShow, aElement, type, quality);
+                    if (Objects.nonNull(indexToSave)) {
+                        wolfmax4kService.save(indexToSave);
+                    }
                 }
             }
         }
@@ -123,15 +126,19 @@ public class Wolfmax4KCallerService {
         index.setName(nameShow);
         String url = aElement.getElementsByTag("a").first().attr("href");
         index.setUrl(WOLFMAX4K_URL + url);
-        Document documentIndividual = retryGetHtmlResponse(index.getUrl(), "h3 fw-semibold mb-1");
-        index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").text());
-        String imageUrl = getImageUrl(documentIndividual.getElementsByClass("img-fluid rounded-1").attr("src"));
-        index.setImage(getImageAsBase64(imageUrl));
-        index.setDomain(DOMAIN_WOLFMAX4K);
-        index.setQuality(quality);
-        index.setCreateTime(new Date());
-        index.setType(type);
-        return index;
+        try {
+            Document documentIndividual = retryGetHtmlResponse(index.getUrl(), "h3 fw-semibold mb-1");
+            index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").text());
+            String imageUrl = getImageUrl(documentIndividual.getElementsByClass("img-fluid rounded-1").attr("src"));
+            index.setImage(getImageAsBase64(imageUrl));
+            index.setDomain(DOMAIN_WOLFMAX4K);
+            index.setQuality(quality);
+            index.setCreateTime(new Date());
+            index.setType(type);
+            return index;
+        } catch (IndexerException e) {
+            return null;
+        }
     }
 
     private Index buildIndex(Element colLg2OrA, Index.Type type, Index.Quality quality) {
@@ -139,15 +146,19 @@ public class Wolfmax4KCallerService {
         index.setName(colLg2OrA.getElementsByTag("h3").text());
         String url = colLg2OrA.getElementsByTag("a").first().attr("href");
         index.setUrl(HTTPS + url);
-        Document documentIndividual = retryGetHtmlResponse(index.getUrl(), "h3 fw-semibold mb-1");
-        index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").text());
-        index.setDomain(DOMAIN_WOLFMAX4K);
-        String imageUrl = getImageUrl(colLg2OrA.getElementsByClass("img-fluid rounded-1").attr("src"));
-        index.setImage(getImageAsBase64(imageUrl));
-        index.setQuality(quality);
-        index.setCreateTime(new Date());
-        index.setType(type);
-        return index;
+        try {
+            Document documentIndividual = retryGetHtmlResponse(index.getUrl(), "h3 fw-semibold mb-1");
+            index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").text());
+            index.setDomain(DOMAIN_WOLFMAX4K);
+            String imageUrl = getImageUrl(colLg2OrA.getElementsByClass("img-fluid rounded-1").attr("src"));
+            index.setImage(getImageAsBase64(imageUrl));
+            index.setQuality(quality);
+            index.setCreateTime(new Date());
+            index.setType(type);
+            return index;
+        } catch (IndexerException e) {
+            return null;
+        }
     }
 
     private String getImageUrl(String imageElement) {
@@ -155,14 +166,21 @@ public class Wolfmax4KCallerService {
     }
 
     private Document retryGetHtmlResponse(String url, String checkContainsClass) {
+        log.info("retryGetHtmlResponse for url {} and checkContainsClass {}", url, checkContainsClass);
         String htmlResponse = getHtmlResponse(url).getSolution().getResponse();
         Document document = Jsoup.parse(htmlResponse);
         if (Boolean.FALSE.equals(document.getElementsByClass(checkContainsClass).isEmpty())) {
             return document;
-        } else {
+        } else if (!doubleCheck) {
             log.error("Not found {} on the result of the url {}", checkContainsClass, url);
+            doubleCheck = true;
             return retryGetHtmlResponse(url, checkContainsClass);
+        } else {
+            log.error("Not found two times {} on the result of the url {}", checkContainsClass, url);
+            doubleCheck = false;
+            throw new IndexerException("Not found two times on retryGetHtmlResponse");
         }
+
     }
 
     public FlaresolverrIDTO getHtmlResponse(String url) {
