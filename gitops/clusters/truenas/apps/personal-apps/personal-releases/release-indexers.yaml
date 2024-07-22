@@ -41,7 +41,7 @@ spec:
         - ${host_backend}
         secretName: backend-tls
     image:
-      tag: 0.0.32 # {"$imagepolicy": "flux-system:lavanda-indexers-policy:tag"}
+      tag: 0.0.33 # {"$imagepolicy": "flux-system:lavanda-indexers-policy:tag"}
       repository: lavandadelpatio/indexers
     spring:
       profile: pro
