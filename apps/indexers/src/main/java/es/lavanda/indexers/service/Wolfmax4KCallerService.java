@@ -101,23 +101,27 @@ public class Wolfmax4KCallerService {
 
     private void processShow(Element colLg2, Index.Type type, Index.Quality quality) {
         String urlMainShow = HTTPS + colLg2.getElementsByTag("a").first().attr("href");
-        Document documentMainShow = retryGetHtmlResponse(urlMainShow, "row gx-lg-4 gx-0");
-        Element rowAfterLayoutSection = documentMainShow.getElementsByClass("row gx-lg-4 gx-0").getFirst();
+        try {
+            Document documentMainShow = retryGetHtmlResponse(urlMainShow, "row gx-lg-4 gx-0");
+            Element rowAfterLayoutSection = documentMainShow.getElementsByClass("row gx-lg-4 gx-0").getFirst();
 //        String imageUrl = getImageUrl(colLg2.getElementsByClass("img-fluid rounded-1").attr("src"));
 //        String imageBase64 = getImageAsBase64(imageUrl);
-        if (rowAfterLayoutSection != null) {
-            Elements tempSerieElements = rowAfterLayoutSection.getElementsByClass("temp-serie");
-            for (int i = tempSerieElements.size() - 1; i >= 0; i--) {
-                Element tempSerie = tempSerieElements.get(i);
-                for (int j = tempSerie.getElementsByTag("a").size() - 1; j >= 0; j--) {
-                    Element aElement = tempSerie.getElementsByTag("a").get(j);
-                    String nameShow = colLg2.getElementsByTag("h3").text();
-                    Index indexToSave = buildIndexForShow(nameShow, aElement, type, quality);
-                    if (Objects.nonNull(indexToSave)) {
-                        wolfmax4kService.save(indexToSave);
+            if (rowAfterLayoutSection != null) {
+                Elements tempSerieElements = rowAfterLayoutSection.getElementsByClass("temp-serie");
+                for (int i = tempSerieElements.size() - 1; i >= 0; i--) {
+                    Element tempSerie = tempSerieElements.get(i);
+                    for (int j = tempSerie.getElementsByTag("a").size() - 1; j >= 0; j--) {
+                        Element aElement = tempSerie.getElementsByTag("a").get(j);
+                        String nameShow = colLg2.getElementsByTag("h3").text();
+                        Index indexToSave = buildIndexForShow(nameShow, aElement, type, quality);
+                        if (Objects.nonNull(indexToSave)) {
+                            wolfmax4kService.save(indexToSave);
+                        }
                     }
                 }
             }
+        } catch (IndexerException e) {
+            log.error("IndexerException processingShow", e);
         }
     }
 
@@ -167,20 +171,28 @@ public class Wolfmax4KCallerService {
 
     private Document retryGetHtmlResponse(String url, String checkContainsClass) {
         log.info("retryGetHtmlResponse for url {} and checkContainsClass {}", url, checkContainsClass);
-        String htmlResponse = getHtmlResponse(url).getSolution().getResponse();
-        Document document = Jsoup.parse(htmlResponse);
-        if (Boolean.FALSE.equals(document.getElementsByClass(checkContainsClass).isEmpty())) {
-            return document;
-        } else if (!doubleCheck) {
-            log.error("Not found {} on the result of the url {}", checkContainsClass, url);
-            doubleCheck = true;
-            return retryGetHtmlResponse(url, checkContainsClass);
-        } else {
-            log.error("Not found two times {} on the result of the url {}", checkContainsClass, url);
-            doubleCheck = false;
-            throw new IndexerException("Not found two times on retryGetHtmlResponse");
-        }
+        try {
+            String htmlResponse = getHtmlResponse(url).getSolution().getResponse();
+            Document document = Jsoup.parse(htmlResponse);
 
+            if (!document.getElementsByClass(checkContainsClass).isEmpty()) {
+                doubleCheck = false;
+                return document;
+            } else {
+                if (!doubleCheck) {
+                    log.error("Class '{}' not found on the result of the url {}", checkContainsClass, url);
+                    doubleCheck = true;
+                    return retryGetHtmlResponse(url, checkContainsClass);
+                } else {
+                    log.error("Class '{}' not found two times on the result of the url {}", checkContainsClass, url);
+                    doubleCheck = false;
+                    throw new IndexerException("Class not found two times on retryGetHtmlResponse");
+                }
+            }
+        } catch (Exception e) {
+            log.error("Exception occurred while fetching or parsing the HTML response for url {}: {}", url, e.getMessage());
+            throw new IndexerException("Exception in retryGetHtmlResponse", e);
+        }
     }
 
     public FlaresolverrIDTO getHtmlResponse(String url) {
