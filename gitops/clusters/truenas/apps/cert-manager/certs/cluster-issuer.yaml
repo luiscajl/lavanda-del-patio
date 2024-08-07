@@ -11,6 +11,7 @@ spec:
     solvers:
       - dns01:
           cloudflare:
-            apiTokenSecretRef:
+            email: luiscarlos@jimenezlopez.es
+            apiKeySecretRef:
               name: api-key
               key: cloudflare_api_key
