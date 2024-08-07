@@ -153,6 +153,13 @@ entries:
     version: 0.1.7
   indexers:
   - apiVersion: v2
+    created: "2024-08-07T16:10:24.870008707Z"
+    digest: 4547dea50d693b4ec4d487718b3e048d1b18905a203484837d94be78e44f753c
+    name: indexers
+    urls:
+    - https://github.com/luiscajl/lavanda-del-patio/releases/download/indexers-0.0.3/indexers-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     created: "2024-08-07T15:13:05.842041806Z"
     digest: 21372c8022944c64e84246e5998d7b83dd75f760c84179140a3c64280736d249
     name: indexers
@@ -302,4 +309,4 @@ entries:
     urls:
     - https://github.com/luiscajl/lavanda-del-patio/releases/download/xteve-0.1.6/xteve-0.1.6.tgz
     version: 0.1.6
-generated: "2024-08-07T15:13:05.842101738Z"
+generated: "2024-08-07T16:10:24.870069942Z"
