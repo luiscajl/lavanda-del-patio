@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: lavanda
         namespace: flux-system
-      version: "0.0.2"
+      version: "0.0.3"
   interval: 1m0s
   targetNamespace: lavanda
   install:
@@ -54,5 +54,5 @@ spec:
       value: "8118"
     - name: MINIO_ENDPOINT
       value: "minio.lavandadelpatio.es"
-    - name: MINIO_BUCKETNAME
+    - name: MINIO_BUCKET_NAME
       value: "indexers-images"
