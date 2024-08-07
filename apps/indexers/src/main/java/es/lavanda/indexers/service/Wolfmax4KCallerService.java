@@ -43,6 +43,8 @@ public class Wolfmax4KCallerService {
 
     private final Wolfmax4kService wolfmax4kService;
 
+    private final MinioService minioService;
+
     private static final String WOLFMAX4K_URL = "https://wolfmax4k.com";
     private static final String DOMAIN_WOLFMAX4K = "WOLFMAX4K";
     private static final String HTTPS = "https:";
@@ -134,7 +136,8 @@ public class Wolfmax4KCallerService {
             Document documentIndividual = retryGetHtmlResponse(index.getUrl(), "h3 fw-semibold mb-1");
             index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").text());
             String imageUrl = getImageUrl(documentIndividual.getElementsByClass("img-fluid rounded-1").attr("src"));
-            index.setImage(getImageAsBase64(imageUrl));
+            String imageBase64 = getImageAsBase64(imageUrl);
+            index.setImage(minioService.saveImage(index.getName(), imageBase64));
             index.setDomain(DOMAIN_WOLFMAX4K);
             index.setQuality(quality);
             index.setCreateTime(new Date());
@@ -155,7 +158,8 @@ public class Wolfmax4KCallerService {
             index.setIndexName(documentIndividual.getElementsByClass("h3 fw-semibold mb-1").text());
             index.setDomain(DOMAIN_WOLFMAX4K);
             String imageUrl = getImageUrl(colLg2OrA.getElementsByClass("img-fluid rounded-1").attr("src"));
-            index.setImage(getImageAsBase64(imageUrl));
+            String imageBase64 = getImageAsBase64(imageUrl);
+            index.setImage(minioService.saveImage(index.getName(), imageBase64));
             index.setQuality(quality);
             index.setCreateTime(new Date());
             index.setType(type);
