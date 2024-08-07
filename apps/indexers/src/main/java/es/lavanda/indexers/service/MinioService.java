@@ -21,13 +21,13 @@ public class MinioService {
     @Value("${minio.endpoint}")
     private String minioEndpoint;
 
-    @Value("${minio.accessKey}")
+    @Value("${minio.access.key}")
     private String minioAccessKey;
 
-    @Value("${minio.secretKey}")
+    @Value("${minio.access.secret}")
     private String minioSecretKey;
 
-    @Value("${minio.bucketName}")
+    @Value("${minio.bucket.name}")
     private String minioBucketName;
 
     private MinioClient minioClient;
@@ -43,8 +43,8 @@ public class MinioService {
 
     public String saveImage(String name, String imageBase64) {
         if (imageBase64.startsWith("http")) {
-            log.info("Can't save image on MinIO because the image is: {}", imageBase64);
-            throw new IndexerException(String.format("Can't save image on MinIO because the image is: %s", imageBase64));
+            log.info("Can't save image on MinIO because the image is on http format: {}", imageBase64);
+            throw new IndexerException(String.format("Can't save image on MinIO because the image is on http format: %s", imageBase64));
         }
 
         log.info("Saving image on MinIO with name {}", name);
@@ -93,7 +93,7 @@ public class MinioService {
                     PutObjectArgs.builder()
                             .bucket(minioBucketName)
                             .object(objectName)
-                            .stream(bais, imageBytes.length, -1)
+                            .stream(bais, bais.available(), -1)
                             .contentType("image/jpeg")
                             .build()
             );

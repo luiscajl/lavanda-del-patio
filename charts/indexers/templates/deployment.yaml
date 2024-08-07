@@ -41,12 +41,12 @@ spec:
                 secretKeyRef:
                   name: mongodb-uri
                   key: secret
-            - name: MINIO_ACCESSKEY
+            - name: MINIO_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: minio-minio-creds
                   key: MINIO_ROOT_USER
-            - name: MINIO_SECRETKEY
+            - name: MINIO_ACCESS_SECRET
               valueFrom:
                 secretKeyRef:
                   name: minio-minio-creds
