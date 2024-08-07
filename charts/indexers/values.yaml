@@ -9,11 +9,7 @@ image:
   pullPolicy: Always
   tag: "0.0.1"
 
-environmentVariables:
-  - name: MINIO_ENDPOINT
-    value: "minio.lavandadelpatio.es"
-  - name: MINIO_BUCKETNAME
-    value: "indexers-images"
+environmentVariables: {}
 
 imagePullSecrets: [ ]
 nameOverride: ""
