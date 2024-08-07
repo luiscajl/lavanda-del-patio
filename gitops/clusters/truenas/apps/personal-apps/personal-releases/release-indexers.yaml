@@ -52,3 +52,7 @@ spec:
       value: "qbittorrentvpn.media-catalog.svc.cluster.local"
     - name: PROXY_PORT
       value: "8118"
+    - name: MINIO_ENDPOINT
+      value: "minio.lavandadelpatio.es"
+    - name: MINIO_BUCKETNAME
+      value: "indexers-images"
