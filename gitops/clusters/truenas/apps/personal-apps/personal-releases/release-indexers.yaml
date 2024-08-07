@@ -12,7 +12,7 @@ spec:
         kind: HelmRepository
         name: lavanda
         namespace: flux-system
-      version: "0.0.1"
+      version: "0.0.2"
   interval: 1m0s
   targetNamespace: lavanda
   install:
