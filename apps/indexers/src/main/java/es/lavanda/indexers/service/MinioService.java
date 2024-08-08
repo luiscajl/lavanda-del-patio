@@ -57,7 +57,7 @@ public class MinioService {
             throw new IndexerException(String.format("Can't decode this image %s", imageBase64), e);
         }
 
-        String objectName = name + ".jpg";
+        String objectName = name.replaceAll(" ", "_") + ".jpg";
         if (objectExistsInMinio(objectName)) {
             log.info("Image already exists in MinIO, skipping upload {}", objectName);
         } else {
@@ -106,7 +106,7 @@ public class MinioService {
 
     private String getImageUrl(String objectName) {
         String imageUrl = "https://" + minioEndpoint + "/" + minioBucketName + "/" + objectName;
-        log.info("Saved with this URL {}", imageUrl);
+        log.info("Get image {} with this URL {}", objectName, imageUrl);
         return imageUrl;
     }
 
