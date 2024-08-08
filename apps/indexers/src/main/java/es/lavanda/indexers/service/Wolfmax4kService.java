@@ -33,7 +33,7 @@ public class Wolfmax4kService
         }
     }
 
-    public Index save(Index index) {
+    public Index saveIfNotExists(Index index) {
         try {
             log.debug("Checking if exist index {}", index);
             if (Boolean.FALSE.equals(indexRepository.existsByIndexName(index.getIndexName()))) {
@@ -57,7 +57,7 @@ public class Wolfmax4kService
         indexRepository.findAll().forEach(index -> {
             try {
                 index.setImage(minioService.saveImage(index.getName(), index.getImage()));
-                save(index);
+                indexRepository.save(index);
             } catch (IndexerException e) {
                 log.error("Can't update the image because... ", e);
             }
