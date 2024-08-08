@@ -7,10 +7,12 @@ import io.minio.StatObjectArgs;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -99,15 +101,9 @@ public class MinioService {
     }
 
     private byte[] downloadImageFromUrl(String imageUrl) throws Exception {
-        String encodedUrl = URLEncoder.encode(imageUrl, StandardCharsets.UTF_8);
-        URL url = new URL(encodedUrl);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setDoInput(true);
-        connection.connect();
-        try (InputStream inputStream = connection.getInputStream()) {
-            return StreamUtils.copyToByteArray(inputStream);
-        }
+        URL url = new URL(imageUrl);
+        URLConnection connection = url.openConnection();
+        return IOUtils.toByteArray(connection.getInputStream());
     }
 
     private boolean objectExistsInMinio(String objectName) {
