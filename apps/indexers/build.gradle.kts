@@ -1,14 +1,12 @@
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
-
 plugins {
     java
     id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
-    id("org.graalvm.buildtools.native") version "0.10.1"
+    id("com.google.cloud.tools.jib") version "3.4.2"
     id("io.freefair.lombok") version "8.6"
 }
 
-version = "0.0.36"
+version = "0.0.37"
 group = "es.lavanda"
 val dockerLibrary = "lavandadelpatio"
 
@@ -39,13 +37,16 @@ tasks.withType<JavaCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
-tasks.named<BootBuildImage>("bootBuildImage") {
-    imageName.set("${dockerLibrary}/${project.name}:${version}")
-    createdDate = "now"
-    environment = mapOf(
-            "BP_NATIVE_IMAGE" to "true",
-            "TZ" to "Europe/Madrid",
-            "LANG" to "en_US.UTF-8"
-    )
+jib {
+    to {
+        image = "lavandadelpatio/indexers"
+        tags = setOf("$version")
+        auth {
+            username = System.getenv("DOCKERHUB_USERNAME")
+            password = System.getenv("DOCKERHUB_TOKEN")
+        }
+    }
+    container {
+        user = "568"
+    }
 }
