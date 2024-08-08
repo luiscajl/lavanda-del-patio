@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import es.lavanda.indexers.exception.IndexerException;
@@ -97,7 +99,8 @@ public class MinioService {
     }
 
     private byte[] downloadImageFromUrl(String imageUrl) throws Exception {
-        URL url = new URL(imageUrl);
+        String encodedUrl = URLEncoder.encode(imageUrl, StandardCharsets.UTF_8);
+        URL url = new URL(encodedUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setDoInput(true);

@@ -6,7 +6,7 @@ plugins {
     id("io.freefair.lombok") version "8.6"
 }
 
-version = "0.0.38"
+version = "0.0.39"
 group = "es.lavanda"
 val dockerLibrary = "lavandadelpatio"
 
