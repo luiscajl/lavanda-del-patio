@@ -92,7 +92,7 @@ public class Wolfmax4KCallerService {
                 } else {
                     Index indexToSave = buildIndex(colLg2Element, type, quality);
                     if (Objects.nonNull(indexToSave)) {
-                        wolfmax4kService.save(indexToSave);
+                        wolfmax4kService.saveIfNotExists(indexToSave);
                     }
                 }
             }
@@ -117,7 +117,7 @@ public class Wolfmax4KCallerService {
                         String nameShow = colLg2.getElementsByTag("h3").text();
                         Index indexToSave = buildIndexForShow(nameShow, aElement, type, quality);
                         if (Objects.nonNull(indexToSave)) {
-                            wolfmax4kService.save(indexToSave);
+                            wolfmax4kService.saveIfNotExists(indexToSave);
                         }
                     }
                 }
