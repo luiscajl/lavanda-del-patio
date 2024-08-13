@@ -36,7 +36,5 @@ public class Bt4g {
 
     private boolean downloaded;
 
-    private String updated;
-
     private List<String> files;
 }
