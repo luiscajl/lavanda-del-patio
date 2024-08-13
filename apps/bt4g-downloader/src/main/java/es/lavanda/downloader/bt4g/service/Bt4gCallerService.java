@@ -46,47 +46,68 @@ public class Bt4gCallerService {
 
     private final MagnetService magnetService;
 
+
     public List<Bt4g> callToBT4G(String search) {
         log.info("Call To BT4G");
-        String html = callWithFlaresolverr(BT4ORG_URL + "/search/" + search).getSolution().getResponse();
-        String rssString = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&page=rss").getSolution()
-                .getResponse();
-
-        Document document = Jsoup.parse(html);
-        if (document.toString().contains("Web server is returning an unknown error")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Web server is returning an unknown error");
-        }
-        Elements magnetObjects = document.getElementsByTag("h5");
         List<Bt4g> allBt4g = new ArrayList<>();
-        for (Element magnetObject : magnetObjects) {
-            Bt4g bt4g = new Bt4g();
-            bt4g.setName(magnetObject.child(0).attr("title"));
-            bt4g.setUrl(BT4ORG_URL + magnetObject.child(0).attr("href"));
-            String hash = getHash(rssString, bt4g.getName());
-            bt4g.setMagnetHash(hash);
-            bt4g.setMagnet(magnetService.getMagnetWithTrackers(hash.toUpperCase(), bt4g.getName()));
-            bt4g.setSeeders(Integer.parseInt(magnetObject.parent().getElementById("seeders").text()));
-            bt4g.setLeechers(Integer.parseInt(magnetObject.parent().getElementById("leechers").text()));
-            if (Objects.nonNull(magnetObject.parent().getElementsByClass("cpill red-pill").first())) {
-                bt4g.setFileSize(magnetObject.parent().getElementsByClass("cpill red-pill").first().text());
-            } else {
-                bt4g.setFileSize(magnetObject.parent().getElementsByClass("cpill yellow-pill").first().text());
+        boolean hasNextPage = true;
+        int currentPage = 1;
+
+        while (hasNextPage) {
+            String html = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&p=" + currentPage).getSolution().getResponse();
+            String rssString = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&p=" + currentPage + "&page=rss").getSolution().getResponse();
+
+            Document document = Jsoup.parse(html);
+            if (document.toString().contains("Web server is returning an unknown error")) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Web server is returning an unknown error");
             }
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            bt4g.setCreateTime(Date.valueOf(
-                    LocalDate.parse(
-                            magnetObject.parent().html().split("<span>Create Time:&nbsp;<b>")[1].split("</b>")[0],
-                            formatter)));
-            bt4g.setFiles(new ArrayList<>());// FIXME: ADD FILES
-            bt4g.setUpdated(null);// FIXME: setUpdated
-            allBt4g.add(bt4g);
+
+            Elements magnetObjects = document.getElementsByTag("h5");
+            for (Element magnetObject : magnetObjects) {
+                Bt4g bt4g = new Bt4g();
+                bt4g.setName(magnetObject.child(0).attr("title"));
+                bt4g.setUrl(BT4ORG_URL + magnetObject.child(0).attr("href"));
+                String hash = getHash(rssString, bt4g.getName());
+                bt4g.setMagnetHash(hash);
+                bt4g.setMagnet(magnetService.getMagnetWithTrackers(hash.toUpperCase(), bt4g.getName()));
+                bt4g.setSeeders(Integer.parseInt(magnetObject.parent().getElementById("seeders").text()));
+                bt4g.setLeechers(Integer.parseInt(magnetObject.parent().getElementById("leechers").text()));
+                if (Objects.nonNull(magnetObject.parent().getElementsByClass("cpill red-pill").first())) {
+                    bt4g.setFileSize(magnetObject.parent().getElementsByClass("cpill red-pill").first().text());
+                } else if (Objects.nonNull(magnetObject.parent().getElementsByClass("cpill yellow-pill").first())) {
+                    bt4g.setFileSize(magnetObject.parent().getElementsByClass("cpill yellow-pill").first().text());
+                } else if (Objects.nonNull(magnetObject.parent().getElementsByClass("cpill blue-pill").first())) {
+                    bt4g.setFileSize(magnetObject.parent().getElementsByClass("cpill blue-pill").first().text());
+                }
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                bt4g.setCreateTime(Date.valueOf(
+                        LocalDate.parse(
+                                magnetObject.parent().html().split("<span>Create Time:&nbsp;<b>")[1].split("</b>")[0],
+                                formatter)));
+                Elements fileElements = magnetObject.parent().getElementsByTag("ul").first().getElementsByTag("li");
+                List<String> files = new ArrayList<>();
+                for (Element fileElement : fileElements) {
+                    files.add(fileElement.ownText().split("&nbsp;")[0].trim());
+                }
+                bt4g.setFiles(files);
+                allBt4g.add(bt4g);
+            }
+            Elements pagination = document.getElementsByClass("pagination");
+            if (pagination.isEmpty() || pagination.select(".active + li").isEmpty()) {
+                hasNextPage = false;
+            } else {
+                currentPage++;
+            }
         }
-        // FIXME: SCAN ANOTHER PAGE.
+
         log.info("Finish call To BT4G");
         return allBt4g;
     }
 
+
     private String getHash(String rssString, String name) {
+        log.info("Get hash with name {}", name);
         Document documentRss = Jsoup.parse(rssString, "", Parser.xmlParser());
         Element rssElement = documentRss.selectFirst("rss");
         if (Objects.isNull(rssElement)) {
@@ -94,7 +115,7 @@ public class Bt4gCallerService {
         }
         Elements items = rssElement.getElementsByTag("item");
         for (Element item : items) {
-            if (item.getElementsByTag("title").text().equals(name)) {
+            if (item.getElementsByTag("title").text().replaceAll(" ", "").equals(name.replaceAll(" ", ""))) {
                 return item.getElementsByTag("link").first().text().split("urn:btih:")[1].split("&")[0];
             }
         }
