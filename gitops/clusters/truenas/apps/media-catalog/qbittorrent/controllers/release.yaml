@@ -28,7 +28,7 @@ spec:
       strategy: uninstall  
   values:
     image: 
-      tag: 4.6.6-1-01
+      tag: 5.0.0-1-01
     ingress:
       enabled: true
       annotations:
