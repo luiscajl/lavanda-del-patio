@@ -41,7 +41,7 @@ spec:
         - ${host_backend}
         secretName: backend-tls
     image:
-      tag: 0.0.16 # {"$imagepolicy": "flux-system:lavanda-bt4g-downloader-policy:tag"}
+      tag: 0.0.17 # {"$imagepolicy": "flux-system:lavanda-bt4g-downloader-policy:tag"}
       repository: lavandadelpatio/bt4g-downloader
     spring:
       profile: pro
