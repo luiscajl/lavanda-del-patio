@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: lavandadelpatio/bt4g-downloader
   pullPolicy: Always
-  tag: "0.0.1"
+  tag: "0.0.17"
 
 environmentVariables: {}
 
