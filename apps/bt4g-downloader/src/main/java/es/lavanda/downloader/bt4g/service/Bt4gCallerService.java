@@ -1,6 +1,5 @@
 package es.lavanda.downloader.bt4g.service;
 
-import java.io.StringReader;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import es.lavanda.downloader.bt4g.exception.Bt4gException;
 import es.lavanda.downloader.bt4g.model.Bt4g;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +44,6 @@ public class Bt4gCallerService {
 
     private final MagnetService magnetService;
 
-
     public List<Bt4g> callToBT4G(String search) {
         log.info("Call To BT4G");
         List<Bt4g> allBt4g = new ArrayList<>();
@@ -54,8 +51,10 @@ public class Bt4gCallerService {
         int currentPage = 1;
 
         while (hasNextPage) {
-            String html = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&p=" + currentPage).getSolution().getResponse();
-            String rssString = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&p=" + currentPage + "&page=rss").getSolution().getResponse();
+            String html = callWithFlaresolverr(BT4ORG_URL + "/search?q=" + search + "&p=" + currentPage).getSolution()
+                    .getResponse();
+            String rssString = callWithFlaresolverr(
+                    BT4ORG_URL + "/search?q=" + search + "&p=" + currentPage + "&page=rss").getSolution().getResponse();
 
             Document document = Jsoup.parse(html);
             if (document.toString().contains("Web server is returning an unknown error")) {
@@ -79,12 +78,19 @@ public class Bt4gCallerService {
                 } else if (Objects.nonNull(magnetObject.parent().getElementsByClass("cpill blue-pill").first())) {
                     bt4g.setFileSize(magnetObject.parent().getElementsByClass("cpill blue-pill").first().text());
                 }
-
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                bt4g.setCreateTime(Date.valueOf(
-                        LocalDate.parse(
-                                magnetObject.parent().html().split("<span>Create Time:&nbsp;<b>")[1].split("</b>")[0],
-                                formatter)));
+                Date createTime = null;
+                try {
+                    createTime = Date.valueOf(
+                            LocalDate.parse(
+                                    magnetObject.parent().html().split("<span>Create Time:&nbsp;<b>")[1]
+                                            .split("</b>")[0],
+                                    formatter));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    log.info("Error parsing date, setting create time right now", e);
+                    createTime = Date.valueOf(LocalDate.now());
+                }
+                bt4g.setCreateTime(createTime);
                 Elements fileElements = magnetObject.parent().getElementsByTag("ul").first().getElementsByTag("li");
                 List<String> files = new ArrayList<>();
                 for (Element fileElement : fileElements) {
@@ -104,7 +110,6 @@ public class Bt4gCallerService {
         log.info("Finish call To BT4G");
         return allBt4g;
     }
-
 
     private String getHash(String rssString, String name) {
         log.info("Get hash with name {}", name);
