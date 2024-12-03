@@ -22,7 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
-    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.2.0")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     compileOnly("org.projectlombok:lombok:1.18.34")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
