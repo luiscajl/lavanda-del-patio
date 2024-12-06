@@ -25,7 +25,7 @@ dependencies {
     implementation("org.telegram:telegrambots-spring-boot-starter:6.9.7.1")
     testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("org.modelmapper:modelmapper:3.2.0") {
+    implementation("org.modelmapper:modelmapper:3.2.2") {
         exclude(group = "com.h2database", module = "h2")
         exclude(group = "org.testng", module = "testng")
     }
