@@ -21,7 +21,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("org.glassfish.jaxb:jaxb-runtime")
-    runtimeOnly("com.thoughtworks.xstream:xstream:1.4.20")
+    runtimeOnly("com.thoughtworks.xstream:xstream:1.4.21")
     testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
