@@ -23,7 +23,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.17.2")
     implementation("commons-io:commons-io:2.16.1")
     implementation("org.modelmapper:modelmapper:3.2.0")
-    implementation("io.minio:minio:8.5.13")
+    implementation("io.minio:minio:8.5.14")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
     compileOnly("org.projectlombok:lombok:1.18.34")
